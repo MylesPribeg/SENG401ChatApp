@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { width } from "@mui/system";
 import logo from "../assets/snake-background.png";
 import "../SignUp.css";
+import { useSignUp } from "../hooks/useSignUp";
 
 export default function SignUp() {
   const [formInputs, setinput] = useState({
@@ -15,13 +16,16 @@ export default function SignUp() {
     password: "",
   });
 
+  const { signUp, error, isLoading } = useSignUp();
+
   const handleChange = (e) => {
     setinput({ ...formInputs, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formInputs);
+    await signUp(formInputs.username, formInputs.email, formInputs.password);
   };
   return (
     <div>
@@ -77,6 +81,7 @@ export default function SignUp() {
           />
 
           <Button
+            disabled={isLoading}
             type="submit"
             size="large"
             color="primary"
@@ -89,9 +94,7 @@ export default function SignUp() {
           </Button>
         </form>
       </Box>
-      <h1>{formInputs.username}</h1>
-      <h1>{formInputs.email}</h1>
-      <h1>{formInputs.password}</h1>
+      {<h1>{error && <div className="error">{error}</div>}</h1>}
     </div>
   );
 }
