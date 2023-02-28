@@ -13,14 +13,11 @@ export default function Home() {
   const [messages, setMessages] = useState([]);
   const [trigger, setTrigger] = useState(false);
 
-
-  //if user is not logged in, redirect to login page
-  if (!user) {
-    window.location.href = "/login";
-  }
-
   const username = user?.username;
   console.log("username: ", username);
+
+  
+ 
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
