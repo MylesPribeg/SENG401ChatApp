@@ -5,6 +5,7 @@ import "../Home.css";
 import settingssvg from "../assets/settings.svg";
 import Settings from "./Settings";
 import UserMessage from "./UserMessage";
+import Group from "./Group";
 
 export default function Home() {
   const { logOut } = useLogOut();
@@ -34,7 +35,14 @@ export default function Home() {
     <div className="parent">
       <div className="top">
         <div className="groups">
-          <h1>Group1 </h1>
+          <Group />
+          <Group />
+          <Group />
+          <Group />
+          <Group />
+          <Group />
+          <Group />
+          <Group />
           <h1>Group2 </h1>
           <h1>Group3 </h1>
         </div>
