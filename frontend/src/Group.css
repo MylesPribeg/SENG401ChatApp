@@ -15,8 +15,7 @@
 .group-name {
     font-size: 2em;
   color: white;
-  margin: auto auto auto 20px;
-  overflow: hidden;
-  text-overflow: clip;
+  margin: auto;
+  
   white-space: nowrap;
 }
