@@ -7,10 +7,12 @@ export default function Home() {
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     console.log(`Message submitted: ${message}`);
+    setMessages([...messages, message]);
     setMessage("");
   };
 
@@ -28,18 +30,9 @@ export default function Home() {
         <div className="chat-chatbox-area">
           <div className="message-area">
             <div className="message-container">
-              <h1>First MESSAGE</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>Stuff</h1>
-              <h1>LAST mesSAGE</h1>
+              {messages.map((message, index) => (
+                <h1 key={index}>{message}</h1>
+              ))}
             </div>
           </div>
           <div className="chat-box">
