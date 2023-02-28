@@ -4,7 +4,7 @@
 }
 
 .top {
-  padding-left: 50px;
+  /* padding-left: 50px; */
   padding-right: 50px;
   background-color: #2c2f33;
   display: flex;
@@ -117,6 +117,12 @@
 
 .groups {
   display: flex;
+  max-width: 85%;
+  overflow-x: scroll;
+}
+
+::-webkit-scrollbar {
+ display: none;
 }
 
 .groups > h1 {
