@@ -5,7 +5,7 @@
     padding: 25px 15px;
     background-color: red;
     margin: 10px;
-    height: 100px;
+    height: auto;
     width: auto;
     display: flex;
     justify-content: space-between;
