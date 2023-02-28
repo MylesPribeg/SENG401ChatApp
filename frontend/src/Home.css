@@ -4,10 +4,14 @@
 }
 
 .top {
+  padding-left: 50px;
+  padding-right: 50px;
   background-color: #2c2f33;
   display: flex;
   flex: 0 1 auto;
+  align-items: center;
   overflow: hidden;
+  justify-content: space-between;
   border-color: red;
   border-width: 50px;
 }
@@ -111,4 +115,11 @@
   background-color: #5a68a5;
 }
 
+.groups {
+  display: flex;
+}
 
+.groups > h1 {
+  display: flex;
+  margin-right: 10px;
+}

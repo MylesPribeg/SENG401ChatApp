@@ -19,8 +19,13 @@ export default function Home() {
   return (
     <div className="parent">
       <div className="top">
-        <div className="group-container">
-          <h1>Groups</h1>
+        <div className="groups">
+          <h1>Group1 </h1>
+          <h1>Group2 </h1>
+          <h1>Group3 </h1>
+        </div>
+        <div className="info-sidebar">
+          <button onClick={logOut}>Log Out</button>
         </div>
       </div>
       <div className="main">
