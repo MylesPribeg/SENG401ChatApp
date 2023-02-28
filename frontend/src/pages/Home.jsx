@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import "../Home.css";
 import settingssvg from "../assets/settings.svg";
 import Settings from "./Settings";
+import UserMessage from "./UserMessage";
 
 export default function Home() {
   const { logOut } = useLogOut();
@@ -11,6 +12,12 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [trigger, setTrigger] = useState(false);
+
+
+  //if user is not logged in, redirect to login page
+  if (!user) {
+    window.location.href = "/login";
+  }
 
   const username = user?.username;
   console.log("username: ", username);
@@ -54,7 +61,7 @@ export default function Home() {
           <div className="message-area">
             <div className="message-container">
               {messages.map((message, index) => (
-                <h1 key={index}>{message}</h1>
+                <UserMessage key={index} message={message} />
               ))}
             </div>
           </div>

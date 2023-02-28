@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const router = require("./routes/user-route");
+const userrouter = require("./routes/user-route");
+const convorouter = require("./routes/conversation-route");
+const messagerouter = require("./routes/message-route");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
@@ -8,7 +10,9 @@ require("dotenv").config();
 const MongoURL = process.env.MONGO_URL;
 app.use(cors());
 app.use(express.json());
-app.use("/users", router);
+app.use("/users", userrouter);
+app.use("/conversations", convorouter);
+app.use("/messages", messagerouter);
 
 mongoose
   .connect(MongoURL)
