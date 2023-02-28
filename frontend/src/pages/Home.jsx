@@ -1,6 +1,8 @@
 import React from "react";
 import { useLogOut } from "../hooks/useLogOut";
 import { useAuthContext } from "../hooks/useAuthContext";
+import "../Home.css";
+
 
 export default function Home() {
   const { logOut } = useLogOut();
@@ -10,14 +12,24 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <h1>Home Page</h1>
-      <button onClick={handleClick}>LogOut</button>
-      {user && (
-        <div>
-          <span>{user.username}</span>
+    <div class="parent">
+    <div class="top">
+        <div class="group-container">
+            <h1>gROUPS GO HERE</h1>
         </div>
-      )}
     </div>
+    <div class="main">
+        <div class="chats">
+        <h1>chats GO HERE</h1>
+        </div>
+        <div class="message-area">
+        <h1>msgs GO HERE</h1>
+        <h1>msgs GO HERE</h1>
+        </div>
+    </div>
+    <div class="bot">
+    <h1>Footer</h1>
+    </div>
+</div>
   );
 }
