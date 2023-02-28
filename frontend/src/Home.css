@@ -123,3 +123,47 @@
   display: flex;
   margin-right: 10px;
 }
+
+/* .userName {
+  display: block;
+} */
+
+.info-sidebar {
+  allign-items: center;
+  display: flex;
+}
+
+.settings-svg {
+  padding-right: 7px;
+}
+
+.pop-up {
+  border-radius: 50px;
+  border: 5px solid white;
+  position: fixed;
+  top: 150px;
+  bottom: 250px;
+  left: 900px;
+  width: 1000px;
+  height: 1000px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-img {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.username {
+  margin: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}

@@ -2,18 +2,28 @@ import React, { useState } from "react";
 import { useLogOut } from "../hooks/useLogOut";
 import { useAuthContext } from "../hooks/useAuthContext";
 import "../Home.css";
+import settingssvg from "../assets/settings.svg";
+import Settings from "./Settings";
 
 export default function Home() {
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [trigger, setTrigger] = useState(false);
+
+  const username = user?.username;
+  console.log("username: ", username);
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     console.log(`Message submitted: ${message}`);
     setMessages([...messages, message]);
     setMessage("");
+  };
+
+  const handleSettingsClick = () => {
+    setTrigger(!trigger);
   };
 
   return (
@@ -24,7 +34,15 @@ export default function Home() {
           <h1>Group2 </h1>
           <h1>Group3 </h1>
         </div>
+
         <div className="info-sidebar">
+          <p className="username">{username}</p>
+          <img
+            className="settings-svg"
+            onClick={handleSettingsClick}
+            src={settingssvg}
+            alt=""
+          />
           <button onClick={logOut}>Log Out</button>
         </div>
       </div>
@@ -53,6 +71,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {trigger && <Settings trigger={trigger} />}
     </div>
   );
 }
