@@ -1,5 +1,5 @@
 import { createContext, useReducer, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -17,14 +17,23 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, { user: null });
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       dispatch({ type: "LOGIN", payload: user });
+    } else {
+      //go to login page if user is not logged in
+      if (location.pathname == "/login") {
+        navigate("/login");
+      } else if (location.pathname == "/signup") {
+        navigate("/signup");
+      } else if (location.pathname == "/") {
+        navigate("/login");
+      }
     }
-    
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
   console.log("Auth context state: ", authState);
 
