@@ -1,26 +1,31 @@
 .bot {
-  flex: 0 1 50px;
-  background-color: #23272a;
+  background-color: #2c2f33;
+  width: 25%;
 }
 
 .top {
-  background-color: #23272a;
+  background-color: #2c2f33;
   display: flex;
   flex: 0 1 auto;
+  overflow: hidden;
 }
 
 .main {
-  background-color: #23272a;
+  background-color: #2c2f33;
   display: flex;
   flex: 1 1 auto;
+  flex-direction: row;
+  height: calc(100% - 60px);
+  overflow: hidden;
 }
 
 .chats {
   background-color: #2c2f33;
   border-top-left-radius: 15px;
-  min-width: 20em;
-  max-width: 20em;
+  /* min-width: 20em;
+    max-width: 20em; */
   overflow: hidden;
+  width: 25%;
 }
 
 .message-area {
@@ -33,6 +38,9 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
+  width: 148%;
+  overflow-y: scroll;
+  display: flex;
 }
 
 .parent {
@@ -43,4 +51,57 @@
   width: 100%;
   top: 0px;
   right: 0px;
+  flex-direction: column;
+  height: 100%;
+}
+
+.message-container {
+  padding: 8px;
+  height: 100%;
+  margin-bottom: 30px; /* Set to height of chat-box div */
+}
+
+.chat-chatbox-area {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.chat-box {
+  height: 60px;
+  background-color: #2c2f33;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  margin-top: auto;
+  width: 100%;
+
+  margin-left: -16px;
+}
+
+.chat-box input[type="text"] {
+  flex: 1;
+  background-color: #2c2f33;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-right: 16px;
+  font-size: 16px;
+  padding-right: 200px;
+}
+
+.chat-box button[type="submit"] {
+  background-color: #7289da;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  /* margin-left: -10px; */
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.chat-box button[type="submit"]:hover {
+  background-color: #5a68a5;
 }
