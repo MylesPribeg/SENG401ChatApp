@@ -19,3 +19,7 @@
   
   white-space: nowrap;
 }
+
+.group:hover {
+  background-color: green;
+}
