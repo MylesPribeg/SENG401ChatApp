@@ -43,8 +43,6 @@ export default function Home() {
           <Group />
           <Group />
           <Group />
-          <h1>Group2 </h1>
-          <h1>Group3 </h1>
         </div>
 
         <div className="info-sidebar">
