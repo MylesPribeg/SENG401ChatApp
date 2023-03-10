@@ -3,7 +3,7 @@ import { useLogOut } from "../hooks/useLogOut";
 import { useAuthContext } from "../hooks/useAuthContext";
 import "../Home.css";
 import settingssvg from "../assets/settings.svg";
-import Settings from "./Settings";
+import Settings from "./Settings/Settings";
 import UserMessage from "./UserMessage";
 import Group from "./Group";
 

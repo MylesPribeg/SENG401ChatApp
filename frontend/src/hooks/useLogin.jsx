@@ -22,6 +22,8 @@ export const useLogin = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(json.message);
+      // navigate("/");
+      // console.log("logging in")
     }
 
     if (response.ok) {

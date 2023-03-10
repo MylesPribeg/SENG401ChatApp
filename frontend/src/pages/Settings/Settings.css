@@ -1,0 +1,19 @@
+body {
+
+}
+
+.settingsParent {
+  background-image: none;
+  background-color: black;
+  display: flex;
+  flex-flow: column wrap;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  right: 0px;
+  flex-direction: column;
+  height: 100%;
+}
+
+
