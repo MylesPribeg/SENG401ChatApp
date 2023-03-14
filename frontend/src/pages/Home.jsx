@@ -6,6 +6,7 @@ import settingssvg from "../assets/settings.svg";
 import Settings from "./Settings/Settings";
 import UserMessage from "./UserMessage";
 import Group from "./Group";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const { logOut } = useLogOut();
@@ -13,7 +14,7 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [trigger, setTrigger] = useState(false);
-
+  const navigate = useNavigate();
   const username = user?.username;
   console.log("username: ", username);
 
@@ -28,6 +29,7 @@ export default function Home() {
   };
 
   const handleSettingsClick = () => {
+    navigate("/settings")
     setTrigger(!trigger);
   };
 
@@ -47,6 +49,7 @@ export default function Home() {
 
         <div className="info-sidebar">
           <p className="username">{username}</p>
+          
           <img
             className="settings-svg"
             onClick={handleSettingsClick}
