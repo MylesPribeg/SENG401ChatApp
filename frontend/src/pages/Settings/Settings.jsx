@@ -13,6 +13,7 @@ import { boxSizing } from "@mui/system";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import settingssvg from "../../assets/settings.svg"
+import { useThemeContext } from "../../hooks/useThemeContext";
 
 function SettingsOptionsView({someState}){
 
@@ -36,19 +37,20 @@ const reducer = (state, action) =>{
 }
 
 export default function Settings(props) {
-  const [trigger, setTrigger] = useState(false)
   const [state, dispatch] = useReducer(reducer, {type: "" })
   const navigate = useNavigate()
+  const {ThemeState} = useThemeContext()
 
   return (
     
-      <div className="settingsParent">
+      <div className="settingsParent" style={{backgroundColor:ThemeState.color}}>
         <Box className = "settingsOptions"
           sx={{
             // width: '20%',
             // height: '100%',
             flex: 1,
-            backgroundColor: "white",
+            backgroundColor: "grey",
+            mixBlendMode:"multiply",
             paddingTop: '50px',
             paddingLeft: '30px',
             boxSizing: 'border-box'
@@ -91,7 +93,8 @@ export default function Settings(props) {
         <Box className = "settingsSelector"
         sx={{
           flex: 3,
-          backgroundColor: "grey",
+          backgroundColor: "inherit",
+          
           display:"flex",
           flexDirection:"column",
           justifyContent: "flex-start",
@@ -100,8 +103,8 @@ export default function Settings(props) {
         }}
         >
           <Container sx={{
-            flex: 1,
-            backgroundColor: "red",
+            flex: 0.5,
+            backgroundColor: "inherit",
 
           }}>
             <Typography
@@ -122,7 +125,7 @@ export default function Settings(props) {
           <Box
           sx={{
             flex: 5,
-            backgroundColor: "orange",
+            backgroundColor: "inherit",
             display: "flex"
 
           }} >
@@ -136,7 +139,8 @@ export default function Settings(props) {
         <Box className = "settingsEscape"
           sx={{
             flex: 0.7,
-            backgroundColor: "green",
+            backgroundColor: "grey",
+            mixBlendMode:"multiply",
 
           }}
         >
