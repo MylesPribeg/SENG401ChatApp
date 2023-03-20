@@ -29,7 +29,7 @@ import { useNavigate } from "react-router-dom";
 
     if (response.ok) {
       localStorage.setItem("user", JSON.stringify(json));
-      console.log("nigfger")
+      console.log("on baby?")
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
       navigate("/");
