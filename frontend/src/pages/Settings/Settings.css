@@ -2,7 +2,7 @@
   
   background-image: none;
   background-color: rgb(82, 82, 82);
-  height: 100%;
+  min-height: 100dvh;
   width: 100%;
   display: flex;
   box-sizing: border-box;

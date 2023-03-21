@@ -43,7 +43,7 @@ export default function Settings(props) {
 
   return (
     
-      <div className="settingsParent" style={{backgroundColor:ThemeState.color}}>
+      <div className="settingsParent" style={{backgroundColor:`rgb(${ThemeState.RGred}, ${ThemeState.RGgreen}, ${ThemeState.RGblue})`}} >
         <Box className = "settingsOptions"
           sx={{
             // width: '20%',

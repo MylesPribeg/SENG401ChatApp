@@ -6,16 +6,25 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/LogIn";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings/Settings";
+import { useThemeContext } from "./hooks/useThemeContext";
 
 function App() {
+
+  const ThemeState = useThemeContext()
   return (
-    <Routes>
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="*" element={<h1>404 Not Found</h1>} /> 
-    </Routes>
+    // <div style={{backgroundColor:}}>
+
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<h1>404 Not Found</h1>} /> 
+      </Routes>
+
+
+    // </div>
+    
   );
 }
 
