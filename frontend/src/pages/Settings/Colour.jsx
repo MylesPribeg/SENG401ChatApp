@@ -5,12 +5,11 @@ import Button from '@mui/material/Button';
 import { Box, Slide } from "@mui/material";
 import { Typography,Slider } from "@mui/material";
 import "./Colour.css";
-import { useThemeContext } from "../../hooks/useThemeContext";
+import { useColour } from "../../hooks/useColour";
 // import Slider from "@mui/material";
 export default function Colour(props) {
     // 'white', 'yellow', 'red', 'blue', 'green'
-    const [color, setColor] = useState('white')
-    const {ThemeState, setThemeState, } = useThemeContext()
+    const { setColor, setGreen,setBlue,setRed } = useColour()
 
     
     const colors = [
@@ -46,7 +45,9 @@ export default function Colour(props) {
         return colors.map( (object_color, index) => {
             return ( <button key={index}
             className = { ' colourButtons ' + object_color.name }
-            onClick={() => setThemeState({...ThemeState, BGred: object_color.red, BGblue: object_color.blue, BGgreen:object_color.green })}
+            onClick={() => {
+                setColor(object_color.red,object_color.green, object_color.blue )
+            }}
             >
             
             {object_color.name}
@@ -60,7 +61,7 @@ export default function Colour(props) {
     sx={{
         display: "flex",
         flexFlow: "column",
-        backgroundColor: ThemeState.color,
+        backgroundColor: "inherit",
         flex: 1,
 
 
@@ -138,7 +139,8 @@ export default function Colour(props) {
             step={10}
             valueLabelDisplay="auto"
             onChange={(event, number) =>{
-                setThemeState({...ThemeState, BGred: number })
+                setRed(number)
+
               }}
            
            />
@@ -170,7 +172,7 @@ export default function Colour(props) {
             step={10}
             valueLabelDisplay="auto"
             onChange={(event, number) =>{
-                setThemeState({...ThemeState, BGgreen: number })
+                setGreen(number)
               }}
            
            />
@@ -202,7 +204,7 @@ export default function Colour(props) {
             step={10}
             valueLabelDisplay="auto"
             onChange={(event, number) =>{
-                setThemeState({...ThemeState, BGblue: number })
+                setBlue(number)
               }}
            />
            </Box>

@@ -5,7 +5,7 @@
 
 .top {
   /* padding-left: 50px; */
-  padding-right: 50px;
+  padding-right: 2rem;
   background-color: #2c2f33;
   display: flex;
   flex: 0 1 auto;
@@ -16,26 +16,51 @@
   border-width: 50px;
 }
 
-.main {
+.body {
   background-color: #2c2f33;
   display: flex;
   flex: 1 1 auto;
   flex-direction: row;
-  height: calc(100% - 60px);
+  /* height: calc(100% - 60px); */
   overflow: hidden;
+}
+.sideview{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  
+
+
+}
+.users{
+  background-color: blue;
+  display: flex;
+  flex:4;
+  flex-flow: column nowrap;
+  justify-content: space-between  ;
+  align-items: center;
+  overflow: hidden;
+  overflow-x: scroll;
+
+
+  
+}
+.optionPlaceHolder{
+  flex:1;
 }
 
 .chats {
-  border-color: red;
-  border-width: thick;
-  /* background-color: #1a1c1f; */
+  /* border-color: red; */
+  /* border-width: thick; */
+  background-color: #1a1c1f;
   border-radius: 50px;
   /* background-color: #2c2f33; */
   /* border-top-left-radius: 15px; */
   /* min-width: 20em;
     max-width: 20em; */
   overflow: hidden;
-  width: 25%;
+  width: 100%;
 }
 
 .message-area {
@@ -75,7 +100,9 @@
 .chat-chatbox-area {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  background-color: blue;
+  flex-grow:1;
+  /* width: 100%; */
 }
 
 .chat-box {
@@ -117,7 +144,7 @@
 
 .groups {
   display: flex;
-  max-width: 85%;
+  flex-flow: row nowrap;
   overflow-x: scroll;
 }
 

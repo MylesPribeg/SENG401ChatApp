@@ -14,6 +14,8 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import settingssvg from "../../assets/settings.svg"
 import { useThemeContext } from "../../hooks/useThemeContext";
+import {useColour} from "../../hooks/useColour";
+
 
 function SettingsOptionsView({someState}){
 
@@ -39,11 +41,11 @@ const reducer = (state, action) =>{
 export default function Settings(props) {
   const [state, dispatch] = useReducer(reducer, {type: "" })
   const navigate = useNavigate()
-  const {ThemeState} = useThemeContext()
+  const {getBackGroundColor} = useColour()
 
   return (
     
-      <div className="settingsParent" style={{backgroundColor:`rgb(${ThemeState.RGred}, ${ThemeState.RGgreen}, ${ThemeState.RGblue})`}} >
+      <div className="settingsParent" style={{backgroundColor:getBackGroundColor()}} >
         <Box className = "settingsOptions"
           sx={{
             // width: '20%',
