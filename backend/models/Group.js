@@ -12,6 +12,8 @@ const messageSchema = new Schema({
         required: true
     }
 }, {timestamps: true});
+//please do not delete above schema, necessary until better solution is found
+
 
 const groupSchema = new Schema({
     name: {
