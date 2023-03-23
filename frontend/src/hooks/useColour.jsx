@@ -9,15 +9,11 @@ export const useColour = () => {
 
   const getBackGroundColor = () =>{
     var val = `rgb(${ThemeState.BGred}, ${ThemeState.BGgreen}, ${ThemeState.BGblue})`
-    console.log("getting background colour of val " + val)
     return val
 
   }
 
   const setColor = (red,green,blue) =>{
-    console.log("setting colour with red " + red + " blue " + blue + " green " + green)
-
-
     setThemeState({...ThemeState,BGred:red,BGgreen:green,BGblue:blue})
   }
 

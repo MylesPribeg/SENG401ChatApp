@@ -8,62 +8,35 @@ import Group from "./Group";
 import { useNavigate } from "react-router-dom";
 import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
+import { useGroups } from "../../hooks/useGroups";
 export default function Home() {
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
 
 
   const navigate = useNavigate();
 
   const {getBackGroundColor} = useColour()
 
-  const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
+  // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
+  const {groupsState,groupsStateDispatch} = useGroups()
+  const [activeIdx, setActiveIdx] = useState(0)
+
   const username = user?.username;
 
 
-  const groups = [
+  
 
-    {
-      id:0,
-      index:0,
-      active:true,
-      name:"hello world",
-      messages:[
-        "dummy message 1",
-        "dummy message 2"
-      ]
-    },{
-      id:1,
-      index:1,
-      active:false,
-      name:"test",
-      messages:[
-        "dummy message 1",
-        "dummy message 2"
-      ]
-    },{
-      id:2,
-      index:2,
-      active:false,
-      name:"not pog",
-      messages:[
-        "dummy message 1",
-        "dummy message 2"
-      ]
-    },
-  ]
-  const test = (index) =>{
-    
-  }
-  const renderGroups = (groups) => {
-    return groups.map((group, index) => {
-      return <Group key={index} val={group} currentGroup={currentActiveGroupIndex} clickHandler={ () => {
-        console.log("group index pressed: " + index + "previously active index " +  currentActiveGroupIndex)
-        groups[currentActiveGroupIndex].active=false
-        groups[index].active=true
-        setCurrentActiveGroupIndex(index)
+  const renderGroups = (groupsState) => {
+    return groupsState.map((group, index) => {
+      return <Group key={index} val={group} clickHandler={ () => {
+        // console.log("group index pressed: " + index + "previously active index " +  currentActiveGroupIndex)
+        // groups[currentActiveGroupIndex].active=false
+        groupsStateDispatch({type:"GROUPCLICKED",idx:index,prevIdx:activeIdx})
+        setActiveIdx(index)
+        // groups[index].active=true
+        // setCurrentActiveGroupIndex(index)
 
 
       }
@@ -75,9 +48,11 @@ export default function Home() {
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
-    console.log(`Message submitted: ${message}`);
-    setMessages([...messages, message]);
+    groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:message})
     setMessage("");
+
+    // setMessages([...messages, message]);
+    
   };
 
   const handleSettingsClick = () => {
@@ -91,7 +66,7 @@ export default function Home() {
     >
       <Box className="top">
         <Box className="groups">
-          {renderGroups(groups)}
+          {renderGroups(groupsState)}
         </Box>
         <Box>
           <button> add group </button>
@@ -147,7 +122,7 @@ export default function Home() {
               <p>Chats</p>
             </div>
               <div className="message-container">
-                {messages.map((message, index) => (
+                {groupsState[activeIdx].messages.map((message, index) => (
                   <UserMessage key={index} message={message} />
                 ))}
               </div>
