@@ -17,8 +17,6 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<h1>404 Not Found</h1>} /> 
       </Routes>
-
-
     // </div>
     
   );
