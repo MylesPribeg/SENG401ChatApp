@@ -147,7 +147,7 @@ export default function Font(props) {
                 
                 aria-label="Custom marks"
                 
-                defaultValue={255}
+                defaultValue={150}
                 max={255}
                 step={10}
                 valueLabelDisplay="auto"

@@ -1,5 +1,5 @@
 import React from "react";
-import avater from "../assets/avater.svg";
+import avater from "../../assets/avater.svg";
 export default function userMessage(props) {
   return (
     <div className="message-div">
