@@ -25,4 +25,4 @@ $ npm start on front end '
 
 ## Server
 
-Make sure you open ports on 5000
+Make sure you open ports on 8000
