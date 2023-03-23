@@ -124,6 +124,33 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getUserGroups = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const groups = await getUserGroups(userId);
+    if (!groups) {
+      return res
+        .status(404)
+        .json({ error: "User not found or error retrieving groups" });
+    }
+    res.json(groups);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// shoudl turn this format HASAN
+// [
+//    group 1:
+//   {
+//     "name": "Group 1",
+//   },
+//    group 2;
+//   {
+//     "name": "Group 2",
+//   }
+// ]
+
 exports.getAllUsers = getAllUsers;
 exports.createUser = createUser;
 exports.updateUser = updateUser;
@@ -131,3 +158,4 @@ exports.deleteUser = deleteUser;
 exports.getUserById = getUserById;
 exports.signUpUser = signUpUser;
 exports.loginUser = loginUser;
+exports.getUserGroups = getUserGroups;

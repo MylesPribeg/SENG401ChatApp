@@ -8,6 +8,7 @@ const {
   getUserById,
   signUpUser,
   loginUser,
+  getUserGroups,
 } = require("../controllers/user-controller");
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.delete("/:id", deleteUser);
 router.get("/:id", getUserById);
 router.post("/signup", signUpUser);
 router.post("/login", loginUser);
+router.get("/user/:userId/groups", getUserGroups);
 
 module.exports = router;
