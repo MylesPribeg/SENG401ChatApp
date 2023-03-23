@@ -124,10 +124,23 @@ const loginUser = async (req, res) => {
   }
 };
 
+async function getgrp(userId) {
+  try {
+    const user = await User.findById(userId).populate("groups");
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user.groups;
+  } catch (error) {
+    console.error("Error retrieving user groups:", error);
+    return null;
+  }
+}
+
 const getUserGroups = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const groups = await getUserGroups(userId);
+    const groups = await getgrp(userId);
     if (!groups) {
       return res
         .status(404)
