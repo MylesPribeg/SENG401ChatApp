@@ -5,14 +5,24 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "2d" });
 };
 
+//old function
+// const getAllUsers = async (req, res) => {
+//   let users;
+//   try {
+//     users = await User.find();
+//   } catch (err) {
+//     return res.status(500).json({ message: err.message });
+//   }
+//   res.json(users);
+// };
+
 const getAllUsers = async (req, res) => {
-  let users;
   try {
-    users = await User.find();
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
+    const users = await User.find().populate("groups");
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
   }
-  res.json(users);
 };
 
 const createUser = async (req, res, next) => {

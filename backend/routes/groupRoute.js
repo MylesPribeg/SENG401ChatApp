@@ -1,14 +1,15 @@
 const express = require("express");
 
+
 const {
-    getGroups,
-    getGroup,
-    createGroup,
-    deleteGroup,
-    updateGroup,
-    addToGroup,
-    getUsers
-} = require("../controllers/groupController")
+  getGroups,
+  getGroup,
+  createGroup,
+  deleteGroup,
+  updateGroup,
+  addToGroup,
+  getUsers,
+} = require("../controllers/groupController");
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get("/:id", getGroup);
 router.post("/", createGroup);
 
 //ad a new group member with a user id (gid: group id, uid: user id)
-router.post("/add/:gid&:uid", addToGroup);
+router.put("/add/:gid&:uid", addToGroup);
 
 //delete a group based off group id
 router.delete("/:id", deleteGroup);

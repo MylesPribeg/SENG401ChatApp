@@ -20,6 +20,6 @@ router.delete("/:id", deleteUser);
 router.get("/:id", getUserById);
 router.post("/signup", signUpUser);
 router.post("/login", loginUser);
-router.get("/user/:userId/groups", getUserGroups);
+router.get("/user/:userId", getUserGroups);
 
 module.exports = router;
