@@ -101,7 +101,7 @@ const getUsers = async (req, res) => {
         return res.status(404).json({error: "no users invalid group id"})
     }
 
-    const users = await Group.findById(id).select({"users": 1, "_id": 0}).populate("users");
+    const users = await Group.findById(id).select({"users": 1, "_id": 0}).populate("users", {"username": 1, "email": 1})
 
     console.log(users);
     res.status(200).json(users);
