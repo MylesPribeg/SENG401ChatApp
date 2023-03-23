@@ -39,7 +39,7 @@ const createMessage = async (req, res) => {
     }
     try {
         console.log("test")
-        const message = await Message.create({user, content});
+        const message = await Message.create({user, content}); //this is for testing please leave this in
         const update = await Group.updateOne({_id: id}, {$push:{messages: message}})
         //res.status(200).json(message);
         res.status(200).json(update);
