@@ -114,7 +114,6 @@ const signUpUser = async (req, res) => {
 
     //Create token
     const token = createToken(user._id);
-
     res.status(200).json({ user, token });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -126,13 +125,26 @@ const loginUser = async (req, res) => {
 
   try {
     const user = await User.login(username, password);
-
     const token = createToken(user._id);
-    res.status(200).json({ username, token });
+    // Include the user ObjectID (_id) in the response
+    res.status(200).json({ username, token, id: user._id });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
+//old login function
+// const loginUser = async (req, res) => {
+//   const { username, password } = req.body;
+
+//   try {
+//     const user = await User.login(username, password);
+//     const token = createToken(user._id);
+//     res.status(200).json({ username, token });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
 
 async function getgrp(userId) {
   try {
