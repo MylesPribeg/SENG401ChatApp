@@ -73,11 +73,6 @@ export default function Home() {
     >
       <Box className="top">
         <Box className="groups">
-          {groups && groups.map((group) => {
-            //<Group key={group._id} group={group}/>
-            <h1>Deez</h1>
-            console.log(group);
-          })}
           {
             groups && renderGroups(groups)
           }
