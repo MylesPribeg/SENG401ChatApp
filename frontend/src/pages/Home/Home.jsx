@@ -62,20 +62,7 @@ export default function Home() {
   }
 //---------------------------------//---------------------------------//---------------------------------//---------------------------------//---------------------------------
   const {groups, dispatch} = useGroupsContext()
-
-  useEffect(() => {
-    
-    const fetchGroups = async () => {
-      const response = await fetch("http://localhost:8000/groups/")
-      const json = await response.json();
-
-      if (response.ok) {
-        dispatch({type: "SET_GROUPS", payload: json})
-      }
-    }
-
-    fetchGroups()
-  }, [dispatch])
+  
 //---------------------------------//---------------------------------//---------------------------------//---------------------------------
 
 
