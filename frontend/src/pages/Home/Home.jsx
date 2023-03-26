@@ -9,11 +9,15 @@ import { useNavigate } from "react-router-dom";
 import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
+import { useRef } from "react"
+import { useEffect } from "react";
 export default function Home() {
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
+  const scrollRef = useRef();
 
+  
 
   const navigate = useNavigate();
 
@@ -58,6 +62,10 @@ export default function Home() {
   const handleSettingsClick = () => {
     navigate("/settings")
   };
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({behavior: "smooth"});
+  },[groupsState])
 
   return (
     <Box className="parent" style={{backgroundColor:getBackGroundColor()}}
@@ -146,7 +154,9 @@ export default function Home() {
               </div> */}
               <div className="message-container">
                 {groupsState[activeIdx].messages.map((message, index) => (
-                  <UserMessage key={index} message={message} />
+                  <div ref={scrollRef}>
+                    <UserMessage key={index} message={message} />
+                  </div>
                 ))}
                 
               </div>
