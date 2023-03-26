@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import { ThemeContextProvider} from "./contexts/ThemeContext"
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
         <ThemeContextProvider>
@@ -14,5 +13,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </ThemeContextProvider>  
       </AuthContextProvider>
     </BrowserRouter>
-  </React.StrictMode>
 );

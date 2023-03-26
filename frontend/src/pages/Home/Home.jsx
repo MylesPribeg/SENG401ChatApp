@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLogOut } from "../../hooks/useLogOut";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import "./Home.css";
@@ -9,15 +9,19 @@ import { useNavigate } from "react-router-dom";
 import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
+import {io} from 'socket.io-client'
+
 export default function Home() {
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
 
+  //web sockets...
+  const socket = useRef();
 
   const navigate = useNavigate();
 
-  const {getBackGroundColor} = useColour()
+  const {getBackGroundColor} = useColour();
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const {groupsState,groupsStateDispatch} = useGroups()
@@ -25,22 +29,47 @@ export default function Home() {
 
   const username = user?.username;
 
+  // set socket for current user
+  useEffect(()=> {
+    socket.current = io("ws://localhost:8001");
+  },[]);
 
-  
+  //send user info to socket serv
+  useEffect(()=>{
+    if(user!=null){
+      socket.current.emit("send-user", user);
+    }
+  }, [user]);
+
+  //get groups after sending user info
+  useEffect(()=>{
+    socket.current.on("send-groups", (groups)=>{
+      console.log(groups);
+      groupsStateDispatch({type:"SET_GROUPS", grps:groups});
+    });
+  }, []);
+
+  // receive message
+  useEffect(()=>{
+    socket.current.on("receive-message", (message, groupid)=>{
+      console.log("received " + message);
+      groupsStateDispatch({type:"ADDMESSAGE", idx:groupid,msg:message});
+    })
+
+  }, [groupsState])
+
 
   const renderGroups = (groupsState) => {
     return groupsState.map((group, index) => {
       return <Group key={index} val={group} clickHandler={ () => {
+        console.log(index);
         // console.log("group index pressed: " + index + "previously active index " +  currentActiveGroupIndex)
         // groups[currentActiveGroupIndex].active=false
         groupsStateDispatch({type:"GROUPCLICKED",idx:index,prevIdx:activeIdx})
         setActiveIdx(index)
         // groups[index].active=true
         // setCurrentActiveGroupIndex(index)
-
-
       }
-
       }></Group>
     })
   }
@@ -48,9 +77,9 @@ export default function Home() {
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
+    socket.current.emit("send-message", message, groupsState[activeIdx].id);
     groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:message})
     setMessage("");
-
     // setMessages([...messages, message]);
     
   };

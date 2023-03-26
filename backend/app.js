@@ -18,7 +18,7 @@ app.use("/users", userrouter);
 //app.use("/messages", messagerouter);
 app.use("/groups", groupRoutes);
 app.use("/messages", messageRoutes);
-
+mongoose.set('strictQuery', true);
 mongoose
   .connect(MongoURL)
   .then(() => app.listen(PORT, () => console.log("Server is running")))
