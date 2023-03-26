@@ -14,7 +14,6 @@
   justify-content: space-between;
   border-color: red;
   border-width: 50px;
-  min-height: 118px;
 }
 
 .body {
@@ -200,4 +199,19 @@
   justify-content: center;
   align-items: center;
   font-size: 40px;
+}
+
+.message-div {
+  display: flex;
+  align-items: center;
+}
+
+.message-div > h1 {
+  font-size: 30px;
+  padding: 12px;
+  margin-left: 10px;
+  color: white;
+  display: inline-block;
+  border: 1px solid white;
+  border-radius: 10%;
 }
