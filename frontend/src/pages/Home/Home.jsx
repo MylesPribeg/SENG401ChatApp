@@ -82,30 +82,38 @@ export default function Home() {
       >
         <Box className="sideview" sx={{
           backgroundColor:"red",
-          flex:1
-          
+          flex:0         
         }}>
-          <Box className="users" sx={{
-
+          <Box className="userList" sx={{  }}>
             
-          }}>
-            <div>user1</div>
+            <div className="users">
+              <h2 className="member">UsernameUsername</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+            </div>
+            <div className="addUsers">
+              <button>Add Users</button>
+            </div>
             
-
           </Box>
-          <Box className="optionPlaceHolder">
 
-          <p className="username">{username}</p>
-          
-          <img
-            className="settings-svg"
-            onClick={handleSettingsClick}
-            src={settingssvg}
-            alt=""
-          />
-          <button onClick={logOut}>Log Out</button>
-
+          <Box className="sideview-bottom">  
+            <p className="username">{username}</p>        
+            <div className="options">
+              <img
+              className="settings-svg"
+              onClick={handleSettingsClick}
+              src={settingssvg}
+              alt=""
+              />
+              <button onClick={logOut}>Log Out</button>
+            </div>
           </Box>
+
         </Box>
 
         <Box className="textArea chat-chatbox-area" sx={{
@@ -122,6 +130,7 @@ export default function Home() {
                 {groupsState[activeIdx].messages.map((message, index) => (
                   <UserMessage key={index} message={message} />
                 ))}
+                
               </div>
             </div>
             <div className="chat-box">
@@ -171,7 +180,7 @@ export default function Home() {
       </div>
       <div className="main">
         <div className="chats">
-          <h1>Chats</h1>
+          <h2>Chats</h2>
         </div>
         <div className="chat-chatbox-area">
           <div className="message-area">

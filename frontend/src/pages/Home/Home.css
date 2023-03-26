@@ -14,6 +14,7 @@
   justify-content: space-between;
   border-color: red;
   border-width: 50px;
+  min-height: 118px;
 }
 
 .body {
@@ -24,30 +25,47 @@
   /* height: calc(100% - 60px); */
   overflow: hidden;
 }
+
 .sideview{
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  align-items: center;
   
-
-
 }
-.users{
+.userList{
   background-color: blue;
   display: flex;
-  flex:4;
-  flex-flow: column nowrap;
-  justify-content: space-between  ;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   overflow-x: scroll;
 
-
-  
 }
-.optionPlaceHolder{
-  flex:1;
+
+.users {
+  overflow: scroll;
+  text-overflow: ellipsis;
+  padding: auto;
+  max-width: 20vw;
+}
+.member {
+  overflow: scroll;
+  white-space: nowrap;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 2em;
+}
+.sideview-bottom{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px 40px; 
+  align-items: center;
+}
+
+.options {
+  display: flex;
+  align-items: center;
 }
 
 .chats {
@@ -67,14 +85,14 @@
   border-radius: 25px;
   background-color: #36393f;
   padding-left: 1em;
-  flex: 1 1 auto;
+  flex: 1 1 100%;
   border-top-right-radius: 15px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  width: 148%;
+  width: 100%;
   overflow-y: scroll;
   display: flex;
 }
