@@ -13,11 +13,13 @@ To clone and run this example, you'll need [Git](https://git-scm.com) and [Node.
 # Install dependencies
 $ npm install on frontend
 $ npm install on backend
+$ npm install on socket
 
 
 # Start the app
 $ enter the frontend folder and type npm run dev in terminal
 $ enter the backend folder and type npm start in terminal
+$ enter the socket folder and type npm start in temrinal
 
 # Done
 # follow link in frontend terminal that {npm run dev provides}

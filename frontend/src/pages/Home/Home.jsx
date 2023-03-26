@@ -25,7 +25,7 @@ export default function Home() {
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const {groupsState,groupsStateDispatch} = useGroups()
-  const [activeIdx, setActiveIdx] = useState(0)
+  const [activeIdx, setActiveIdx] = useState()
 
   const username = user?.username;
 
@@ -58,6 +58,13 @@ export default function Home() {
 
   }, [groupsState])
 
+  const renderMessages = (groupsState) => {
+    if(activeIdx!=null){
+      groupsState[activeIdx].messages.map((message, index) => (
+      <UserMessage key={index} message={message} />
+      ))
+    }
+  }
 
   const renderGroups = (groupsState) => {
     return groupsState.map((group, index) => {
@@ -151,9 +158,7 @@ export default function Home() {
               <p>Chats</p>
             </div>
               <div className="message-container">
-                {groupsState[activeIdx].messages.map((message, index) => (
-                  <UserMessage key={index} message={message} />
-                ))}
+              {renderMessages(groupsState)}
               </div>
             </div>
             <div className="chat-box">
