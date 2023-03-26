@@ -9,12 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
-
-
-//fsdfsd
-import { useGroupsContext } from "../../hooks/useGroupsContext";
-import { useEffect } from "react";
-//fdsf
 export default function Home() {
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
@@ -30,23 +24,13 @@ export default function Home() {
   const [activeIdx, setActiveIdx] = useState(0)
 
   const username = user?.username;
+
+
   
-  const handleMessageSubmit = (e) => {
-    e.preventDefault();
-    groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:message})
-    setMessage("");
 
-    // setMessages([...messages, message]);
-    
-  };
-
-  const handleSettingsClick = () => {
-    navigate("/settings")
-  };
-
-  const renderGroups = (groups) => {
-    return groups.map((group) => {
-      return <Group key={group._id} val={group} clickHandler={ () => {
+  const renderGroups = (groupsState) => {
+    return groupsState.map((group, index) => {
+      return <Group key={index} val={group} clickHandler={ () => {
         // console.log("group index pressed: " + index + "previously active index " +  currentActiveGroupIndex)
         // groups[currentActiveGroupIndex].active=false
         groupsStateDispatch({type:"GROUPCLICKED",idx:index,prevIdx:activeIdx})
@@ -60,24 +44,20 @@ export default function Home() {
       }></Group>
     })
   }
-//---------------------------------//---------------------------------//---------------------------------//---------------------------------//---------------------------------
-  const {groups, dispatch} = useGroupsContext()
+ 
 
-  useEffect(() => {
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:message})
+    setMessage("");
+
+    // setMessages([...messages, message]);
     
-    const fetchGroups = async () => {
-      const response = await fetch("http://localhost:8000/groups/")
-      const json = await response.json();
+  };
 
-      if (response.ok) {
-        dispatch({type: "SET_GROUPS", payload: json})
-      }
-    }
-
-    fetchGroups()
-  }, [dispatch])
-//---------------------------------//---------------------------------//---------------------------------//---------------------------------
-
+  const handleSettingsClick = () => {
+    navigate("/settings")
+  };
 
   return (
     <Box className="parent" style={{backgroundColor:getBackGroundColor()}}
@@ -86,14 +66,7 @@ export default function Home() {
     >
       <Box className="top">
         <Box className="groups">
-          {groups && groups.map((group) => {
-            //<Group key={group._id} group={group}/>
-            <h1>Deez</h1>
-            console.log(group);
-          })}
-          {
-            groups && renderGroups(groups)
-          }
+          {renderGroups(groupsState)}
         </Box>
         <Box>
           <button> add group </button>
@@ -108,7 +81,7 @@ export default function Home() {
       }}  
       >
         <Box className="sideview" sx={{
-          backgroundColor:"yellow",
+          backgroundColor:"red",
           flex:1
           
         }}>
@@ -117,10 +90,7 @@ export default function Home() {
             
           }}>
             <div>user1</div>
-            <div>user1</div>
-            <div>user1</div>
-
-            <div>user1</div>
+            
 
           </Box>
           <Box className="optionPlaceHolder">
