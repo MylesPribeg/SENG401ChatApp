@@ -1,0 +1,35 @@
+.messageCard {
+    display: flex;
+    width: 70vw;
+    white-space: normal;
+}
+
+.messageContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.messageTop {
+    display: flex;
+    align-items: baseline;
+    
+}
+
+.messageSender {
+    color: #FAF9F6;
+}
+
+.messageTop * {
+    margin: 0px 5px; /*top/bottom left-right*/
+    /* white-space: nowrap; */
+}
+.messageTime {
+    color: #D3D3D3;
+}
+
+.messageContent {
+    margin: 5px 0px 25px; /*top left/right bottom*/
+    flex-wrap: wrap;
+    color: #FAF9F6;
+}

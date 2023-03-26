@@ -16,8 +16,8 @@ $ npm install on backend
 
 
 # Start the app
-$ npm run dev on front end
-$ npm start on front end '
+$ enter the frontend folder and type npm run dev in terminal
+$ enter the backend folder and type npm start in terminal
 
 # Done
 # follow link in frontend terminal that {npm run dev provides}
