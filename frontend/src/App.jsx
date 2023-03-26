@@ -4,21 +4,21 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/LogIn";
 import Home from "./pages/Home/Home";
 import Settings from "./pages/Settings/Settings";
+import Video from "./pages/VideoPage/Video";
 
 function App() {
-
   return (
     // <div style={{backgroundColor:}}>
 
-      <Routes>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} /> 
-      </Routes>
+    <Routes>
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/settings" element={<Settings />} />
+      <Route path="*" element={<h1>404 Not Found</h1>} />
+      <Route path="/video" element={<Video />} />
+    </Routes>
     // </div>
-    
   );
 }
 
