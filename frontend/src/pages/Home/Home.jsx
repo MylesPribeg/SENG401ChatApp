@@ -81,8 +81,8 @@ export default function Home() {
       }}  
       >
         <Box className="sideview" sx={{
-          backgroundColor:"red",
-          flex:0         
+          // backgroundColor:"red",
+          // flex:0         
         }}>
           <Box className="userList" sx={{  }}>
             
@@ -117,15 +117,15 @@ export default function Home() {
         </Box>
 
         <Box className="textArea chat-chatbox-area" sx={{
-          backgroundColor:"white",
-          flex:3
+          // backgroundColor:"white",
+          // flex:3
         }}>
 
             
             <div className="message-area">
-            <div className="chats">
-              <p>Chats</p>
-            </div>
+              <div className="chats">
+                <p>Chats</p>
+              </div>
               <div className="message-container">
                 {groupsState[activeIdx].messages.map((message, index) => (
                   <UserMessage key={index} message={message} />
