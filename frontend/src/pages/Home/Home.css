@@ -38,7 +38,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  overflow: visible;
+  overflow: hidden;
   overflow-x: scroll;
 
 }
@@ -47,7 +47,7 @@
   overflow: scroll;
   text-overflow: ellipsis;
   padding: auto;
-  max-width: 20vw;
+  max-width: 15vw;
 }
 .member {
   overflow: scroll;
@@ -59,7 +59,7 @@
 .sideview-bottom{
   display: flex;
   justify-content: space-between;
-  padding: 20px 40px 40px; 
+  padding: 20px 10px 40px; 
   align-items: center;
 }
 

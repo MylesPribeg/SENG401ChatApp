@@ -2,6 +2,7 @@
     display: flex;
     width: 70vw;
     white-space: normal;
+    margin-right: 20px;
 }
 
 .messageContainer {
@@ -32,4 +33,7 @@
     margin: 5px 0px 25px; /*top left/right bottom*/
     flex-wrap: wrap;
     color: #FAF9F6;
+    overflow-wrap: break-word;
+    width: 60vw;
+    max-width: 60vw;
 }
