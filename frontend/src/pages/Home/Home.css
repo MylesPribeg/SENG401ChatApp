@@ -30,7 +30,7 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  
+  max-width: 20vw;
 }
 .userList{
   background-color: #2c2f33;
@@ -41,6 +41,7 @@
   overflow: hidden;
   overflow-x: scroll;
   align-self:flex-start;
+  max-width: 95%;
 
 }
 
@@ -48,14 +49,16 @@
   overflow: scroll;
   text-overflow: ellipsis;
   padding: auto;
-  max-width: 15vw;
+  max-width: 100%;
 }
+/* this will probably be replaced with a react component */
 .member {
   overflow: scroll;
   white-space: nowrap;
   padding-left: 10px;
   margin: 0;
   font-size: 2em;
+  color: white;
 }
 .sideview-bottom{
   display: flex;

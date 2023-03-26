@@ -87,11 +87,29 @@ export default function Home() {
           <Box className="userList" sx={{  }}>
             
             <div className="users">
-              <h2 className="member">UsernameUsername</h2>
+              <h2 className="member">UsernameUsernameUsernameUsername</h2>
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
+              <h2 className="member">nuts</h2>
               <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">nuts</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">deez</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">deez</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">deez</h2>
+              <h2 className="member">nuts</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">deez</h2>
+              <h2 className="member">Username</h2>
+              <h2 className="member">nuts</h2>
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
             </div>
@@ -123,9 +141,9 @@ export default function Home() {
 
             
             <div className="message-area">
-              <div className="chats">
+              {/* <div className="chats">
                 <p>Chats</p>
-              </div>
+              </div> */}
               <div className="message-container">
                 {groupsState[activeIdx].messages.map((message, index) => (
                   <UserMessage key={index} message={message} />
