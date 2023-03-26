@@ -81,7 +81,7 @@ export default function Home() {
       }}  
       >
         <Box className="sideview" sx={{
-          backgroundColor:"yellow",
+          backgroundColor:"red",
           flex:1
           
         }}>
@@ -90,10 +90,7 @@ export default function Home() {
             
           }}>
             <div>user1</div>
-            <div>user1</div>
-            <div>user1</div>
-
-            <div>user1</div>
+            
 
           </Box>
           <Box className="optionPlaceHolder">

@@ -200,36 +200,3 @@
   align-items: center;
   font-size: 40px;
 }
-
-.message-div {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.message-div>h2{
-  font-size: 15px;
-  margin-left: 10px;
-  color: white;
-  display: inline-block;
-  border-radius: 10%;
-}
-
-.message-div>h1{
-  font-size: 30px;
-  padding: 12px;
-  margin-left: 10px;
-  color: white;
-  display: inline-block;
-  border: 1px solid white;
-  border-radius: 10%;
-}
-
-.message-div>h3{
-  font-size: 10px;
-  margin-left: 10px;
-  color: white;
-  display: inline-block;
-  border-radius: 10%;
-}
-
