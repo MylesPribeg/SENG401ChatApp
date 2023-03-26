@@ -162,9 +162,9 @@ export default function Home() {
               </div>
             </div>
             <div className="chat-box">
-              <form onSubmit={handleMessageSubmit}>
+              <form className="sub-form" onSubmit={handleMessageSubmit}>
                 <input
-                  type="text"
+                  type="textarea"
                   placeholder="Type a message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
