@@ -1,6 +1,5 @@
 const express = require("express");
 
-
 const {
   getGroups,
   getGroup,
@@ -9,6 +8,7 @@ const {
   updateGroup,
   addToGroup,
   getUsers,
+  createGroupWithName,
 } = require("../controllers/groupController");
 
 const router = express.Router();
@@ -33,5 +33,8 @@ router.patch("/:id", updateGroup);
 
 //update get a groups users
 router.get("/members/:id", getUsers);
+
+//create a new group with a username
+router.post("/create", createGroupWithName);
 
 module.exports = router;
