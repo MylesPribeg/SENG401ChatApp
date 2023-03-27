@@ -10,12 +10,14 @@ import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
 import {io} from 'socket.io-client'
-
+import AddGroup from "./AddGroup";
+import AddUser from "./AddUser";
 export default function Home() {
+  const [addGroup, setAddGroup] = useState(false)
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
-
+  const [addUser, setAddUser] = useState(false)
   //web sockets...
   const socket = useRef();
 
@@ -74,12 +76,8 @@ export default function Home() {
   const renderGroups = (groupsState) => {
     return groupsState.map((group, index) => {
       return <Group key={index} val={group} clickHandler={ () => {
-        // console.log("group index pressed: " + index + "previously active index " +  currentActiveGroupIndex)
-        // groups[currentActiveGroupIndex].active=false
         groupsStateDispatch({type:"GROUPCLICKED",idx:index,prevIdx:activeIdx})
         setActiveIdx(index)
-        // groups[index].active=true
-        // setCurrentActiveGroupIndex(index)
       }
       }></Group>
     })
@@ -102,13 +100,18 @@ export default function Home() {
     <Box className="parent" style={{backgroundColor:getBackGroundColor()}}
       
     
-    >
+    > 
+  {addGroup &&!addUser?<AddGroup state={setAddGroup}/> :""}
+  {addUser &&!addGroup?<AddUser state={setAddUser}/> :""}
+
       <Box className="top">
         <Box className="groups">
           {renderGroups(groupsState)}
         </Box>
         <Box>
-          <button> add group </button>
+          <button onClick={()=>setAddGroup(true)}
+          
+          > add group </button>
         </Box>
 
 
@@ -128,11 +131,18 @@ export default function Home() {
 
             
           }}>
-            <div>user1</div>
-            <div>user1</div>
-            <div>user1</div>
+            <div>
+              <div>user1</div>
+              <div>user1</div>
+              <div>user1</div>
 
-            <div>user1</div>
+              <div>user1</div>
+            </div>
+            <Box>
+              <button onClick={()=>setAddUser(true)}
+              
+              > add User </button>
+            </Box>
 
           </Box>
           <Box className="optionPlaceHolder">
