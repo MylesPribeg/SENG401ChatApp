@@ -103,8 +103,8 @@ export default function Home() {
       
     
     > 
-  {addGroup &&!addUser?<AddGroup state={setAddGroup}/> :""}
-  {addUser &&!addGroup?<AddUser state={setAddUser}/> :""}
+  {addGroup?<AddGroup state={setAddGroup}/> :""}
+  {addUser ?<AddUser state={setAddUser}/> :""}
 
       <Box className="top">
         <Box className="groups">
@@ -135,27 +135,7 @@ export default function Home() {
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
+ 
             </div>
             <div className="addUsers">
               <button onClick={()=>{
