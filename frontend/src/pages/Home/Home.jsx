@@ -20,7 +20,7 @@ export default function Home() {
   const [addUser, setAddUser] = useState(false);
   //web sockets...
   const socket = useRef();
-
+  const scrollRef = useRef();
   const navigate = useNavigate();
 
   const { getBackGroundColor } = useColour();
@@ -64,8 +64,6 @@ export default function Home() {
       return groupsState[activeIdx].messages.map((message, index) => (
         <UserMessage key={index} message={message} />
       ))
-        <UserMessage key={index} message={message} />
-      ));
     }
   };
 
@@ -145,9 +143,7 @@ export default function Home() {
                 Add Users
               </button>
             </div>
-          </Box>
-          <Box className="optionPlaceHolder">
-
+          </Box>                
           <Box className="sideview-bottom">
             <p className="username">{username}</p>
             <div className="options">
@@ -192,55 +188,9 @@ export default function Home() {
           </div>
         </Box>
       </Box>
-
-      {/*         
-        <div className="groups">
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-        </div>
-
-        <div className="info-sidebar">
-          <p className="username">{username}</p>
-          
-          <img
-            className="settings-svg"
-            onClick={handleSettingsClick}
-            src={settingssvg}
-            alt=""
-          />
-          <button onClick={logOut}>Log Out</button>
-        </div>
-      </div>
-      <div className="main">
-        <div className="chats">
-          <h1>Chats</h1>
-        </div>
-        <div className="chat-chatbox-area">
-          <div className="message-area">
-            <div className="message-container">
-              {messages.map((message, index) => (
-                <UserMessage key={index} message={message} />
-              ))}
-            </div>
-          </div>
-          <div className="chat-box">
-            <form onSubmit={handleMessageSubmit}>
-              <input
-                type="text"
-                placeholder="Type a message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-              />
-              <button type="submit">Send</button>
-            </form>
-          </div>
-        </div> */}
     </Box>
+
+     
+    
   );
 }
