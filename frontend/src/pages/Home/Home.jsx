@@ -64,8 +64,6 @@ export default function Home() {
       return groupsState[activeIdx].messages.map((message, index) => (
         <UserMessage key={index} message={message} />
       ))
-        <UserMessage key={index} message={message} />
-      ));
     }
   };
 
@@ -241,6 +239,7 @@ export default function Home() {
             </form>
           </div>
         </div> */}
+    </Box>
     </Box>
   );
 }
