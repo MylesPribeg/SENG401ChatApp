@@ -30,15 +30,16 @@ export default function SignUp() {
     await signUp(formInputs.username, formInputs.email, formInputs.password);
   };
   return (
-    <div>
+    <div className="mainContent">
       <Box
+        className="main"
         sx={{
+          
           "& .MuiTextField-root": { m: 1, width: "45ch" },
           width: 500,
           height: 400,
           backgroundColor: "white",
           borderRadius: 10,
-          marginBottom: 25,
         }}
       >
         <Typography
@@ -46,12 +47,13 @@ export default function SignUp() {
           variant="h1"
           color="black"
           fontSize={50}
-          paddingTop={5}
+          padding={0}
+          margin={0}
         >
           Welcome to Rattle!
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           <TextField
             value={formInputs.username}
             onChange={handleChange}
@@ -81,27 +83,29 @@ export default function SignUp() {
             label="Password"
             variant="outlined"
           />
-
-          <Button
-            disabled={isLoading}
-            type="submit"
-            size="large"
-            color="primary"
-            variant="contained"
-            sx={
-              ({ marginRight: 43 }, { paddingLeft: 20 }, { paddingRight: 40 })
-            }
-          >
-            SignUp
-          </Button>
-          <Button
-            size="large"
-            color="primary"
-            variant="contained"
-            onClick={() => navigate("/login")}
-          >
-            LogIn
-          </Button>
+          <div className="buttons">
+            <Button
+            className="mainButton"
+              disabled={isLoading}
+              type="submit"
+              size="large"
+              color="primary"
+              variant="contained"
+              
+            >
+              SignUp
+            </Button>
+            <Button
+            className="sideButton"
+              size="large"
+              color="primary"
+              variant="contained"
+              onClick={() => navigate("/login")}
+              sx={{margin: 1.5}}
+            >
+              Back
+            </Button>
+          </div>
         </form>
       </Box>
       {<h1>{error && <div className="error">{error}</div>}</h1>}

@@ -161,6 +161,9 @@ export default function Home() {
               >
                 Add Users
               </button>
+              <button>
+                Leave Group
+              </button>
             </div>
           </Box>
           <Box className="sideview-bottom">
