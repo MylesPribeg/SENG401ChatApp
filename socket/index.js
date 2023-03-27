@@ -23,11 +23,11 @@ io.on("connection", (socket)=> {
             console.log("unable to retrieve user groups");
         }
         if(response.ok){
-            console.log(json);
+            //console.log(json);
             if(Object.keys(json).length!==0){
                 socket.emit("send-groups", json);
                 json.map((id)=>{
-                    console.log(id);
+                    //console.log(id);
                     socket.join(id);
                 })
             }
@@ -44,7 +44,7 @@ io.on("connection", (socket)=> {
     //to server from client
     socket.on("send-message", (message, groupid)=> {
         console.log("received " + message + " from room: " + groupid);
-        socket.to(groupid).emit("receive-message", message, groupid);
+        socket.emit("receive-message", message, groupid);
     })
 
     socket.on("disconnect", ()=> {

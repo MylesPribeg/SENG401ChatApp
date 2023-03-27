@@ -32,7 +32,7 @@ export default function Home() {
   const [activeIdx, setActiveIdx] = useState()
 
   const username = user?.username;
-
+  console.log(groupsState)
   // set socket for current user
   useEffect(()=> {
     socket.current = io("ws://localhost:8001");
@@ -45,27 +45,34 @@ export default function Home() {
     }
   }, [user]);
 
-  //get groups after sending user info
+  //get groups after sending user info from socket
   useEffect(()=>{
     socket.current.on("send-groups", (groups)=>{
-      console.log(groups);
       groupsStateDispatch({type:"SET_GROUPS", grps:groups});
     });
   }, []);
 
-  // receive message
-  useEffect(()=>{
-    socket.current.on("receive-message", (message, groupid)=>{
-      console.log("received " + message);
-      groupsStateDispatch({type:"ADDMESSAGE", idx:groupid,msg:message});
-    })
+  //receive message from socket
+  // useEffect(()=>{
+  //   console.log(groupsState)
+  //   socket.current.on("receive-message", (message, groupid)=>{
+  //     console.log("received ");
+  //     console.log(groupsState);
+  //     console.log(message);
+  //     const groupidx = groupsState.findIndex(group => group._id = groupid);
+  //     console.log(groupid);
+  //     console.log(groupsState);
+  //     console.log(groupidx);
+  //     console.log(groupsState[groupidx]);
+  //     groupsStateDispatch({type:"ADDMESSAGE", idx:groupidx, msg:message});
+  //   })
 
-  }, [groupsState])
+  // }, [])
 
   const renderMessages = (groupsState) => {
     if(activeIdx!=null){
       return groupsState[activeIdx].messages.map((message, index) => (
-      <UserMessage key={index} message={message} />
+        <UserMessage key={index} val={message} />
       ))
     }
   }
@@ -83,8 +90,10 @@ export default function Home() {
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
-    socket.current.emit("send-message", message, groupsState[activeIdx].id);
-    groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:message})
+    console.log("submit message")
+    const messageObj = {content: message, createdAt: Date.now(), user: user.username}
+    socket.current.emit("send-message", messageObj, groupsState[activeIdx]._id);
+    groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:messageObj})
     setMessage("");
     // setMessages([...messages, message]);
     
