@@ -12,7 +12,7 @@ import { useGroups } from "../../hooks/useGroups";
 import { io } from "socket.io-client";
 import AddGroup from "./AddGroup";
 import AddUser from "./AddUser";
-import formatDistanceToNow from "date-fns/formatDistanceToNow"
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 export default function Home() {
   const [addGroup, setAddGroup] = useState(false);
@@ -32,30 +32,29 @@ export default function Home() {
   const [activeIdx, setActiveIdx] = useState(-1);
 
   const username = user?.username;
-  console.log(groupsState)
+  console.log(groupsState);
   // set socket for current user
-  useEffect(()=> {
+  useEffect(() => {
     //console.log("connecting with user: " + user.username)
-    if(user != null){
-      socket.current = io("ws://localhost:8001",{
-        auth:{
-          token: user
-        }
+    if (user != null) {
+      socket.current = io("ws://localhost:8001", {
+        auth: {
+          token: user,
+        },
       });
 
-      socket.current.on("send-groups", (groups)=>{
+      socket.current.on("send-groups", (groups) => {
         console.log(groups);
-        groups.map((group)=>{
+        groups.map((group) => {
           group.active = false;
-        })
-        groupsStateDispatch({type:"SET_GROUPS", grps:groups});
+        });
+        groupsStateDispatch({ type: "SET_GROUPS", grps: groups });
       });
 
-      socket.current.on("receive-message", (message, groupid)=>{
+      socket.current.on("receive-message", (message, groupid) => {
         console.log("received " + message);
-        groupsStateDispatch({type:"ADDMESSAGE", idx:groupid,msg:message});
-      })
-
+        groupsStateDispatch({ type: "ADDMESSAGE", idx: groupid, msg: message });
+      });
     }
   }, [user]);
 
@@ -77,12 +76,12 @@ export default function Home() {
   // }, [])
 
   const renderMessages = (groupsState) => {
-    if(activeIdx>=0){
+    if (activeIdx >= 0) {
       console.log("rendienr messg");
       console.log(groupsState);
       return groupsState[activeIdx].messages.map((message, index) => (
         <UserMessage key={index} val={message} />
-      ))
+      ));
     }
   };
 
@@ -104,14 +103,22 @@ export default function Home() {
       );
     });
   };
-  
+
   const handleMessageSubmit = (e) => {
     e.preventDefault();
-    console.log("submit message")
-    console.log()
-    const messageObj = {content: message, createdAt: new Date(), user: user.username}
+    console.log("submit message");
+    console.log();
+    const messageObj = {
+      content: message,
+      createdAt: new Date(),
+      user: user.username,
+    };
     socket.current.emit("send-message", messageObj, groupsState[activeIdx]._id);
-    groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:messageObj})
+    groupsStateDispatch({
+      type: "ADDMESSAGE",
+      idx: activeIdx,
+      msg: messageObj,
+    });
     setMessage("");
     // setMessages([...messages, message]);
   };
@@ -125,12 +132,9 @@ export default function Home() {
   }, [groupsState]);
 
   return (
-    <Box className="parent" style={{backgroundColor:getBackGroundColor()}}
-      
-    
-    > 
-  {addGroup?<AddGroup state={setAddGroup}/> :""}
-  {addUser ?<AddUser state={setAddUser}/> :""}
+    <Box className="parent" style={{ backgroundColor: getBackGroundColor() }}>
+      {addGroup ? <AddGroup state={setAddGroup} /> : ""}
+      {addUser ? <AddUser state={setAddUser} /> : ""}
 
       <Box className="top">
         <Box className="groups">{renderGroups(groupsState)}</Box>
@@ -154,7 +158,6 @@ export default function Home() {
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
- 
             </div>
             <div className="addUsers">
               <button
@@ -165,7 +168,7 @@ export default function Home() {
                 Add Users
               </button>
             </div>
-          </Box>                
+          </Box>
           <Box className="sideview-bottom">
             <p className="username">{username}</p>
             <div className="options">
@@ -211,8 +214,5 @@ export default function Home() {
         </Box>
       </Box>
     </Box>
-
-     
-    
   );
 }

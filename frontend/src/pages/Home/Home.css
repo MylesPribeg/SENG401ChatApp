@@ -27,23 +27,22 @@
   overflow: hidden;
 }
 
-.sideview{
+.sideview {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   max-width: 20vw;
   background-color: #1c2544;
 }
-.userList{
-    display: flex;
+.userList {
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
   overflow-x: scroll;
-  align-self:flex-start;
+  align-self: flex-start;
   max-width: 95%;
-
 }
 
 .users {
@@ -62,13 +61,13 @@
   color: white;
 }
 
-.sideview-bottom{
+.sideview-bottom {
   display: flex;
   justify-content: space-between;
-  padding: 20px 10px; 
+  padding: 20px 10px;
   align-items: center;
   /* background-color: #2c2f33; */
-  height:60px;
+  height: 60px;
 }
 
 .username {
@@ -136,18 +135,18 @@
 .message-container {
   padding: 8px;
   height: 100%;
-  
+
   /* margin-bottom: 30px;  */
- 
+
   /* Set to height of chat-box div */
 }
 
 .chat-chatbox-area {
   display: flex;
   flex-direction: column;
-  
-  flex-grow:1;
-  
+
+  flex-grow: 1;
+
   /* width: 100%; */
 }
 
@@ -155,7 +154,7 @@
   height: 100px;
   min-height: 100px;
   background-color: #1c2544;
-   display: flex;
+  display: flex;
   /* justify-content: space-between; */
   align-items: center;
   padding: 0 16px;
@@ -178,7 +177,7 @@
   padding: 10px;
   margin-right: 16px;
   font-size: 16px;
- 
+
   /* padding-right: 200px; */
 }
 
@@ -204,7 +203,7 @@
 }
 
 ::-webkit-scrollbar {
- display: none;
+  display: none;
 }
 
 .groups > h1 {
@@ -263,9 +262,9 @@
   border-radius: 10%;
 }
 
-
-
-.addGroupParent{
+.addGroupParent {
+  border: 5px solid black;
+  border-radius: 15px;
   position: absolute;
   left: 50%;
   margin-left: -10rem;
@@ -277,11 +276,11 @@
   z-index: 100;
 }
 
-.groupName{
+.groupName {
   text-align: center;
 }
 
-.addGroupContainer{
+.addGroupContainer {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -289,15 +288,15 @@
   flex-flow: column nowrap;
 }
 
-.closeIcon{
+.closeIcon {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-
-
-.addUserParent{
+.addUserParent {
+  border: 5px solid black;
+  border-radius: 15px;
   position: absolute;
   left: 50%;
   margin-left: -10rem;
@@ -309,11 +308,11 @@
   z-index: 100;
 }
 
-.userName{
+.userName {
   text-align: center;
 }
 
-.addUserContainer{
+.addUserContainer {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
