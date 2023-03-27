@@ -27,7 +27,7 @@ export default function Home() {
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const { groupsState, groupsStateDispatch } = useGroups();
-  const [activeIdx, setActiveIdx] = useState();
+  const [activeIdx, setActiveIdx] = useState(-1);
 
   const username = user?.username;
   console.log(groupsState)
@@ -56,13 +56,6 @@ export default function Home() {
 
     }
   }, [user]);
-
-  //get groups after sending user info from socket
-  useEffect(()=>{
-    socket.current.on("send-groups", (groups)=>{
-      groupsStateDispatch({type:"SET_GROUPS", grps:groups});
-    });
-  }, []);
 
   //receive message from socket
   // useEffect(()=>{
@@ -113,6 +106,7 @@ export default function Home() {
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     console.log("submit message")
+    console.log()
     const messageObj = {content: message, createdAt: Date.now(), user: user.username}
     socket.current.emit("send-message", messageObj, groupsState[activeIdx]._id);
     groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:messageObj})
