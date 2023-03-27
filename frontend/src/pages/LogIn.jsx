@@ -33,7 +33,7 @@ export default function Login() {
         sx={{
           "& .MuiTextField-root": { m: 1, width: "45ch" },
           width: 500,
-          height: 350,
+          height: 320,
           backgroundColor: "white",
           borderRadius: 10,
         }}
@@ -90,6 +90,7 @@ export default function Login() {
               variant="contained"
               className="sideButton"
               onClick={() => navigate("/signup")}
+              sx={{margin: 1.5}}
             >
               Sign Up
             </Button>

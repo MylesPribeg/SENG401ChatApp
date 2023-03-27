@@ -64,7 +64,7 @@ export default function Home() {
   const renderMessages = (groupsState) => {
     if (activeIdx >= 0) {
       return groupsState[activeIdx].messages.map((message, index) => (
-        <div ref={scrollRef}><UserMessage key={index} val={message} /></div>
+        <UserMessage key={index} val={message} />
       ));
     }
   };
@@ -126,7 +126,7 @@ export default function Home() {
   return (
     <Box className="parent" style={{ backgroundColor: getBackGroundColor() }}>
       {addGroup ? <AddGroup state={setAddGroup} /> : ""}
-      {addUser ? <AddUser state={setAddUser} /> : ""}
+      {addUser ? <AddUser state={setAddUser} groupid={groupsState} /> : ""}
 
       <Box className="top">
         <Box className="groups">{renderGroups(groupsState)}</Box>
@@ -155,6 +155,9 @@ export default function Home() {
                 }}
               >
                 Add Users
+              </button>
+              <button>
+                Leave Group
               </button>
             </div>
           </Box>

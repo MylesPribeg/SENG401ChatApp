@@ -37,7 +37,7 @@ export default function SignUp() {
           
           "& .MuiTextField-root": { m: 1, width: "45ch" },
           width: 500,
-          height: 350,
+          height: 400,
           backgroundColor: "white",
           borderRadius: 10,
         }}
@@ -101,8 +101,9 @@ export default function SignUp() {
               color="primary"
               variant="contained"
               onClick={() => navigate("/login")}
+              sx={{margin: 1.5}}
             >
-              LogIn
+              Back
             </Button>
           </div>
         </form>
