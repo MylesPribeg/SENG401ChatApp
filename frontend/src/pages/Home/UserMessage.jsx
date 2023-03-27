@@ -1,6 +1,8 @@
 import React from "react";
 import avater from "../../assets/avater.svg";
 import "./UserMessage.css"
+import formatDistanceToNow from "date-fns/formatDistanceToNow"
+
 // export default function userMessage(props) {
 //   return (
 //     <div className="message-div">
@@ -20,7 +22,7 @@ export default function UserMessage(props) {
       <div className="messageContainer">
         <div className="messageTop"> 
           <h2 className="messageSender">{props.val.user}</h2>
-          <h4 className="messageTime">{props.val.createdAt}</h4>
+          <h4 className="messageTime">{formatDistanceToNow(new Date(props.val.createdAt), { addSuffix: true })}</h4>
         </div>
         <h3 className="messageContent">{props.val.content}</h3>
       </div>

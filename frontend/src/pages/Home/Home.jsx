@@ -12,6 +12,8 @@ import { useGroups } from "../../hooks/useGroups";
 import { io } from "socket.io-client";
 import AddGroup from "./AddGroup";
 import AddUser from "./AddUser";
+import formatDistanceToNow from "date-fns/formatDistanceToNow"
+
 export default function Home() {
   const [addGroup, setAddGroup] = useState(false);
   const { logOut } = useLogOut();
@@ -102,12 +104,12 @@ export default function Home() {
       );
     });
   };
-
+  
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     console.log("submit message")
     console.log()
-    const messageObj = {content: message, createdAt: Date.now(), user: user.username}
+    const messageObj = {content: message, createdAt: new Date(), user: user.username}
     socket.current.emit("send-message", messageObj, groupsState[activeIdx]._id);
     groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:messageObj})
     setMessage("");
