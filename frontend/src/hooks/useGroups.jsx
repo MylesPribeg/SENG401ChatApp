@@ -8,9 +8,9 @@ const groupReducer = (state, action) => {
       case "ADDGROUP":
           return[...state, {id:4,name:action.name,messages:[]}]
       case "ADDMESSAGE":
-        console.log(state);
-        console.log(action.msg)
-        console.log(action.idx)
+        if(typeof action.grp !== 'undefined'){
+          action.idx = state.findIndex((group)=> group._id === action.grp)
+        }
         console.log("before: " + state[action.idx].messages);
         const newState = state.map((group, index) => {
           if (index === action.idx) {
