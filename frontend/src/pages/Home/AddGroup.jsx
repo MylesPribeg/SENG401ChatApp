@@ -2,7 +2,7 @@ import { useState } from "react"
 import close from "../../assets/close.svg"
 export default function AddGroup(props){
 
-    const [group, setGroup] = useState()
+    const [group, setGroup] = useState("")
     const handleMessageSubmit = (e)=>{
         e.preventDefault();
         props.setGroup(false)
