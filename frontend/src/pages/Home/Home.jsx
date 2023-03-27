@@ -9,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
-import { useRef } from "react"
-import { useEffect } from "react";
 import {io} from 'socket.io-client'
 import AddGroup from "./AddGroup";
 import AddUser from "./AddUser";
