@@ -11,15 +11,7 @@ const io = require("socket.io")(8001, {
 console.log("active on port 8800");
 let activeUsers = [];
 
-//set up connection
-io.on("connection", async(socket)=> {
-    // console.log('user connected: ' + socket.handshake.auth.token.username)
-    user = socket.handshake.auth.token
-
-    //get groups for user
-    console.log("inside async")
-    if(user==null){return;}
-    console.log("got user: " +user.username);
+async function addToGroups(user, socket){
     const response = await fetch("http://localhost:8000/users/user/"+user.id);
     const json = await response.json();
     if(!response.ok){
@@ -36,18 +28,39 @@ io.on("connection", async(socket)=> {
         }
         console.log(`${user.username} in ${socket.rooms.size-1} rooms`);
     }
+}
+
+//set up connection
+io.on("connection", async(socket)=> {
+    // console.log('user connected: ' + socket.handshake.auth.token.username)
+    user = socket.handshake.auth.token
+
+    //get groups for user
+    console.log("inside async")
+    if(user==null){return;}
+    console.log("got user: " +user.username);
+    addToGroups(user, socket);
+    
 
 
-  //to server from client
-  socket.on("send-message", (message, groupid) => {
-    console.log("received " + message + " from room: " + groupid);
-    socket.to(groupid).emit("receive-message", message, groupid);
-  });
+    //to server from client
+    socket.on("send-message", (message, groupid) => {
+        console.log("received " + message + " from room: " + groupid);
+        socket.to(groupid).emit("receive-message", message, groupid);
+    });
 
-  socket.on("disconnect", () => {
-    activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
-    console.log("user disconnected");
-  });
+    socket.on("group-add", () =>{
+        addToGroups(user, socket)
+    })
+
+    socket.on("retrieve-messages", () =>{
+        //TODO
+    })
+
+    socket.on("disconnect", () => {
+        activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
+        console.log("user disconnected");
+    });
 });
 
 instrument(io, {
