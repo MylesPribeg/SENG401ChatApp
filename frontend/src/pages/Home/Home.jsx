@@ -19,6 +19,8 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [addUser, setAddUser] = useState(false)
   //web sockets...
+  const scrollRef = useRef();
+
   const socket = useRef();
 
   const navigate = useNavigate();
@@ -27,10 +29,10 @@ export default function Home() {
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const {groupsState,groupsStateDispatch} = useGroups()
-  const [activeIdx, setActiveIdx] = useState(-1)
+  const [activeIdx, setActiveIdx] = useState()
 
   const username = user?.username;
-  console.log(groupsState);
+
   // set socket for current user
   useEffect(()=> {
     socket.current = io("ws://localhost:8001");
@@ -47,9 +49,6 @@ export default function Home() {
   useEffect(()=>{
     socket.current.on("send-groups", (groups)=>{
       console.log(groups);
-      groups.map((group)=>{
-        group.active = false;
-      })
       groupsStateDispatch({type:"SET_GROUPS", grps:groups});
     });
   }, []);
@@ -64,11 +63,9 @@ export default function Home() {
   }, [groupsState])
 
   const renderMessages = (groupsState) => {
-    if(activeIdx>=0){
-      console.log("rendienr messg");
-      console.log(groupsState);
-      return groupsState[activeIdx].messages.map((message, index) => (
-        <UserMessage key={index} message={message} />
+    if(activeIdx!=null){
+      groupsState[activeIdx].messages.map((message, index) => (
+      <UserMessage key={index} message={message} />
       ))
     }
   }
@@ -82,6 +79,7 @@ export default function Home() {
       }></Group>
     })
   }
+ 
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
@@ -160,7 +158,9 @@ export default function Home() {
               <h2 className="member">Username</h2>
             </div>
             <div className="addUsers">
-              <button>Add Users</button>
+              <button onClick={()=>{
+                setAddUser(true)
+              }}>Add Users</button>
             </div>
             
           </Box>
@@ -191,7 +191,7 @@ export default function Home() {
                 <p>Chats</p>
               </div> */}
               <div className="message-container">
-                {renderMessages(groupsState)}
+              {renderMessages(groupsState)}
               </div>
             </div>
             <div className="chat-box">

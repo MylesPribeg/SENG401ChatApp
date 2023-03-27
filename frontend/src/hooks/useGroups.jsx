@@ -24,9 +24,7 @@ const groupReducer = (state, action) => {
           // state[0].active=false
           
           state[action.idx].active=true
-          if(action.prevIdx>=0){
-            state[action.prevIdx].active=false
-          }
+          state[action.prevIdx].active=false
           return state
 
       default:
@@ -34,9 +32,41 @@ const groupReducer = (state, action) => {
   }
 }
 
+export function useGroups(){
+    const [groupsState, groupsStateDispatch] = useReducer(  groupReducer, [
 
-export const useGroups = () => {
-  const [groupsState, groupsStateDispatch] = useReducer(groupReducer, [])
+        {
+          id:0,
+          active:true,
+          name:"hello world",
+          messages:[
+            "dummy message 1",
+            "dummy message 2"
+          ]
+        },{
+          id:1,
+          active:false,
+          name:"test",
+          messages:[
+            "dummy message 1",
+            "poggers"
+          ]
+        },{
+          id:2,
+          active:false,
+          name:"not pog",
+          messages:[
+            "hasan is a monkey monkey"
+          ]
+        },
+      ])
+      
+      
 
-  return { groupsState, groupsStateDispatch };
-};
+      return {groupsState,groupsStateDispatch}
+    
+
+
+    }
+
+
