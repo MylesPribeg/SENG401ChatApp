@@ -4,11 +4,13 @@ import { useReducer, useState } from "react"
 const groupReducer = (state, action) => {
     switch(action.type){
       case "SET_GROUPS":
-        console.log(action.grps);
         return action.grps
       case "ADDGROUP":
           return[...state, {id:4,name:action.name,messages:[]}]
       case "ADDMESSAGE":
+        console.log(state);
+        console.log(action.msg)
+        console.log(action.idx)
         console.log("before: " + state[action.idx].messages);
         const newState = state.map((group, index) => {
           if (index === action.idx) {
