@@ -105,9 +105,12 @@ export default function Home() {
   }, [groupsState]);
 
   return (
-    <Box className="parent" style={{ backgroundColor: getBackGroundColor() }}>
-      {addGroup && !addUser ? <AddGroup state={setAddGroup} /> : ""}
-      {addUser && !addGroup ? <AddUser state={setAddUser} /> : ""}
+    <Box className="parent" style={{backgroundColor:getBackGroundColor()}}
+      
+    
+    > 
+  {addGroup?<AddGroup state={setAddGroup}/> :""}
+  {addUser ?<AddUser state={setAddUser}/> :""}
 
       <Box className="top">
         <Box className="groups">{renderGroups(groupsState)}</Box>
@@ -131,27 +134,7 @@ export default function Home() {
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
+ 
             </div>
             <div className="addUsers">
               <button
