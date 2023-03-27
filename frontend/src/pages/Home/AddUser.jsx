@@ -26,7 +26,7 @@ export default function AddUser(props){
             </div>
 
             <div className="addGroupContainer">
-            <h3> Please Enter Group Name</h3>
+            <h3> Please Enter a Username</h3>
                 
             <input
                 

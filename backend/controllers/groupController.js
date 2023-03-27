@@ -129,6 +129,33 @@ const addToGroup = async (req, res) => {
   }
 };
 
+const createGroupWithName = async (req, res) => {
+  const { groupName, username } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ username: username });
+
+    // If the user is not found, return an error
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Create a new group with the given name
+    const group = await Group.create({ name: groupName, users: [user._id] });
+
+    // Add the group to the user's groups array
+    await User.updateOne(
+      { _id: user._id },
+      { $addToSet: { groups: group._id } }
+    );
+
+    res.status(200).json(group);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 //this function accesses the users ina group based off an id for group passed in parameters and populates the list giving access to the users name
 const getUsers = async (req, res) => {
   const { id } = req.params;
@@ -154,4 +181,5 @@ module.exports = {
   updateGroup,
   addToGroup,
   getUsers,
+  createGroupWithName,
 };

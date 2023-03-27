@@ -1,13 +1,15 @@
-const {instrument} = require('@socket.io/admin-ui');
 
-const io = require('socket.io')(8001, {
-    cors :{
-        origin: ["http://localhost:5173", "https://admin.socket.io"],
-        credentials: true
-    },
-})
+const { instrument } = require("@socket.io/admin-ui");
+const { fetch } = require("cross-fetch");
+
+const io = require("socket.io")(8001, {
+  cors: {
+    origin: ["http://localhost:5173", "https://admin.socket.io"],
+    credentials: true,
+  },
+});
 console.log("active on port 8800");
-let activeUsers = []
+let activeUsers = [];
 
 //set up connection
 io.on("connection", async(socket)=> {
@@ -36,19 +38,18 @@ io.on("connection", async(socket)=> {
     }
 
 
-    //to server from client
-    socket.on("send-message", (message, groupid)=> {
-        console.log("received " + message + " from room: " + groupid);
-        socket.to(groupid).emit("receive-message", message, groupid);
-    })
+  //to server from client
+  socket.on("send-message", (message, groupid) => {
+    console.log("received " + message + " from room: " + groupid);
+    socket.to(groupid).emit("receive-message", message, groupid);
+  });
 
-    socket.on("disconnect", ()=> {
-        activeUsers= activeUsers.filter((user)=> user.socketId !== socket.id);
-        console.log("user disconnected");
-    })
+  socket.on("disconnect", () => {
+    activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
+    console.log("user disconnected");
+  });
 });
 
 instrument(io, {
-    auth: false,
+  auth: false,
 });
-
