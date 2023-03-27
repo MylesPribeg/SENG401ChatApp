@@ -9,39 +9,51 @@ import { useNavigate } from "react-router-dom";
 import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
-import {io} from 'socket.io-client'
+import { io } from "socket.io-client";
 import AddGroup from "./AddGroup";
 import AddUser from "./AddUser";
 export default function Home() {
-  const [addGroup, setAddGroup] = useState(false)
+  const [addGroup, setAddGroup] = useState(false);
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
-  const [addUser, setAddUser] = useState(false)
+  const [addUser, setAddUser] = useState(false);
   //web sockets...
-  const scrollRef = useRef();
-
   const socket = useRef();
-
+  const scrollRef = useRef();
   const navigate = useNavigate();
 
-  const {getBackGroundColor} = useColour();
+  const { getBackGroundColor } = useColour();
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
-  const {groupsState,groupsStateDispatch} = useGroups()
-  const [activeIdx, setActiveIdx] = useState()
+  const { groupsState, groupsStateDispatch } = useGroups();
+  const [activeIdx, setActiveIdx] = useState();
 
   const username = user?.username;
   console.log(groupsState)
   // set socket for current user
   useEffect(()=> {
-    socket.current = io("ws://localhost:8001");
-  },[]);
+    //console.log("connecting with user: " + user.username)
+    if(user != null){
+      socket.current = io("ws://localhost:8001",{
+        auth:{
+          token: user
+        }
+      });
 
-  //send user info to socket serv
-  useEffect(()=>{
-    if(user!=null){
-      socket.current.emit("send-user", user);
+      socket.current.on("send-groups", (groups)=>{
+        console.log(groups);
+        groups.map((group)=>{
+          group.active = false;
+        })
+        groupsStateDispatch({type:"SET_GROUPS", grps:groups});
+      });
+
+      socket.current.on("receive-message", (message, groupid)=>{
+        console.log("received " + message);
+        groupsStateDispatch({type:"ADDMESSAGE", idx:groupid,msg:message});
+      })
+
     }
   }, [user]);
 
@@ -70,23 +82,33 @@ export default function Home() {
   // }, [])
 
   const renderMessages = (groupsState) => {
-    if(activeIdx!=null){
+    if(activeIdx>=0){
+      console.log("rendienr messg");
+      console.log(groupsState);
       return groupsState[activeIdx].messages.map((message, index) => (
         <UserMessage key={index} val={message} />
       ))
     }
-  }
+  };
 
   const renderGroups = (groupsState) => {
     return groupsState.map((group, index) => {
-      return <Group key={index} val={group} clickHandler={ () => {
-        groupsStateDispatch({type:"GROUPCLICKED",idx:index,prevIdx:activeIdx})
-        setActiveIdx(index)
-      }
-      }></Group>
-    })
-  }
- 
+      return (
+        <Group
+          key={index}
+          val={group}
+          clickHandler={() => {
+            groupsStateDispatch({
+              type: "GROUPCLICKED",
+              idx: index,
+              prevIdx: activeIdx,
+            });
+            setActiveIdx(index);
+          }}
+        ></Group>
+      );
+    });
+  };
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
@@ -96,174 +118,93 @@ export default function Home() {
     groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:messageObj})
     setMessage("");
     // setMessages([...messages, message]);
-    
   };
 
   const handleSettingsClick = () => {
-    navigate("/settings")
+    navigate("/settings");
   };
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({behavior: "smooth"});
-  },[groupsState])
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [groupsState]);
 
   return (
     <Box className="parent" style={{backgroundColor:getBackGroundColor()}}
       
     
     > 
-  {addGroup &&!addUser?<AddGroup state={setAddGroup}/> :""}
-  {addUser &&!addGroup?<AddUser state={setAddUser}/> :""}
+  {addGroup?<AddGroup state={setAddGroup}/> :""}
+  {addUser ?<AddUser state={setAddUser}/> :""}
 
       <Box className="top">
-        <Box className="groups">
-          {renderGroups(groupsState)}
-        </Box>
+        <Box className="groups">{renderGroups(groupsState)}</Box>
         <Box>
-          <button onClick={()=>setAddGroup(true)}
-          
-          > add group </button>
+          <button onClick={() => setAddGroup(true)}> Create Group </button>
         </Box>
-
-
       </Box>
-      <Box className="body"
-      sx={{
-    
-
-      }}  
-      >
-        <Box className="sideview" sx={{
-          // backgroundColor:"red",
-          // flex:0         
-        }}>
-          <Box className="userList" sx={{  }}>
-            
+      <Box className="body" sx={{}}>
+        <Box
+          className="sideview"
+          sx={
+            {
+              // backgroundColor:"red",
+              // flex:0
+            }
+          }
+        >
+          <Box className="userList" sx={{}}>
             <div className="users">
               <h2 className="member">UsernameUsernameUsernameUsername</h2>
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
               <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">deez</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">nuts</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
+ 
             </div>
             <div className="addUsers">
-              <button onClick={()=>{
-                setAddUser(true)
-              }}>Add Users</button>
+              <button
+                onClick={() => {
+                  setAddUser(true);
+                }}
+              >
+                Add Users
+              </button>
             </div>
-            
-          </Box>
-
-          <Box className="sideview-bottom">  
-            <p className="username">{username}</p>        
+          </Box>                
+          <Box className="sideview-bottom">
+            <p className="username">{username}</p>
             <div className="options">
               <img
-              className="settings-svg"
-              onClick={handleSettingsClick}
-              src={settingssvg}
-              alt=""
+                className="settings-svg"
+                onClick={handleSettingsClick}
+                src={settingssvg}
+                alt=""
               />
               <button onClick={logOut}>Log Out</button>
             </div>
           </Box>
-
         </Box>
 
-        <Box className="textArea chat-chatbox-area" sx={{
-          // backgroundColor:"white",
-          // flex:3
-        }}>
-
-            
-            <div className="message-area">
-              {/* <div className="chats">
+        <Box
+          className="textArea chat-chatbox-area"
+          sx={
+            {
+              // backgroundColor:"white",
+              // flex:3
+            }
+          }
+        >
+          <div className="message-area">
+            {/* <div className="chats">
                 <p>Chats</p>
               </div> */}
-              <div className="message-container">
-              {renderMessages(groupsState)}
-              </div>
-            </div>
-            <div className="chat-box">
-              <form className="sub-form" onSubmit={handleMessageSubmit}>
-                <input
-                  type="textarea"
-                  placeholder="Type a message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                />
-                <button type="submit">Send</button>
-              </form>
-            </div>
-          
-
-        </Box>
-
-
-        
-      </Box>
-
-
-
-{/*         
-        <div className="groups">
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-          <Group />
-        </div>
-
-        <div className="info-sidebar">
-          <p className="username">{username}</p>
-          
-          <img
-            className="settings-svg"
-            onClick={handleSettingsClick}
-            src={settingssvg}
-            alt=""
-          />
-          <button onClick={logOut}>Log Out</button>
-        </div>
-      </div>
-      <div className="main">
-        <div className="chats">
-          <h2>Chats</h2>
-        </div>
-        <div className="chat-chatbox-area">
-          <div className="message-area">
             <div className="message-container">
-              {messages.map((message, index) => (
-                <UserMessage key={index} message={message} />
-              ))}
+              {renderMessages(groupsState)}
             </div>
           </div>
           <div className="chat-box">
-            <form onSubmit={handleMessageSubmit}>
+            <form className="sub-form" onSubmit={handleMessageSubmit}>
               <input
-                type="text"
+                type="textarea"
                 placeholder="Type a message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -271,8 +212,11 @@ export default function Home() {
               <button type="submit">Send</button>
             </form>
           </div>
-        </div> */}
-      
+        </Box>
+      </Box>
     </Box>
+
+     
+    
   );
 }

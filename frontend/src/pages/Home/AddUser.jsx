@@ -2,7 +2,7 @@ import { useState } from "react"
 import close from "../../assets/close.svg"
 export default function AddUser(props){
 
-    const [group, setGroup] = useState()
+    const [group, setGroup] = useState("")
     const handleMessageSubmit = (e)=>{
         e.preventDefault();
         // props.setGroup(false)
@@ -26,7 +26,7 @@ export default function AddUser(props){
             </div>
 
             <div className="addGroupContainer">
-            <h3> Please Enter Group Name</h3>
+            <h3> Please Enter a Username</h3>
                 
             <input
                 
