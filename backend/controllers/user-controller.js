@@ -168,6 +168,7 @@ const getUserGroups = async (req, res) => {
         .status(404)
         .json({ error: "User not found or error retrieving groups" });
     }
+    console.log(groups);
     res.json(groups);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });

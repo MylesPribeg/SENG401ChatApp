@@ -119,6 +119,7 @@
 }
 
 .parent {
+  position: relative;
   display: flex;
   flex-flow: column;
   height: 100%;
@@ -261,6 +262,57 @@
 }
 
 
-button {
-  color: white;
+
+.addGroupParent{
+  position: absolute;
+  left: 50%;
+  margin-left: -10rem;
+  top: 50%;
+  margin-top: -10rem;
+  width: 20rem;
+  height: 20rem;
+  background-color: inherit;
+}
+
+.groupName{
+  text-align: center;
+}
+
+.addGroupContainer{
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.closeIcon{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+
+
+.addUserParent{
+  position: absolute;
+  left: 50%;
+  margin-left: -10rem;
+  top: 50%;
+  margin-top: -10rem;
+  width: 20rem;
+  height: 20rem;
+  background-color: inherit;
+}
+
+.userName{
+  text-align: center;
+}
+
+.addUserContainer{
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-flow: column nowrap;
 }

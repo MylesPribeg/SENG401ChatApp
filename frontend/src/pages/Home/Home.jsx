@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLogOut } from "../../hooks/useLogOut";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import "./Home.css";
@@ -11,50 +11,85 @@ import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
 import { useRef } from "react"
 import { useEffect } from "react";
+import {io} from 'socket.io-client'
+import AddGroup from "./AddGroup";
+import AddUser from "./AddUser";
 export default function Home() {
+  const [addGroup, setAddGroup] = useState(false)
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
   const [message, setMessage] = useState("");
-  const scrollRef = useRef();
-
-  
+  const [addUser, setAddUser] = useState(false)
+  //web sockets...
+  const socket = useRef();
 
   const navigate = useNavigate();
 
-  const {getBackGroundColor} = useColour()
+  const {getBackGroundColor} = useColour();
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const {groupsState,groupsStateDispatch} = useGroups()
-  const [activeIdx, setActiveIdx] = useState(0)
+  const [activeIdx, setActiveIdx] = useState(-1)
 
   const username = user?.username;
+  console.log(groupsState);
+  // set socket for current user
+  useEffect(()=> {
+    socket.current = io("ws://localhost:8001");
+  },[]);
 
+  //send user info to socket serv
+  useEffect(()=>{
+    if(user!=null){
+      socket.current.emit("send-user", user);
+    }
+  }, [user]);
 
-  
+  //get groups after sending user info
+  useEffect(()=>{
+    socket.current.on("send-groups", (groups)=>{
+      console.log(groups);
+      groups.map((group)=>{
+        group.active = false;
+      })
+      groupsStateDispatch({type:"SET_GROUPS", grps:groups});
+    });
+  }, []);
+
+  // receive message
+  useEffect(()=>{
+    socket.current.on("receive-message", (message, groupid)=>{
+      console.log("received " + message);
+      groupsStateDispatch({type:"ADDMESSAGE", idx:groupid,msg:message});
+    })
+
+  }, [groupsState])
+
+  const renderMessages = (groupsState) => {
+    if(activeIdx>=0){
+      console.log("rendienr messg");
+      console.log(groupsState);
+      return groupsState[activeIdx].messages.map((message, index) => (
+        <UserMessage key={index} message={message} />
+      ))
+    }
+  }
 
   const renderGroups = (groupsState) => {
     return groupsState.map((group, index) => {
       return <Group key={index} val={group} clickHandler={ () => {
-        // console.log("group index pressed: " + index + "previously active index " +  currentActiveGroupIndex)
-        // groups[currentActiveGroupIndex].active=false
         groupsStateDispatch({type:"GROUPCLICKED",idx:index,prevIdx:activeIdx})
         setActiveIdx(index)
-        // groups[index].active=true
-        // setCurrentActiveGroupIndex(index)
-
-
       }
-
       }></Group>
     })
   }
- 
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
+    socket.current.emit("send-message", message, groupsState[activeIdx].id);
     groupsStateDispatch({type:"ADDMESSAGE", idx:activeIdx,msg:message})
     setMessage("");
-
     // setMessages([...messages, message]);
     
   };
@@ -71,13 +106,18 @@ export default function Home() {
     <Box className="parent" style={{backgroundColor:getBackGroundColor()}}
       
     
-    >
+    > 
+  {addGroup &&!addUser?<AddGroup state={setAddGroup}/> :""}
+  {addUser &&!addGroup?<AddUser state={setAddUser}/> :""}
+
       <Box className="top">
         <Box className="groups">
           {renderGroups(groupsState)}
         </Box>
         <Box>
-          <button> add group </button>
+          <button onClick={()=>setAddGroup(true)}
+          
+          > add group </button>
         </Box>
 
 
@@ -153,12 +193,7 @@ export default function Home() {
                 <p>Chats</p>
               </div> */}
               <div className="message-container">
-                {groupsState[activeIdx].messages.map((message, index) => (
-                  <div ref={scrollRef}>
-                    <UserMessage key={index} message={message} />
-                  </div>
-                ))}
-                
+                {renderMessages(groupsState)}
               </div>
             </div>
             <div className="chat-box">
