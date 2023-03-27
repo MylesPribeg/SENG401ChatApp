@@ -9,6 +9,7 @@ const {
   addToGroup,
   getUsers,
   createGroupWithName,
+  addToGroupWithUsername,
 } = require("../controllers/groupController");
 
 const router = express.Router();
@@ -36,5 +37,8 @@ router.get("/members/:id", getUsers);
 
 //create a new group with a username
 router.post("/create", createGroupWithName);
+
+//add a new group member with a username (gid: group id, username: username)
+router.put("/add/:gid", addToGroupWithUsername);
 
 module.exports = router;

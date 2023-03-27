@@ -129,6 +129,41 @@ const addToGroup = async (req, res) => {
   }
 };
 
+const addToGroupWithUsername = async (req, res) => {
+  const gid = req.params.gid;
+  const username = req.query.username; // Changed from req.params.username
+
+  if (!mongoose.Types.ObjectId.isValid(gid)) {
+    return res.status(404).json({ error: "Invalid gid" });
+  }
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Add user to the group's users array
+    const groupUpdate = await Group.updateOne(
+      { _id: gid },
+      { $addToSet: { users: user._id } }
+    );
+
+    // Add group to the user's groups array
+    const userUpdate = await User.updateOne(
+      { _id: user._id },
+      { $addToSet: { groups: gid } }
+    );
+
+    // Return the results of both update operations
+    res.status(200).json({ groupUpdate, userUpdate });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const createGroupWithName = async (req, res) => {
   const { groupName, username } = req.body;
 
@@ -182,4 +217,5 @@ module.exports = {
   addToGroup,
   getUsers,
   createGroupWithName,
+  addToGroupWithUsername,
 };

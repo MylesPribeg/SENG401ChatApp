@@ -45,7 +45,7 @@ export default function Home() {
 
       //receive groups from server
       socket.current.on("send-groups", (groups) => {
-        console.log("sending groups")
+        console.log("sending groups");
         groups.map((group) => {
           group.active = false;
         });
@@ -59,7 +59,6 @@ export default function Home() {
       });
     }
   }, [user]);
-
 
   const renderMessages = (groupsState) => {
     if (activeIdx >= 0) {
@@ -89,11 +88,15 @@ export default function Home() {
   };
 
   const renderUsernames = (groupsState) => {
-    if(activeIdx>=0){
-      return groupsState[activeIdx].users.map((user, index)=>{
-          return <h2 className="member" key = {index}>{user.username}</h2>
-        })
-      }
+    if (activeIdx >= 0) {
+      return groupsState[activeIdx].users.map((user, index) => {
+        return (
+          <h2 className="member" key={index}>
+            {user.username}
+          </h2>
+        );
+      });
+    }
   };
 
   const handleMessageSubmit = (e) => {
@@ -126,7 +129,11 @@ export default function Home() {
   return (
     <Box className="parent" style={{ backgroundColor: getBackGroundColor() }}>
       {addGroup ? <AddGroup state={setAddGroup} /> : ""}
-      {addUser ? <AddUser state={setAddUser} /> : ""}
+      {addUser ? (
+        <AddUser state={setAddUser} groupid={groupsState[activeIdx]} />
+      ) : (
+        ""
+      )}
 
       <Box className="top">
         <Box className="groups">{renderGroups(groupsState)}</Box>
@@ -145,9 +152,7 @@ export default function Home() {
           }
         >
           <Box className="userList" sx={{}}>
-            <div className="users">
-              {renderUsernames(groupsState)}
-            </div>
+            <div className="users">{renderUsernames(groupsState)}</div>
             <div className="addUsers">
               <button
                 onClick={() => {
