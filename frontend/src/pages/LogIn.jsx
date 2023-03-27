@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "../SignUp.css";
 import { useLogin } from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formInputs, setinput] = useState({
@@ -14,6 +15,7 @@ export default function Login() {
   });
 
   const { login, error, isLoading } = useLogin();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setinput({ ...formInputs, [e.target.name]: e.target.value });
@@ -80,6 +82,14 @@ export default function Login() {
             }
           >
             Login
+          </Button>
+          <Button
+            size="large"
+            color="primary"
+            variant="contained"
+            onClick={() => navigate("/signup")}
+          >
+            Sign Up
           </Button>
         </form>
       </Box>

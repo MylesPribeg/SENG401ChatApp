@@ -8,6 +8,7 @@ import { width } from "@mui/system";
 import logo from "../assets/snake-background.png";
 import "../SignUp.css";
 import { useSignUp } from "../hooks/useSignUp";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [formInputs, setinput] = useState({
@@ -17,6 +18,7 @@ export default function SignUp() {
   });
 
   const { signUp, error, isLoading } = useSignUp();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setinput({ ...formInputs, [e.target.name]: e.target.value });
@@ -91,6 +93,14 @@ export default function SignUp() {
             }
           >
             SignUp
+          </Button>
+          <Button
+            size="large"
+            color="primary"
+            variant="contained"
+            onClick={() => navigate("/login")}
+          >
+            LogIn
           </Button>
         </form>
       </Box>

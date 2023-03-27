@@ -34,7 +34,7 @@ async function addToGroups(user, socket) {
       console.log(json);
       json.map((group) => {
         //console.log(id);
-        console.log(user.username +" in "+group._id)
+        console.log(user.username + " in " + group._id);
         socket.join(group._id);
       });
     }
@@ -43,23 +43,23 @@ async function addToGroups(user, socket) {
 }
 
 async function addMessages(socket, message, groupid) {
-    console.log("received " + message + " from room: " + groupid);
-    socket.to(groupid).emit("receive-message", message, groupid);
-    console.log(message);
+  console.log("received " + message + " from room: " + groupid);
+  socket.to(groupid).emit("receive-message", message, groupid);
+  console.log(message);
 
-    const response = await fetch("http://localhost:8000/messages/" + groupid, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({user: message.user, content: message.content}),
-    });
-    //const json = await response.json();
-    if (!response.ok) {
-      console.log("unable to add message to db");
-    }
-    if (response.ok) {
-        console.log("sent message:");
-        console.log(message);
-    }
+  const response = await fetch("http://localhost:8000/messages/" + groupid, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user: message.user, content: message.content }),
+  });
+  //const json = await response.json();
+  if (!response.ok) {
+    console.log("unable to add message to db");
+  }
+  if (response.ok) {
+    console.log("sent message:");
+    console.log(message);
+  }
 }
 
 //set up connection
