@@ -25,10 +25,10 @@ export default function Home() {
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const {groupsState,groupsStateDispatch} = useGroups()
-  const [activeIdx, setActiveIdx] = useState()
+  const [activeIdx, setActiveIdx] = useState(-1)
 
   const username = user?.username;
-
+  console.log(groupsState);
   // set socket for current user
   useEffect(()=> {
     socket.current = io("ws://localhost:8001");
@@ -45,6 +45,9 @@ export default function Home() {
   useEffect(()=>{
     socket.current.on("send-groups", (groups)=>{
       console.log(groups);
+      groups.map((group)=>{
+        group.active = false;
+      })
       groupsStateDispatch({type:"SET_GROUPS", grps:groups});
     });
   }, []);
@@ -59,9 +62,11 @@ export default function Home() {
   }, [groupsState])
 
   const renderMessages = (groupsState) => {
-    if(activeIdx!=null){
-      groupsState[activeIdx].messages.map((message, index) => (
-      <UserMessage key={index} message={message} />
+    if(activeIdx>=0){
+      console.log("rendienr messg");
+      console.log(groupsState);
+      return groupsState[activeIdx].messages.map((message, index) => (
+        <UserMessage key={index} message={message} />
       ))
     }
   }
@@ -69,7 +74,6 @@ export default function Home() {
   const renderGroups = (groupsState) => {
     return groupsState.map((group, index) => {
       return <Group key={index} val={group} clickHandler={ () => {
-        console.log(index);
         // console.log("group index pressed: " + index + "previously active index " +  currentActiveGroupIndex)
         // groups[currentActiveGroupIndex].active=false
         groupsStateDispatch({type:"GROUPCLICKED",idx:index,prevIdx:activeIdx})
@@ -80,7 +84,6 @@ export default function Home() {
       }></Group>
     })
   }
- 
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
@@ -158,7 +161,7 @@ export default function Home() {
               <p>Chats</p>
             </div>
               <div className="message-container">
-              {renderMessages(groupsState)}
+                {renderMessages(groupsState)}
               </div>
             </div>
             <div className="chat-box">
