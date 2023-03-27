@@ -32,7 +32,7 @@ export default function Home() {
   const [activeIdx, setActiveIdx] = useState(-1);
 
   const username = user?.username;
-  //console.log(groupsState);
+  console.log(groupsState);
   // set socket for current user
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
@@ -43,6 +43,7 @@ export default function Home() {
         },
       });
 
+      //receive groups from server
       socket.current.on("send-groups", (groups) => {
         console.log("sending groups")
         groups.map((group) => {
@@ -51,6 +52,7 @@ export default function Home() {
         groupsStateDispatch({ type: "SET_GROUPS", grps: groups });
       });
 
+      //receive messages from server
       socket.current.on("receive-message", (message, groupid) => {
         console.log("received " + message);
         groupsStateDispatch({ type: "ADDMESSAGE", grp: groupid, msg: message });
@@ -86,6 +88,14 @@ export default function Home() {
     });
   };
 
+  const renderUsernames = (groupsState) => {
+    if(activeIdx>=0){
+      return groupsState[activeIdx].users.map((user, index)=>{
+          return <h2 className="member" key = {index}>{user.username}</h2>
+        })
+      }
+  };
+
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     console.log("submit message");
@@ -94,6 +104,7 @@ export default function Home() {
       createdAt: new Date(),
       user: user.username,
     };
+    //send message to socket server
     socket.current.emit("send-message", messageObj, groupsState[activeIdx]._id);
     groupsStateDispatch({
       type: "ADDMESSAGE",
@@ -135,10 +146,7 @@ export default function Home() {
         >
           <Box className="userList" sx={{}}>
             <div className="users">
-              <h2 className="member">UsernameUsernameUsernameUsername</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
+              {renderUsernames(groupsState)}
             </div>
             <div className="addUsers">
               <button
