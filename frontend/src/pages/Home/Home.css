@@ -273,7 +273,8 @@
   margin-top: -10rem;
   width: 20rem;
   height: 20rem;
-  background-color: inherit;
+  background-color: transparent;
+  z-index: 100;
 }
 
 .groupName{
