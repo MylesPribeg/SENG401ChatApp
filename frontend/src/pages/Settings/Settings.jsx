@@ -9,12 +9,10 @@ import Font from "./Font";
 import Colour from "./Colour";
 import Profile from "./Profile";
 import Account from "./Account";
-import { boxSizing } from "@mui/system";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import settingssvg from "../../assets/settings.svg"
-import { useThemeContext } from "../../hooks/useThemeContext";
-import {useColour} from "../../hooks/useColour";
+import {useBackgroundColour} from "../../hooks/useBackgroundColour";
 
 
 function SettingsOptionsView({someState}){
@@ -41,7 +39,7 @@ const reducer = (state, action) =>{
 export default function Settings(props) {
   const [state, dispatch] = useReducer(reducer, {type: "" })
   const navigate = useNavigate()
-  const {getBackGroundColor} = useColour()
+  const {getBackGroundColor} = useBackgroundColour()
 
   return (
     

@@ -3,7 +3,7 @@ import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { useThemeContext } from "./useThemeContext";
 
-export const useColour = () => {
+export const useBackgroundColour = () => {
   const {ThemeState, setThemeState} = useThemeContext()
 
 

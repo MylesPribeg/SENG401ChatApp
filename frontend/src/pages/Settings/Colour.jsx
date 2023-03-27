@@ -5,11 +5,11 @@ import Button from '@mui/material/Button';
 import { Box, Slide } from "@mui/material";
 import { Typography,Slider } from "@mui/material";
 import "./Colour.css";
-import { useColour } from "../../hooks/useColour";
+import { useBackgroundColour } from "../../hooks/useBackgroundColour";
 // import Slider from "@mui/material";
 export default function Colour(props) {
     // 'white', 'yellow', 'red', 'blue', 'green'
-    const { setColor, setGreen,setBlue,setRed } = useColour()
+    const { setColor, setGreen,setBlue,setRed } = useBackgroundColour()
 
     
     const colors = [
