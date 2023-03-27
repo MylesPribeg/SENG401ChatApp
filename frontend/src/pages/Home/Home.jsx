@@ -64,7 +64,7 @@ export default function Home() {
 
   const renderMessages = (groupsState) => {
     if(activeIdx!=null){
-      groupsState[activeIdx].messages.map((message, index) => (
+      return groupsState[activeIdx].messages.map((message, index) => (
       <UserMessage key={index} message={message} />
       ))
     }
