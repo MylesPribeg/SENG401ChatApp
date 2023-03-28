@@ -12,64 +12,64 @@ export default function Colour(props) {
     const { setPColor,setPRed,setPGreen,setPBlue,setSColor,setSRed,setSGreen,setSBlue } = useColour()
 
     
-    const colors = [
-        {
-            name:"white",
-            red: 255,
-            green:255, 
-            blue:255,
-            sred: 200,
-            sgreen:200,
-            sblue:200,
-        },
-        {
-            name:"grey",
-            red: 255,
-            green:255, 
-            blue:0,
-            sred: 200,
-            sgreen:200,
-            sblue:0,
-        }, {
-            name:"blue",
-            red: 0,
-            green:0, 
-            blue:255,
-            sred: 0,
-            sgreen:0,
-            sblue:200,
-        }, {
-            name:"green",
-            red: 0,
-            green:255, 
-            blue:0,
-            sred: 0,
-            sgreen:200,
-            sblue:0,
-        }, {
-            name:"red",
-            red: 255,
-            green:0,
-            blue:0,
-            sred: 200,
-            sgreen:0,
-            sblue:0,
-        }]
+    // const colors = [
+    //     {
+    //         name:"white",
+    //         red: 255,
+    //         green:255, 
+    //         blue:255,
+    //         sred: 200,
+    //         sgreen:200,
+    //         sblue:200,
+    //     },
+    //     {
+    //         name:"grey",
+    //         red: 255,
+    //         green:255, 
+    //         blue:0,
+    //         sred: 200,
+    //         sgreen:200,
+    //         sblue:0,
+    //     }, {
+    //         name:"blue",
+    //         red: 0,
+    //         green:0, 
+    //         blue:255,
+    //         sred: 0,
+    //         sgreen:0,
+    //         sblue:200,
+    //     }, {
+    //         name:"green",
+    //         red: 0,
+    //         green:255, 
+    //         blue:0,
+    //         sred: 0,
+    //         sgreen:200,
+    //         sblue:0,
+    //     }, {
+    //         name:"red",
+    //         red: 255,
+    //         green:0,
+    //         blue:0,
+    //         sred: 200,
+    //         sgreen:0,
+    //         sblue:0,
+    //     }]
 
-    const renderButtons = colors => {
-        return colors.map( (object_color, index) => {
-            return ( <button key={index}
-            className = { ' colourButtons ' + object_color.name }
-            onClick={() => {
-                setPColor(object_color.red,object_color.green, object_color.blue )
-                setSColor(object_color.sred,object_color.sgreen, object_color.sblue )
-            }}
-            >
+    // const renderButtons = colors => {
+    //     return colors.map( (object_color, index) => {
+    //         return ( <button key={index}
+    //         className = { ' colourButtons ' + object_color.name }
+    //         onClick={() => {
+    //             setPColor(object_color.red,object_color.green, object_color.blue )
+    //             setSColor(object_color.sred,object_color.sgreen, object_color.sblue )
+    //         }}
+    //         >
             
-            {object_color.name}
-            </button> )
-        })
-    }
+    //         {object_color.name}
+    //         </button> )
+    //     })
+    // }
 
 
   return (
@@ -83,7 +83,7 @@ export default function Colour(props) {
 
     }}>
 
-        <Box
+        {/* <Box
         sx={{
             
             backgroundColor: "inherit",
@@ -111,7 +111,7 @@ export default function Colour(props) {
             }}>
                 {renderButtons(colors)}
             </Box> 
-        </Box>
+        </Box> */}
 
         <Box
             sx={{

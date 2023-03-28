@@ -19,18 +19,35 @@ export function ThemeContextProvider({children}){
     // const [Theme, changeThemeDispatch] = useReducer(ChangeThemeReducer,({colorState,fontState}))
     
     const [ThemeState,setThemeState] = useState({
-        fontStyle: "",
-        fontColour: "",
-        font:"",
-        PBGred:100,
-        PBGgreen:100,
-        PBGblue:100,
-        SBGred:100,
-        SBGgreen:100,
-        SBGblue:100,
+        fontStyle: "normal",
+        fontColour: 100,
+        font:"Times New Roman",
+        PBGred:150,
+        PBGgreen:150,
+        PBGblue:150,
+        SBGred:50,
+        SBGgreen:50,
+        SBGblue:50,
+        updated:false,
         
         
     })
+
+    const setThemes = () =>{
+        var r = document.querySelector(':root');
+        r.style.setProperty('--font-colour',`rgb(${ThemeState.fontColour}, ${ThemeState.fontColour}, ${ThemeState.fontColour})`)
+        r.style.setProperty('--font-style',ThemeState.fontStyle)
+        r.style.setProperty('--pBG',`rgb(${ThemeState.PBGred}, ${ThemeState.PBGgreen}, ${ThemeState.PBGblue})`)
+        r.style.setProperty('--sBG',`rgb(${ThemeState.SBGred}, ${ThemeState.SBGgreen}, ${ThemeState.SBGblue})`)
+        r.style.setProperty('--font',ThemeState.font)
+
+        ThemeState.updated = !ThemeState.updated
+
+
+
+    
+    }
+
     const setThemeColor = (red,green,blue) =>{
 
         console.log("setting theme colour")
@@ -73,7 +90,7 @@ export function ThemeContextProvider({children}){
 
 
 return (
-    <ThemeContext.Provider value={{ThemeState, setThemeColor, setThemeFont, setThemeState}}>
+    <ThemeContext.Provider value={{ThemeState, setThemeState}}>
         {children}
     </ThemeContext.Provider>
 )

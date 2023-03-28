@@ -1,26 +1,23 @@
 import React, { useContext } from "react";
 
-import { useState } from "react";
-import Button from '@mui/material/Button';
 import { Box } from "@mui/material";
 import { Typography, Slider } from "@mui/material";
-import { useThemeContext } from "../../hooks/useThemeContext";
+import { useFont } from "../../hooks/useFont";
 import "./Fonts.css"
 
 export default function Font(props) {
 
-    const [color, setColor] = useState('white')
-    const {ThemeState, setThemeState, } = useThemeContext()
+    const{setFont, setFontColour, setFontStyle} = useFont()
     const fontStyles = ['normal', 'italic', 'oblique']
     const marks = [
       {
         value: 0,
-        label: 'white',
+        label: 'black',
       },
 
       {
         value: 255,
-        label: 'black',
+        label: 'white',
       },
     ];
     const fonts = ['Courier', 'Times', 'Arial']
@@ -28,7 +25,7 @@ export default function Font(props) {
       return fonts.map( (buttonFont, index) => {
           return ( <button key={index}
           className = { 'colourButtons ' + buttonFont }
-          onClick={() => setThemeState({...ThemeState, font: buttonFont })}>
+          onClick={() => setFont(buttonFont)}>
           
           {buttonFont}
           </button> )
@@ -38,12 +35,14 @@ export default function Font(props) {
         return fonts.map( (buttonStyle, index) => {
             return ( <button key={index}
             className = { 'colourButtons ' + buttonStyle }
-            onClick={() => setThemeState({...ThemeState, fontStyles: buttonStyle })}>
+            onClick={() => setFontStyle(buttonStyle)}>
             
             {buttonStyle}
             </button> )
         })
     }
+
+
 
   
   
@@ -52,7 +51,6 @@ export default function Font(props) {
     sx={{
         display: "flex",
         flexFlow: "column",
-        backgroundColor: ThemeState.color,
         flex: 1,
 
 
@@ -153,7 +151,7 @@ export default function Font(props) {
                 valueLabelDisplay="auto"
                 marks={marks}
                 onChange={(event, number) =>{
-                  setThemeState({...ThemeState, fontColour: number })
+                    setFontColour(number)
                 }}
               />
             </Box> 
