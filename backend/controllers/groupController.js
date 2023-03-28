@@ -208,6 +208,29 @@ const getUsers = async (req, res) => {
   res.status(200).json(users);
 };
 
+const removeUserFromGroup = async (groupId, username) => {
+  try {
+    // Find the group by its ID
+    const group = await Group.findById(groupId);
+
+    // Find the user by their username
+    const user = await User.findOne({ username });
+
+    // Remove the group from the user's list of groups
+    user.groups.pull(group);
+
+    // Remove the user from the group's list of users
+    group.users.pull(user);
+
+    // Save the changes to the database
+    await Promise.all([user.save(), group.save()]);
+
+    console.log(`User ${username} removed from group ${group.name}`);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 module.exports = {
   getGroups,
   getGroup,
@@ -218,4 +241,5 @@ module.exports = {
   getUsers,
   createGroupWithName,
   addToGroupWithUsername,
+  removeUserFromGroup,
 };

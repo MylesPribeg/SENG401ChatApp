@@ -10,6 +10,7 @@ const {
   getUsers,
   createGroupWithName,
   addToGroupWithUsername,
+  removeUserFromGroup,
 } = require("../controllers/groupController");
 
 const router = express.Router();
@@ -40,5 +41,20 @@ router.post("/create", createGroupWithName);
 
 //add a new group member with a username (gid: group id, username: username)
 router.put("/add/:gid", addToGroupWithUsername);
+
+//remove a user from a group
+router.put("/removeUser/:groupId&:username", async (req, res) => {
+  const { groupId, username } = req.params;
+  try {
+    // Call the removeUserFromGroup() function with the parameters from the URL
+    await removeUserFromGroup(groupId, username);
+    res
+      .status(200)
+      .json({ message: `User ${username} removed from group ${groupId}` });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;
