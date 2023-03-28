@@ -7,14 +7,14 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
   const navigate = useNavigate();
-  const API_URL =
-    process.env.production.REACT_APP_API_URL || "http://localhost:8000";
+  // const API_URL =
+  //   process.env.production.REACT_APP_API_URL || "http://localhost:8000";
 
   const login = async (username, password) => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`${API_URL}/users/login`, {
+    const response = await fetch("http://localhost:8000/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
