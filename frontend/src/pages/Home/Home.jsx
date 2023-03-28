@@ -6,7 +6,7 @@ import settingssvg from "../../assets/settings.svg";
 import UserMessage from "./UserMessage";
 import Group from "./Group";
 import { useNavigate } from "react-router-dom";
-import { useBackgroundColour } from "../../hooks/useBackgroundColour";
+// import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
 import { io } from "socket.io-client";
@@ -26,7 +26,6 @@ export default function Home() {
   const scrollRef = useRef();
   const navigate = useNavigate();
 
-  const {getBackGroundColor} = useBackgroundColour();
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const { groupsState, groupsStateDispatch } = useGroups();

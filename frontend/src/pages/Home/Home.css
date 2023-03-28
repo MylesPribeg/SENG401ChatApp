@@ -11,8 +11,6 @@
 .top {
   /* padding-left: 50px; */
   padding-right: 2rem;
-  background-color: var(--primary-colour);
-  mix-blend-mode: multiply;
   display: flex;
   flex: 0 1 auto;
   align-items: center;
@@ -24,8 +22,6 @@
 }
 
 .body {
-  background-color: grey;
-  mix-blend-mode: multiply;
   display: flex;
   flex: 1 1 auto;
   flex-direction: row;
@@ -40,7 +36,6 @@
   width: 20%;
   overflow-x:hidden;
   overflow-y: scroll;
-  background-color: var(--primary-colour);
 }
 .userList {
   display: flex;
