@@ -15,6 +15,7 @@ import AddUser from "./AddUser";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 export default function Home() {
+  var alreadyConnected = false;
   const [addGroup, setAddGroup] = useState(false);
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
@@ -36,7 +37,8 @@ export default function Home() {
   // set socket for current user
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
-    if (user != null) {
+    if (user != null && alreadyConnected===false) {
+      alreadyConnected = true;
       socket.current = io("ws://localhost:8001", {
         auth: {
           token: user,
@@ -57,8 +59,30 @@ export default function Home() {
         console.log("received " + message);
         groupsStateDispatch({ type: "ADDMESSAGE", grp: groupid, msg: message });
       });
+
+      //receive message that user left group
+      socket.current.on("left-group", (username, groupid)=>{
+        if(username!=user.username){
+          console.log(username+" leaving "+ groupid);
+          groupsStateDispatch({type: "REMOVE_USER", user: username, grp: groupid});
+        }
+      })
     }
   }, [user]);
+
+  //handle sockets and state when user leaves group
+  const handleUserLeave = (e) =>{
+    e.preventDefault();
+    console.log("user leave ", user.username);
+    socket.current.emit("leave-group", (groupsState[activeIdx]._id), user.username);
+    groupsStateDispatch({
+      type: "REMOVE_USER", 
+      user: user.username, 
+      grp: groupsState[activeIdx]._id});
+    
+    groupsStateDispatch({type: "DELETEGROUP", grp:groupsState[activeIdx]._id});
+    setActiveIdx(-1);
+  }
 
   const renderMessages = (groupsState) => {
     if (activeIdx >= 0) {
@@ -154,14 +178,10 @@ export default function Home() {
           <Box className="userList" sx={{}}>
             <div className="users">{renderUsernames(groupsState)}</div>
             <div className="addUsers">
-              <button
-                onClick={() => {
-                  setAddUser(true);
-                }}
-              >
+              <button onClick={() => {setAddUser(true);}}>
                 Add Users
               </button>
-              <button>
+              <button onClick={handleUserLeave}>
                 Leave Group
               </button>
             </div>
