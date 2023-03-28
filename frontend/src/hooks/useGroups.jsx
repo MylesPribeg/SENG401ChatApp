@@ -5,8 +5,14 @@ const groupReducer = (state, action) => {
     switch(action.type){
       case "SET_GROUPS":
         return action.grps
+      case "REMOVE_USER":
+        const grpidx = state.findIndex((group)=>group._id===action.grp);
+        const useridx = state[grpidx].users.findIndex((user)=>user.username === action.user);
+        if(grpidx>-1 && useridx>-1){state[grpidx].users.splice(useridx, 1)}
+        console.log("after remove: ",state)
+        return state;
       case "ADDGROUP":
-          return[...state, {id:4,name:action.name,messages:[]}]
+        return[...state, {id:4,name:action.name,messages:[]}]
       case "ADDMESSAGE":
         if(typeof action.grp !== 'undefined'){
           action.idx = state.findIndex((group)=> group._id === action.grp)
@@ -22,7 +28,9 @@ const groupReducer = (state, action) => {
         return newState;
       case "DELETEGROUP":
           // return []
-          return state.splice(action.idx,1)
+          console.log(action.grp)
+
+          return state.filter(group => group._id!==action.grp)
       case "GROUPCLICKED":
           // state[0].active=false
           

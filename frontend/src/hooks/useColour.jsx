@@ -7,26 +7,62 @@ export const useColour = () => {
   const {ThemeState, setThemeState} = useThemeContext()
 
 
-  const getBackGroundColor = () =>{
-    var val = `rgb(${ThemeState.BGred}, ${ThemeState.BGgreen}, ${ThemeState.BGblue})`
-    return val
+  const setBackGroundColor = () =>{
+    var r = document.querySelector(':root');
+    console.log("primary background " + `rgb(${ThemeState.PBGred}, ${ThemeState.PBGgreen}, ${ThemeState.PBGblue})`)
+    r.style.setProperty('--pBG',`rgb(${ThemeState.PBGred}, ${ThemeState.PBGgreen}, ${ThemeState.PBGblue})`)
+
 
   }
 
-  const setColor = (red,green,blue) =>{
-    setThemeState({...ThemeState,BGred:red,BGgreen:green,BGblue:blue})
+  const setSecondaryColor = () =>{
+    var r = document.querySelector(':root');
+    // console.log("secondary " + `rgb(${ThemeState.SBGred}, ${ThemeState.SBGgreen}, ${ThemeState.SBGblue})`)
+
+    r.style.setProperty('--sBG',`rgb(${ThemeState.SBGred}, ${ThemeState.SBGgreen}, ${ThemeState.SBGblue})`)
   }
 
-  const setGreen =(green)=>{
-    setThemeState({...ThemeState, BGgreen:green})
+
+  const setPColor = (red,green,blue) =>{
+    console.log(red,green,blue)
+    setThemeState({...ThemeState,PBGred:red,PBGgreen:green,PBGblue:blue})
+    setBackGroundColor()
   }
-  const setBlue =(blue)=>{
-    setThemeState({...ThemeState, BGblue:blue})
+
+  const setPGreen =(green)=>{
+    setThemeState({...ThemeState, PBGgreen:green})
+    setBackGroundColor()
   }
-  const setRed =(red)=>{
-    setThemeState({...ThemeState, BGred:red})
+  const setPBlue =(blue)=>{
+    setThemeState({...ThemeState, PBGblue:blue})
+    setBackGroundColor()
+  }
+  const setPRed =(red)=>{
+    setThemeState({...ThemeState, PBGred:red})
+    setBackGroundColor()
+  }
+
+  const setSColor = (red,green,blue) =>{
+    setThemeState({...ThemeState,SBGred:red,SBGgreen:green,SBGblue:blue})
+    setSecondaryColor()
+  }
+
+  const setSGreen =(green)=>{
+    setThemeState({...ThemeState, SBGgreen:green})
+    setSecondaryColor()
+
+  }
+  const setSBlue =(blue)=>{
+    setThemeState({...ThemeState, SBGblue:blue})
+    setSecondaryColor()
+
+  }
+  const setSRed =(red)=>{
+    setThemeState({...ThemeState, SBGred:red})
+    setSecondaryColor()
+
   }
 
   
-  return { getBackGroundColor, setColor,setRed,setGreen,setBlue };
+  return {setBackGroundColor, setSecondaryColor, setPColor,setPRed,setPGreen,setPBlue,setSColor,setSRed,setSGreen,setSBlue };
 };

@@ -22,9 +22,12 @@ export function ThemeContextProvider({children}){
         fontStyle: "",
         fontColour: "",
         font:"",
-        BGred:100,
-        BGgreen:100,
-        BGblue:100,
+        PBGred:100,
+        PBGgreen:100,
+        PBGblue:100,
+        SBGred:100,
+        SBGgreen:100,
+        SBGblue:100,
         
         
     })
@@ -36,6 +39,9 @@ export function ThemeContextProvider({children}){
     const setThemeFont = ({style, color, type}) =>{
         setThemeState(...ThemeState,fontStyle=style, fontColour=color, font=type)
     }
+
+
+
     // const changeBackgroundColorReducer = (state, action) => {
     //     var someState
     //     switch (action.type) {

@@ -25,12 +25,17 @@ async function addToGroups(user, socket) {
     console.log("unable to retrieve user groups");
   }
   if (response.ok) {
-    socket.emit("send-groups", json);
-    console.log(json);
-    json.map((group) => {
-      console.log(user.username + " in " + group._id);
-      socket.join(group._id);
-    });
+    //console.log(json);
+    if (Object.keys(json).length !== 0) {
+      socket.emit("send-groups", json);
+      //console.log(json);
+      json.map((group) => {
+        //console.log(id);
+        console.log(user.username + " in " + group._id);
+        socket.join(group._id);
+      });
+    }
+    console.log(`${user.username} in ${socket.rooms.size - 1} rooms`);
   }
   console.log(`${user.username} in ${socket.rooms.size - 1} rooms`);
 }
@@ -54,8 +59,23 @@ async function addMessages(socket, message, groupid) {
   }
 }
 
+const onlineUsers = [];
+//set up connection
 io.on("connection", async (socket) => {
   user = socket.handshake.auth.token;
+  socket.onAny(() => {
+    user = socket.handshake.auth.token;
+  });
+
+  // if(onlineUsers.find(usr => usr === user)){
+  //   socket.disconnect();
+  // }
+  // else{
+  //   onlineUsers.push(user);
+  // }
+
+  //get groups for user
+  console.log("inside async");
   if (user == null) {
     return;
   }
@@ -70,9 +90,10 @@ io.on("connection", async (socket) => {
     addToGroups(user, socket);
   });
 
-  socket.on("left-group", async (leftGroupId) => {
+  socket.on("leave-group", async (leftGroupid) => {
+    //DATABASE
     const response = await fetch(
-      `${BACKEND_URL}/groups/removeUser/${leftGroupId}&${user.username}`,
+      `http://localhost:8000/groups/removeUser/${leftGroupid}&${user.username}`,
       {
         method: "PUT",
         headers: {
@@ -85,15 +106,17 @@ io.on("connection", async (socket) => {
       console.log("unable to remove user from group in db");
     }
     if (response.ok) {
-      console.log("removed user: " + user._id + " from db");
+      console.log("removed user: " + user.username + " from db");
     }
+
     //emit to other users in group that user has left
-    socket.to(leftGroupId).emit("left-group", user.username, leftGroupId);
+    console.log(user.username, " left ", leftGroupid);
+    socket.to(leftGroupid).emit("left-group", user.username, leftGroupid);
   });
 
   socket.on("disconnect", () => {
     activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
-    console.log("user disconnected");
+    console.log(user.username, " disconnected");
   });
 });
 

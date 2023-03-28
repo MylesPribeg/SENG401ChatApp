@@ -6,15 +6,18 @@ import settingssvg from "../../assets/settings.svg";
 import UserMessage from "./UserMessage";
 import Group from "./Group";
 import { useNavigate } from "react-router-dom";
-import { useColour } from "../../hooks/useColour";
+// import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
 import { io } from "socket.io-client";
 import AddGroup from "./AddGroup";
 import AddUser from "./AddUser";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import VideoScreen from "../Video/VideoScreen";
+import VideoCallPage from "../Video/VideoCallPage";
 
 export default function Home() {
+  var alreadyConnected = false;
   const [addGroup, setAddGroup] = useState(false);
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
@@ -25,8 +28,6 @@ export default function Home() {
   const scrollRef = useRef();
   const navigate = useNavigate();
 
-  const { getBackGroundColor } = useColour();
-
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const { groupsState, groupsStateDispatch } = useGroups();
   const [activeIdx, setActiveIdx] = useState(-1);
@@ -36,7 +37,8 @@ export default function Home() {
   // set socket for current user
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
-    if (user != null) {
+    if (user != null && alreadyConnected === false) {
+      alreadyConnected = true;
       socket.current = io("ws://localhost:8001", {
         auth: {
           token: user,
@@ -57,8 +59,42 @@ export default function Home() {
         console.log("received " + message);
         groupsStateDispatch({ type: "ADDMESSAGE", grp: groupid, msg: message });
       });
+
+      //receive message that user left group
+      socket.current.on("left-group", (username, groupid) => {
+        if (username != user.username) {
+          console.log(username + " leaving " + groupid);
+          groupsStateDispatch({
+            type: "REMOVE_USER",
+            user: username,
+            grp: groupid,
+          });
+        }
+      });
     }
   }, [user]);
+
+  //handle sockets and state when user leaves group
+  const handleUserLeave = (e) => {
+    e.preventDefault();
+    console.log("user leave ", user.username);
+    socket.current.emit(
+      "leave-group",
+      groupsState[activeIdx]._id,
+      user.username
+    );
+    groupsStateDispatch({
+      type: "REMOVE_USER",
+      user: user.username,
+      grp: groupsState[activeIdx]._id,
+    });
+
+    groupsStateDispatch({
+      type: "DELETEGROUP",
+      grp: groupsState[activeIdx]._id,
+    });
+    setActiveIdx(-1);
+  };
 
   const renderMessages = (groupsState) => {
     if (activeIdx >= 0) {
@@ -126,8 +162,12 @@ export default function Home() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [groupsState]);
 
+  const startVideoCall = () => {
+    navigate("/video-call");
+  };
+
   return (
-    <Box className="parent" style={{ backgroundColor: getBackGroundColor() }}>
+    <Box className="parent">
       {addGroup ? <AddGroup state={setAddGroup} /> : ""}
       {addUser ? (
         <AddUser state={setAddUser} groupid={groupsState[activeIdx]} />
@@ -135,7 +175,7 @@ export default function Home() {
         ""
       )}
 
-      <Box className="top">
+      <Box className="top primaryBackground">
         <Box className="groups">{renderGroups(groupsState)}</Box>
         <Box>
           <button onClick={() => setAddGroup(true)}> Create Group </button>
@@ -143,7 +183,7 @@ export default function Home() {
       </Box>
       <Box className="body" sx={{}}>
         <Box
-          className="sideview"
+          className="sideview primaryBackground"
           sx={
             {
               // backgroundColor:"red",
@@ -161,9 +201,9 @@ export default function Home() {
               >
                 Add Users
               </button>
-              <button>
-                Leave Group
-              </button>
+              <button onClick={handleUserLeave}>Leave Group</button>
+
+              <button onClick={startVideoCall}>Start Video Call</button>
             </div>
           </Box>
           <Box className="sideview-bottom">
@@ -189,7 +229,7 @@ export default function Home() {
             }
           }
         >
-          <div className="message-area">
+          <div className="message-area secondaryBackground">
             {/* <div className="chats">
                 <p>Chats</p>
               </div> */}
@@ -197,7 +237,7 @@ export default function Home() {
               {renderMessages(groupsState)}
             </div>
           </div>
-          <div className="chat-box">
+          <div className="chat-box primaryBackground">
             <form className="sub-form" onSubmit={handleMessageSubmit}>
               <input
                 type="textarea"
