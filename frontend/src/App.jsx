@@ -17,7 +17,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="*" element={<h1>404 Not Found</h1>} />
-      <Route path="/video-call" element={<VideoCallPage />} />
+      <Route path="/video-call/:data" element={<VideoCallPage />} />
     </Routes>
     // </div>
   );

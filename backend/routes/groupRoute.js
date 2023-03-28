@@ -11,6 +11,7 @@ const {
   createGroupWithName,
   addToGroupWithUsername,
   removeUserFromGroup,
+  isUserInGroup,
 } = require("../controllers/groupController");
 
 const router = express.Router();
@@ -51,6 +52,19 @@ router.put("/removeUser/:groupId&:username", async (req, res) => {
     res
       .status(200)
       .json({ message: `User ${username} removed from group ${groupId}` });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//check if a user is in a group
+router.get("/isUserInGroup/:groupId/:username", async (req, res) => {
+  const { groupId, username } = req.params;
+  try {
+    // Call the isUserInGroup() function with the parameters from the URL
+    const userInGroup = await isUserInGroup(groupId, username);
+    res.status(200).json({ userInGroup });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });

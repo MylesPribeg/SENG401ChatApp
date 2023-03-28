@@ -4,6 +4,7 @@ import React from "react";
 
 const VideoScreen = ({ groupId }) => {
   const [videoCall, setVideoCall] = useState(true);
+  console.log(groupId + "in video MAIN DRIVER");
   const rtcProps = {
     appId: "bc0326d2aa374e21a27f892bc75c4ba4",
     channel: groupId, // use the passed groupId prop as the channel

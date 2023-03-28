@@ -231,6 +231,39 @@ const removeUserFromGroup = async (groupId, username) => {
   }
 };
 
+const isUserInGroup = async (groupId, username) => {
+  try {
+    // Find the group by its ID
+    const group = await Group.findById(groupId).populate("users");
+
+    // If the group doesn't exist, return false
+    if (!group) {
+      return false;
+    }
+
+    // Find the user by its username
+    const user = await User.findOne({ username: username });
+
+    // If the user doesn't exist, return false
+    if (!user) {
+      return false;
+    }
+
+    // Check if the user is in the group
+    const userInGroup = group.users.some((groupUser) =>
+      groupUser._id.equals(user._id)
+    );
+
+    // Return true if the user is in the group, otherwise return false
+    return userInGroup;
+  } catch (error) {
+    console.error("Error checking if user is in group:", error);
+    return false;
+  }
+};
+
+module.exports = isUserInGroup;
+
 module.exports = {
   getGroups,
   getGroup,
@@ -242,4 +275,5 @@ module.exports = {
   createGroupWithName,
   addToGroupWithUsername,
   removeUserFromGroup,
+  isUserInGroup,
 };

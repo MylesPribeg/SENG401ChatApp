@@ -163,7 +163,8 @@ export default function Home() {
   }, [groupsState]);
 
   const startVideoCall = () => {
-    navigate("/video-call");
+    console.log("before use nav " + groupsState[activeIdx]._id);
+    navigate("/video-call/" + groupsState[activeIdx]._id);
   };
 
   return (
