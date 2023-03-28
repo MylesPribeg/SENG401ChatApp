@@ -5,11 +5,11 @@ import Button from '@mui/material/Button';
 import { Box, Slide } from "@mui/material";
 import { Typography,Slider } from "@mui/material";
 import "./Colour.css";
-import { useBackgroundColour } from "../../hooks/useBackgroundColour";
+import { useColour } from "../../hooks/useColour";
 // import Slider from "@mui/material";
 export default function Colour(props) {
     // 'white', 'yellow', 'red', 'blue', 'green'
-    const { setColor, setGreen,setBlue,setRed } = useBackgroundColour()
+    const { setPColor,setPRed,setPGreen,setPBlue,setSColor,setSRed,setSGreen,setSBlue } = useColour()
 
     
     const colors = [
@@ -17,28 +17,43 @@ export default function Colour(props) {
             name:"white",
             red: 255,
             green:255, 
-            blue:255
+            blue:255,
+            sred: 200,
+            sgreen:200,
+            sblue:200,
         },
         {
             name:"grey",
             red: 255,
             green:255, 
-            blue:0
+            blue:0,
+            sred: 200,
+            sgreen:200,
+            sblue:0,
         }, {
             name:"blue",
             red: 0,
             green:0, 
-            blue:255
+            blue:255,
+            sred: 0,
+            sgreen:0,
+            sblue:200,
         }, {
             name:"green",
             red: 0,
             green:255, 
-            blue:0
+            blue:0,
+            sred: 0,
+            sgreen:200,
+            sblue:0,
         }, {
             name:"red",
             red: 255,
             green:0,
-            blue:0
+            blue:0,
+            sred: 200,
+            sgreen:0,
+            sblue:0,
         }]
 
     const renderButtons = colors => {
@@ -46,7 +61,8 @@ export default function Colour(props) {
             return ( <button key={index}
             className = { ' colourButtons ' + object_color.name }
             onClick={() => {
-                setColor(object_color.red,object_color.green, object_color.blue )
+                setPColor(object_color.red,object_color.green, object_color.blue )
+                setSColor(object_color.sred,object_color.sgreen, object_color.sblue )
             }}
             >
             
@@ -113,7 +129,7 @@ export default function Colour(props) {
                 paddingTop={5}
                 textAlign= "center">
             
-                Custom Colours
+                Primary Colours
           </Typography>
           <Typography
                 variant="h3"
@@ -139,7 +155,7 @@ export default function Colour(props) {
             step={10}
             valueLabelDisplay="auto"
             onChange={(event, number) =>{
-                setRed(number)
+                setPRed(number)
 
               }}
            
@@ -172,7 +188,7 @@ export default function Colour(props) {
             step={10}
             valueLabelDisplay="auto"
             onChange={(event, number) =>{
-                setGreen(number)
+                setPGreen(number)
               }}
            
            />
@@ -204,7 +220,117 @@ export default function Colour(props) {
             step={10}
             valueLabelDisplay="auto"
             onChange={(event, number) =>{
-                setBlue(number)
+                setPBlue(number)
+              }}
+           />
+           </Box>
+
+
+
+
+
+
+           <Typography
+                paddingBottom={2}
+                variant="h3"
+                color="black"
+                fontSize={20}
+                boxSizing="border-box"
+                paddingTop={5}
+                textAlign= "center">
+            
+                Secondary Colours
+          </Typography>
+          <Typography
+                variant="h3"
+                color="black"
+                fontSize={20}
+                boxSizing="border-box"
+                textAlign= "center">
+            
+                red
+            </Typography>
+            <Box className = "colourOptions"
+            sx={{
+                display:"flex",
+                flexFlow: "row wrap",
+                boxSizing:"border-box",
+                padding: "0 50px 0 50px"
+            }}>
+           <Slider
+            aria-label="Custom marks"
+                
+            defaultValue={150}
+            max={255}
+            step={10}
+            valueLabelDisplay="auto"
+            onChange={(event, number) =>{
+                setSRed(number)
+
+              }}
+           
+           />
+           </Box>
+           
+
+
+           <Typography
+                variant="h3"
+                color="black"
+                fontSize={20}
+                boxSizing="border-box"
+                textAlign= "center">
+            
+                green
+            </Typography>
+            <Box className = "colourOptions"
+            sx={{
+                display:"flex",
+                flexFlow: "row wrap",
+                boxSizing:"border-box",
+                padding: "0 50px 0 50px"
+            }}>
+           <Slider
+            aria-label="Custom marks"
+                
+            defaultValue={150}
+            max={255}
+            step={10}
+            valueLabelDisplay="auto"
+            onChange={(event, number) =>{
+                setSGreen(number)
+              }}
+           
+           />
+           </Box>
+
+
+           <Typography
+                variant="h3"
+                color="black"
+                fontSize={20}
+                boxSizing="border-box"
+               
+                textAlign= "center">
+            
+                blue
+            </Typography>
+            <Box className = "colourOptions"
+            sx={{
+                display:"flex",
+                flexFlow: "row wrap",
+                boxSizing:"border-box",
+                padding: "0 50px 0 50px"
+            }}>
+           <Slider
+            aria-label="Custom marks"
+                
+            defaultValue={150}
+            max={255}
+            step={10}
+            valueLabelDisplay="auto"
+            onChange={(event, number) =>{
+                setSBlue(number)
               }}
            />
            </Box>

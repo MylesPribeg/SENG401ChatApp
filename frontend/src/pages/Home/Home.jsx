@@ -6,7 +6,7 @@ import settingssvg from "../../assets/settings.svg";
 import UserMessage from "./UserMessage";
 import Group from "./Group";
 import { useNavigate } from "react-router-dom";
-import { useBackgroundColour } from "../../hooks/useBackgroundColour";
+// import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
 import {io} from 'socket.io-client'
@@ -25,7 +25,6 @@ export default function Home() {
 
   const navigate = useNavigate();
 
-  const {getBackGroundColor} = useBackgroundColour();
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const {groupsState,groupsStateDispatch} = useGroups()
@@ -99,14 +98,14 @@ export default function Home() {
   },[groupsState])
 
   return (
-    <Box className="parent" style={{backgroundColor:getBackGroundColor()}}
+    <Box className="parent"
       
     
     > 
   {addGroup?<AddGroup state={setAddGroup}/> :""}
   {addUser ?<AddUser state={setAddUser}/> :""}
 
-      <Box className="top">
+      <Box className="top primaryBackground">
         <Box className="groups">
           {renderGroups(groupsState)}
         </Box>
@@ -124,7 +123,7 @@ export default function Home() {
 
       }}  
       >
-        <Box className="sideview" sx={{
+        <Box className="sideview primaryBackground" sx={{
           // backgroundColor:"red",
           // flex:0         
         }}>
@@ -166,7 +165,7 @@ export default function Home() {
         }}>
 
             
-            <div className="message-area">
+            <div className="message-area secondaryBackground">
               {/* <div className="chats">
                 <p>Chats</p>
               </div> */}
@@ -174,7 +173,7 @@ export default function Home() {
               {renderMessages(groupsState)}
               </div>
             </div>
-            <div className="chat-box">
+            <div className="chat-box primaryBackground">
               <form className="sub-form" onSubmit={handleMessageSubmit}>
                 <input
                   type="textarea"

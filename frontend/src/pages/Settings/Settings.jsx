@@ -12,7 +12,6 @@ import Account from "./Account";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import settingssvg from "../../assets/settings.svg"
-import {useBackgroundColour} from "../../hooks/useBackgroundColour";
 
 
 function SettingsOptionsView({someState}){
@@ -39,18 +38,15 @@ const reducer = (state, action) =>{
 export default function Settings(props) {
   const [state, dispatch] = useReducer(reducer, {type: "" })
   const navigate = useNavigate()
-  const {getBackGroundColor} = useBackgroundColour()
 
   return (
     
-      <div className="settingsParent" style={{backgroundColor:getBackGroundColor()}} >
-        <Box className = "settingsOptions"
+      <div className="settingsParent " >
+        <Box className = "settingsOptions secondaryBackground"
           sx={{
             // width: '20%',
             // height: '100%',
             flex: 1,
-            backgroundColor: "grey",
-            mixBlendMode:"multiply",
             paddingTop: '50px',
             paddingLeft: '30px',
             boxSizing: 'border-box'
@@ -90,10 +86,9 @@ export default function Settings(props) {
         </Box>
 
 
-        <Box className = "settingsSelector"
+        <Box className = "settingsSelector primaryBackground"
         sx={{
           flex: 3,
-          backgroundColor: "inherit",
           
           display:"flex",
           flexDirection:"column",
@@ -104,7 +99,6 @@ export default function Settings(props) {
         >
           <Container sx={{
             flex: 0.5,
-            backgroundColor: "inherit",
 
           }}>
             <Typography
@@ -136,11 +130,9 @@ export default function Settings(props) {
         
 
         </Box>
-        <Box className = "settingsEscape"
+        <Box className = "settingsEscape secondaryBackground"
           sx={{
             flex: 0.7,
-            backgroundColor: "grey",
-            mixBlendMode:"multiply",
 
           }}
         >

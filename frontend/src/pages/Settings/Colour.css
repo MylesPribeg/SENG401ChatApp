@@ -1,3 +1,10 @@
+:root{
+  --pBG: grey;
+  --sBG: grey;
+  --font: "1";
+}
+
+
 .color-selector:hover {
     cursor: pointer;
   }
