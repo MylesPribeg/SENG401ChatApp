@@ -21,8 +21,9 @@ const VideoCallPage = () => {
 
   async function checkIfUserInGroup(groupId, username) {
     try {
+      
       const response = await axios.get(
-        `http://localhost:8000/groups/isUserInGroup/${groupId}/${username}`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/groups/isUserInGroup/${groupId}/${username}`
       );
       console.log(
         `User ${username} is in group ${groupId}:`,

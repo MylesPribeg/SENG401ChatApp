@@ -16,7 +16,7 @@ export default function AddGroup(props) {
     e.preventDefault();
 
     try {
-      const API_URL = "http://localhost:8000/groups";
+      const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
       // Fetch the username of the current user
       const username = user?.username;

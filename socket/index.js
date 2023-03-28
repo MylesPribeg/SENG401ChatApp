@@ -2,10 +2,11 @@ const { instrument } = require("@socket.io/admin-ui");
 const { fetch } = require("cross-fetch");
 const express = require("express");
 const app = express();
+require("dotenv").config();
 const httpServer = require("http").createServer(app);
 
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
+const BACKEND_URL = process.env.BACKEND_URL// || "http://localhost:8000";
 const PORT = process.env.PORT || 8001;
 
 const io = require("socket.io")(PORT, {
@@ -76,6 +77,7 @@ io.on("connection", async (socket) => {
 
   //get groups for user
   console.log("inside async");
+  console.log("BACKEND URL:" + BACKEND_URL)
   if (user == null) {
     return;
   }
@@ -93,7 +95,7 @@ io.on("connection", async (socket) => {
   socket.on("leave-group", async (leftGroupid) => {
     //DATABASE
     const response = await fetch(
-      `http://localhost:8000/groups/removeUser/${leftGroupid}&${user.username}`,
+      `${BACKEND_URL}/groups/removeUser/${leftGroupid}&${user.username}`,
       {
         method: "PUT",
         headers: {

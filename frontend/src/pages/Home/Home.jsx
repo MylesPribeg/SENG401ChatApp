@@ -39,7 +39,7 @@ export default function Home() {
     //console.log("connecting with user: " + user.username)
     if (user != null && alreadyConnected === false) {
       alreadyConnected = true;
-      socket.current = io("ws://localhost:8001", {
+      socket.current = io(import.meta.env.VITE_REACT_APP_SOCKET_URL, {
         auth: {
           token: user,
         },

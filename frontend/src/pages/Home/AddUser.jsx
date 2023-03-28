@@ -9,7 +9,7 @@ export default function AddUser(props) {
   const handleMessageSubmit = async (e) => {
     e.preventDefault();
     try {
-      const API_URL = "http://localhost:8000/groups/"; // Assuming your server is running on port 8000
+      const API_URL = `${import.meta.env.VITE_REACT_APP_API_URL}/groups/`; 
       const response = await axios.put(
         `${API_URL}/add/${props.groupid._id}?username=${usernameInput}`
       );
