@@ -22,7 +22,7 @@ export default function AddGroup(props) {
       const username = user?.username;
 
       // Make the API call
-      const response = await axios.post(`${API_URL}/create`, {
+      const response = await axios.post(`${API_URL}create`, {
         groupName: group,
         username: username,
       });
