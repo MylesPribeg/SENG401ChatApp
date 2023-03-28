@@ -1,15 +1,48 @@
-.settingsParent {
-  
-  background-image: none;
-  background-color: rgb(82, 82, 82);
-  min-height: 100dvh;
-  width: 100%;
-  display: flex;
-  box-sizing: border-box;
-  flex-flow: column wrap;
-  position: absolute;
-  flex-direction: row;
-
+body {
+  background-color:  #333;
 }
 
+.settings {
+  text-align: center;
+  padding: 30px;
 
+}
+#area {
+  width: 500px;
+  height: 300px;
+  border: 1px solid #555;
+  margin: 0 auto;
+  border-radius: .5em;
+}
+
+#toolbox li {
+  display: inline-block;
+  margin: .5em 0 0 .7em;
+  border-radius: .5em;
+  height: 24px;
+  width: 24px;
+}
+
+.color-selector:hover {
+  cursor: pointer;
+}
+
+.yellow {
+  background-color: Gold;
+}
+
+.red {
+  background-color: Coral;
+}
+
+.blue {
+  background-color: RoyalBlue;
+}
+
+.green {
+  background-color: PaleGreen;
+}
+
+.white {
+  background-color: WhiteSmoke;
+}

@@ -6,15 +6,19 @@ import settingssvg from "../../assets/settings.svg";
 import UserMessage from "./UserMessage";
 import Group from "./Group";
 import { useNavigate } from "react-router-dom";
-import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
 import { io } from "socket.io-client";
 import AddGroup from "./AddGroup";
 import AddUser from "./AddUser";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+
+import { useThemesContext } from "../../hooks/useThemesContext";
 
 export default function Home() {
+  //-----------------------------------------------------------------------------------------------------------------------------
+  const { theme } = useThemesContext();
+  console.log("theme home", theme)
+//-----------------------------------------------------------------------------------------------------------------------------
   const [addGroup, setAddGroup] = useState(false);
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
@@ -24,8 +28,6 @@ export default function Home() {
   const socket = useRef();
   const scrollRef = useRef();
   const navigate = useNavigate();
-
-  const { getBackGroundColor } = useColour();
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const { groupsState, groupsStateDispatch } = useGroups();
@@ -63,7 +65,7 @@ export default function Home() {
   const renderMessages = (groupsState) => {
     if (activeIdx >= 0) {
       return groupsState[activeIdx].messages.map((message, index) => (
-        <UserMessage key={index} val={message} />
+        <div ref={scrollRef}><UserMessage key={index} val={message} /></div>
       ));
     }
   };
@@ -127,7 +129,7 @@ export default function Home() {
   }, [groupsState]);
 
   return (
-    <Box className="parent" style={{ backgroundColor: getBackGroundColor() }}>
+    <Box className={theme} id="parent" sx={{ }}>
       {addGroup ? <AddGroup state={setAddGroup} /> : ""}
       {addUser ? (
         <AddUser state={setAddUser} groupid={groupsState[activeIdx]} />
@@ -135,7 +137,7 @@ export default function Home() {
         ""
       )}
 
-      <Box className="top">
+      <Box id="top" className={theme}>
         <Box className="groups">{renderGroups(groupsState)}</Box>
         <Box>
           <button onClick={() => setAddGroup(true)}> Create Group </button>
@@ -143,7 +145,8 @@ export default function Home() {
       </Box>
       <Box className="body" sx={{}}>
         <Box
-          className="sideview"
+          className={theme}
+          id="sideview"
           sx={
             {
               // backgroundColor:"red",
@@ -182,6 +185,7 @@ export default function Home() {
 
         <Box
           className="textArea chat-chatbox-area"
+          id="chat-chatbox-area"
           sx={
             {
               // backgroundColor:"white",
@@ -197,7 +201,7 @@ export default function Home() {
               {renderMessages(groupsState)}
             </div>
           </div>
-          <div className="chat-box">
+          <div className={theme} id="chat-box">
             <form className="sub-form" onSubmit={handleMessageSubmit}>
               <input
                 type="textarea"
