@@ -150,7 +150,7 @@ export default function Home() {
   }, [groupsState]);
 
   return (
-    <Box className="parent" style={{ backgroundColor: getBackGroundColor() }}>
+    <Box className="parent">
       {addGroup ? <AddGroup state={setAddGroup} /> : ""}
       {addUser ? (
         <AddUser state={setAddUser} groupid={groupsState[activeIdx]} />
@@ -158,7 +158,7 @@ export default function Home() {
         ""
       )}
 
-      <Box className="top">
+      <Box className="top primaryBackground">
         <Box className="groups">{renderGroups(groupsState)}</Box>
         <Box>
           <button onClick={() => setAddGroup(true)}> Create Group </button>
@@ -166,7 +166,7 @@ export default function Home() {
       </Box>
       <Box className="body" sx={{}}>
         <Box
-          className="sideview"
+          className="sideview primaryBackground"
           sx={
             {
               // backgroundColor:"red",
@@ -208,7 +208,7 @@ export default function Home() {
             }
           }
         >
-          <div className="message-area">
+          <div className="message-area secondaryBackground">
             {/* <div className="chats">
                 <p>Chats</p>
               </div> */}
@@ -216,7 +216,7 @@ export default function Home() {
               {renderMessages(groupsState)}
             </div>
           </div>
-          <div className="chat-box">
+          <div className="chat-box primaryBackground">
             <form className="sub-form" onSubmit={handleMessageSubmit}>
               <input
                 type="textarea"
