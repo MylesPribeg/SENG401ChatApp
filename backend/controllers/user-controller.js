@@ -148,7 +148,18 @@ const loginUser = async (req, res) => {
 
 async function getgrp(userId) {
   try {
-    const user = await User.findById(userId).populate("groups");
+    const user = await 
+      User.findById(userId)
+        .populate({
+          path: "groups",
+          populate: {
+            path: "users",
+            select: "username",
+            model: "User"
+          }
+        })
+        // .exec(function(err, docs){});
+
     if (!user) {
       throw new Error("User not found");
     }

@@ -13,12 +13,12 @@ const httpServer = require("http").createServer(app);
 
 const io = require("socket.io")(8001, {
   cors: {
-    origin: ["http://127.0.0.1:5173", "https://admin.socket.io"],
+    origin: ["http://localhost:5173", "https://admin.socket.io"],
     methods: ["GET", "POST"],
     credentials: true,
   },
 });
-console.log("active on port 8800");
+console.log("server running");
 let activeUsers = [];
 
 async function addToGroups(user, socket) {
@@ -31,12 +31,34 @@ async function addToGroups(user, socket) {
     //console.log(json);
     if (Object.keys(json).length !== 0) {
       socket.emit("send-groups", json);
-      json.map((id) => {
+      console.log(json);
+      json.map((group) => {
         //console.log(id);
-        socket.join(id);
+        console.log(user.username + " in " + group._id);
+        socket.join(group._id);
       });
     }
     console.log(`${user.username} in ${socket.rooms.size - 1} rooms`);
+  }
+}
+
+async function addMessages(socket, message, groupid) {
+  console.log("received " + message + " from room: " + groupid);
+  socket.to(groupid).emit("receive-message", message, groupid);
+  console.log(message);
+
+  const response = await fetch("http://localhost:8000/messages/" + groupid, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user: message.user, content: message.content }),
+  });
+  //const json = await response.json();
+  if (!response.ok) {
+    console.log("unable to add message to db");
+  }
+  if (response.ok) {
+    console.log("sent message:");
+    console.log(message);
   }
 }
 
@@ -55,8 +77,7 @@ io.on("connection", async (socket) => {
 
   //to server from client
   socket.on("send-message", (message, groupid) => {
-    console.log("received " + message + " from room: " + groupid);
-    socket.to(groupid).emit("receive-message", message, groupid);
+    addMessages(socket, message, groupid);
   });
 
   socket.on("group-add", () => {

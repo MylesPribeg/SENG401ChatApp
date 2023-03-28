@@ -43,42 +43,25 @@ export default function Home() {
         },
       });
 
+      //receive groups from server
       socket.current.on("send-groups", (groups) => {
-        console.log(groups);
+        console.log("sending groups");
         groups.map((group) => {
           group.active = false;
         });
         groupsStateDispatch({ type: "SET_GROUPS", grps: groups });
       });
 
+      //receive messages from server
       socket.current.on("receive-message", (message, groupid) => {
         console.log("received " + message);
-        groupsStateDispatch({ type: "ADDMESSAGE", idx: groupid, msg: message });
+        groupsStateDispatch({ type: "ADDMESSAGE", grp: groupid, msg: message });
       });
     }
   }, [user]);
 
-  //receive message from socket
-  // useEffect(()=>{
-  //   console.log(groupsState)
-  //   socket.current.on("receive-message", (message, groupid)=>{
-  //     console.log("received ");
-  //     console.log(groupsState);
-  //     console.log(message);
-  //     const groupidx = groupsState.findIndex(group => group._id = groupid);
-  //     console.log(groupid);
-  //     console.log(groupsState);
-  //     console.log(groupidx);
-  //     console.log(groupsState[groupidx]);
-  //     groupsStateDispatch({type:"ADDMESSAGE", idx:groupidx, msg:message});
-  //   })
-
-  // }, [])
-
   const renderMessages = (groupsState) => {
     if (activeIdx >= 0) {
-      console.log("rendienr messg");
-      console.log(groupsState);
       return groupsState[activeIdx].messages.map((message, index) => (
         <UserMessage key={index} val={message} />
       ));
@@ -104,15 +87,27 @@ export default function Home() {
     });
   };
 
+  const renderUsernames = (groupsState) => {
+    if (activeIdx >= 0) {
+      return groupsState[activeIdx].users.map((user, index) => {
+        return (
+          <h2 className="member" key={index}>
+            {user.username}
+          </h2>
+        );
+      });
+    }
+  };
+
   const handleMessageSubmit = (e) => {
     e.preventDefault();
     console.log("submit message");
-    console.log();
     const messageObj = {
       content: message,
       createdAt: new Date(),
       user: user.username,
     };
+    //send message to socket server
     socket.current.emit("send-message", messageObj, groupsState[activeIdx]._id);
     groupsStateDispatch({
       type: "ADDMESSAGE",
@@ -134,7 +129,11 @@ export default function Home() {
   return (
     <Box className="parent" style={{ backgroundColor: getBackGroundColor() }}>
       {addGroup ? <AddGroup state={setAddGroup} /> : ""}
-      {addUser ? <AddUser state={setAddUser} /> : ""}
+      {addUser ? (
+        <AddUser state={setAddUser} groupid={groupsState[activeIdx]} />
+      ) : (
+        ""
+      )}
 
       <Box className="top">
         <Box className="groups">{renderGroups(groupsState)}</Box>
@@ -153,12 +152,7 @@ export default function Home() {
           }
         >
           <Box className="userList" sx={{}}>
-            <div className="users">
-              <h2 className="member">UsernameUsernameUsernameUsername</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-              <h2 className="member">Username</h2>
-            </div>
+            <div className="users">{renderUsernames(groupsState)}</div>
             <div className="addUsers">
               <button
                 onClick={() => {
@@ -166,6 +160,9 @@ export default function Home() {
                 }}
               >
                 Add Users
+              </button>
+              <button>
+                Leave Group
               </button>
             </div>
           </Box>

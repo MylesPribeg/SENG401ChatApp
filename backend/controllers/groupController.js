@@ -129,6 +129,41 @@ const addToGroup = async (req, res) => {
   }
 };
 
+const addToGroupWithUsername = async (req, res) => {
+  const gid = req.params.gid;
+  const username = req.query.username; // Changed from req.params.username
+
+  if (!mongoose.Types.ObjectId.isValid(gid)) {
+    return res.status(404).json({ error: "Invalid gid" });
+  }
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Add user to the group's users array
+    const groupUpdate = await Group.updateOne(
+      { _id: gid },
+      { $addToSet: { users: user._id } }
+    );
+
+    // Add group to the user's groups array
+    const userUpdate = await User.updateOne(
+      { _id: user._id },
+      { $addToSet: { groups: gid } }
+    );
+
+    // Return the results of both update operations
+    res.status(200).json({ groupUpdate, userUpdate });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const createGroupWithName = async (req, res) => {
   const { groupName, username } = req.body;
 
@@ -173,6 +208,29 @@ const getUsers = async (req, res) => {
   res.status(200).json(users);
 };
 
+const removeUserFromGroup = async (groupId, username) => {
+  try {
+    // Find the group by its ID
+    const group = await Group.findById(groupId);
+
+    // Find the user by their username
+    const user = await User.findOne({ username });
+
+    // Remove the group from the user's list of groups
+    user.groups.pull(group);
+
+    // Remove the user from the group's list of users
+    group.users.pull(user);
+
+    // Save the changes to the database
+    await Promise.all([user.save(), group.save()]);
+
+    console.log(`User ${username} removed from group ${group.name}`);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 module.exports = {
   getGroups,
   getGroup,
@@ -182,4 +240,6 @@ module.exports = {
   addToGroup,
   getUsers,
   createGroupWithName,
+  addToGroupWithUsername,
+  removeUserFromGroup,
 };

@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "../SignUp.css";
 import { useLogin } from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formInputs, setinput] = useState({
@@ -14,6 +15,7 @@ export default function Login() {
   });
 
   const { login, error, isLoading } = useLogin();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setinput({ ...formInputs, [e.target.name]: e.target.value });
@@ -25,15 +27,15 @@ export default function Login() {
     await login(formInputs.username, formInputs.password);
   };
   return (
-    <div>
+    <div className="mainContent">
       <Box
+        className="main"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "45ch" },
           width: 500,
-          height: 315,
+          height: 320,
           backgroundColor: "white",
           borderRadius: 10,
-          marginBottom: 25,
         }}
       >
         <Typography
@@ -41,13 +43,15 @@ export default function Login() {
           variant="h1"
           color="black"
           fontSize={50}
-          paddingTop={5}
+          padding={0}
+          margin={0}
         >
           Welcome to Rattle!
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           <TextField
+            className="textField"
             value={formInputs.username}
             onChange={handleChange}
             name="username"
@@ -59,6 +63,7 @@ export default function Login() {
           />
 
           <TextField
+            className="textField"
             value={formInputs.password}
             onChange={handleChange}
             name="password"
@@ -68,19 +73,28 @@ export default function Login() {
             label="Password"
             variant="outlined"
           />
-
-          <Button
-            disabled={isLoading}
-            type="submit"
-            size="large"
-            color="primary"
-            variant="contained"
-            sx={
-              ({ marginRight: 43 }, { paddingLeft: 20 }, { paddingRight: 40 })
-            }
-          >
-            Login
-          </Button>
+          <div className="buttons">
+            <Button
+              disabled={isLoading}
+              type="submit"
+              size="large"
+              color="primary"
+              variant="contained"
+              className="mainButton"
+            >
+              Login
+            </Button>
+            <Button
+              size="large"
+              color="primary"
+              variant="contained"
+              className="sideButton"
+              onClick={() => navigate("/signup")}
+              sx={{margin: 1.5}}
+            >
+              Sign Up
+            </Button>
+          </div>
         </form>
       </Box>
       {<h1>{error && <div className="error">{error}</div>}</h1>}
