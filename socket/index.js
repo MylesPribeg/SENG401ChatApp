@@ -14,7 +14,7 @@ const httpServer = require("http").createServer(app);
 const io = require("socket.io")(8001, {
   cors: {
     origin: ["http://localhost:5173", "https://admin.socket.io"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT"],
     credentials: true,
   },
 });
@@ -84,8 +84,24 @@ io.on("connection", async (socket) => {
     addToGroups(user, socket);
   });
 
-  socket.on("retrieve-messages", () => {
-    //TODO
+  socket.on("left-group", async(leftGroupid) => {
+    //DATABASE
+ const response = await fetch(`http://localhost:8000/groups/removeUser/${leftGroupId}&${user.username}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+      //const json = await response.json();
+      if (!response.ok) {
+        console.log("unable to remove user from group in db");
+      }
+      if (response.ok) {
+        console.log("removed user: " + user._id + " from db");
+      }
+
+    //emit to other users in group that user has left
+    socket.to(leftGroupid).emit("left-group", user.username, leftGroupid)
   });
 
   socket.on("disconnect", () => {
