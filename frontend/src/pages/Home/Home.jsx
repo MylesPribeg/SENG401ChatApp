@@ -99,7 +99,10 @@ export default function Home() {
   const renderMessages = (groupsState) => {
     if (activeIdx >= 0) {
       return groupsState[activeIdx].messages.map((message, index) => (
-        <UserMessage key={index} val={message} />
+        <div ref={scrollRef}>
+          <UserMessage key={index} val={message} />
+        </div>
+
       ));
     }
   };
