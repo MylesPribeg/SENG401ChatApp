@@ -20,7 +20,7 @@ export default function Colour(props) {
             blue:255
         },
         {
-            name:"yellow",
+            name:"grey",
             red: 255,
             green:255, 
             blue:0
