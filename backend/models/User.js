@@ -21,7 +21,6 @@ const userSchema = new SCHEMA({
 
 userSchema.statics.signUp = async function (username, email, password) {
   const exists = await this.findOne({ email });
-
   //validate function
   if (!email || !password || !username) {
     throw new Error("Please fill all fields");
