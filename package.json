@@ -1,9 +1,21 @@
 {
   "devDependencies": {
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "mockingoose": "^2.16.2"
   },
   "dependencies": {
+    "jest": "^29.5.0",
+    "libcrypto": "^0.0.1",
+    "mongod": "^2.0.0",
+    "mongodb-memory-server": "^8.12.1",
+    "mongoose": "^7.0.3",
     "nodemon": "^2.0.22",
     "socket.io": "^4.6.1"
+  },
+  "scripts": {
+    "test": "jest --runInBand --detectOpenHandles"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

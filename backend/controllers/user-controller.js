@@ -18,9 +18,12 @@ const createToken = (_id) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().populate("groups");
+    console.log("assssss")
+    const users = await User.find();
+    console.log(users)
     res.json(users);
   } catch (error) {
+    console.log("FUCK")
     res.status(500).json({ error: "Internal server error" });
   }
 };
