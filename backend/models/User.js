@@ -13,6 +13,18 @@ const userSchema = new SCHEMA({
       ref: "Group",
     },
   ],
+  theme: {
+    fontStyle: { type: String, default: "normal" },
+    fontColour: { type: Number, default: 100 },
+    font: { type: String, default: "Times New Roman" },
+    PBGred: { type: Number, default: 150 },
+    PBGgreen: { type: Number, default: 150 },
+    PBGblue: { type: Number, default: 150 },
+    SBGred: { type: Number, default: 50 },
+    SBGgreen: { type: Number, default: 50 },
+    SBGblue: { type: Number, default: 50 },
+    updated: { type: Boolean, default: false },
+  },
 });
 
 //users schema
@@ -74,5 +86,9 @@ userSchema.statics.login = async function (username, password) {
 
   return user;
 };
+
+//update user to have theme
+userSchema.statics.updateTheme = 
+ 
 
 module.exports = mongoose.model("User", userSchema);

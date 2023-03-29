@@ -2,7 +2,6 @@ const { instrument } = require("@socket.io/admin-ui");
 const { fetch } = require("cross-fetch");
 const express = require("express");
 const app = express();
-const httpServer = require("http").createServer(app);
 
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
