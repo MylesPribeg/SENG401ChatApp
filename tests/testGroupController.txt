@@ -1,0 +1,124 @@
+let newName;
+let newId;
+
+test('created named group', async () => {
+    const url = "http://localhost:8000/groups/"
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({name: 'testGroup'})
+    })
+
+    const json = await response.json()
+
+    // test that a group with name testGroup was created.
+    console.log(json)
+    expect(response.status).toBe(200)
+    expect(json.name).toBe('testGroup')
+    newName = 'testGroup';
+    newId = json._id;
+
+});
+
+test('get groups', async () => {
+    const url = "http://localhost:8000/groups/"
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    // const json = await response.json()
+    // console.log(json)
+
+    expect(response.status).toBe(200)
+    
+});
+
+test('get a single group', async () => {
+    const url = "http://localhost:8000/groups/"
+    const id = newId;
+
+    const response = await fetch(url + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    const json = await response.json()
+
+    expect(json.name).toBe(newName)
+})
+
+// test('update a group with new info', async () => {
+//     const url = "http://localhost:8000/groups/"
+//     const id = newId;
+
+//     const response = await fetch(url + id, {
+//         method: 'PATCH',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({name: 'newName', message: [
+//             {user: 'newUser1', content: 'Hello!'},
+//             {user: 'newUser2', content: 'World!'}]
+//         })
+//     })
+
+//     const json = await response.json()
+//     expect(json.name).toBe('newName')
+// })
+
+test('get users from a group', async () => {
+    const url = "http://localhost:8000/groups/"
+    const id = '642393a446f247e8228184c5';
+
+    const response = await fetch(url + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    const json = await response.json()
+    console.log(json)
+    expect(json.name).toBe('PurpleGuy')
+    expect(json.users).toEqual(['64237b875993f4016ae5e5ed', '641cd412403a29160db59cb3'])
+})
+
+test('delete a group', async () => {
+    const url = "http://localhost:8000/groups/"
+    const id = newId
+
+    const response = await fetch(url + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    // test that group called testGroup was deleted
+    const json = await response.json()
+    expect(json.name).toBe('testGroup')
+    expect(response.status).toBe(200)
+
+});
+
+test('try to delete group that doesnt exist', async () => {
+    const url = "http://localhost:8000/groups/"
+    const id = "FAKEID"
+    const response = await fetch(url + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    // test that group called testGroup was deleted
+    expect(response.status).toBe(404)
+})
