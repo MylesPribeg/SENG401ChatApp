@@ -69,67 +69,78 @@
 // };
 
 // export default VideoScreen;
+import { useState, useEffect } from "react";
+import AgoraUIKit from "agora-react-uikit";
+import React from "react";
 
-// import { useState, useEffect } from "react";
-// import AgoraUIKit from "agora-react-uikit";
-// import React from "react";
+const VideoScreen = ({ groupId }) => {
+  const [videoCall, setVideoCall] = useState(true);
+  const [rtcToken, setRtcToken] = useState("");
+  const [uid, setUid] = useState("");
 
-// const VideoScreen = ({ groupId }) => {
-//   const [videoCall, setVideoCall] = useState(true);
-//   const [rtcToken, setRtcToken] = useState("");
-//   const [uid, setUid] = useState("");
-//   const agoraAppCertificate = import.meta.env
-//     .VITE_REACT_APP_AGORA_APP_CERTIFICATE;
-//   const agoraAppId = import.meta.env.VITE_REACT_APP_AGORA_APP_ID;
+  const agoraAppId = import.meta.env.VITE_REACT_APP_AGORA_APP_ID;
 
-//   console.log("app id is " + agoraAppId);
-//   console.log("app certificate is " + agoraAppCertificate);
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ channel: groupId }),
+        });
 
-//   useEffect(() => {
-//     // Fetch the token from the server
-//     const fetchToken = async () => {
-//       try {
-//         const input = {
-//           channel: groupId,
-//           isPublisher: "true",
-//         };
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-//         const response = await fetch("http://localhost:8000/token", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify(input),
-//         });
+        const data = await response.json();
+        setRtcToken(data.token);
+        setUid(data.uid);
+        console.log("Fetched token:", data.token);
+        console.log("Fetched UID:", data.uid);
+      } catch (error) {
+        console.log("Failed to fetch token and UID:", error);
+      }
+    };
+    fetchToken();
+    console.log("token is " + rtcToken);
+    console.log("uid is " + uid);
+  }, [groupId]);
 
-//         const data = await response.json();
-//         setRtcToken(data.token);
-//         setUid(data.uid);
-//       } catch (error) {
-//         console.log("Failed to fetch token and UID:", error);
-//       }
-//     };
-//     fetchToken();
-//   }, [groupId]);
+  useEffect(() => {
+    console.log("Updated rtcToken:", rtcToken);
+    console.log("Updated uid:", uid);
+  }, [rtcToken, uid]);
 
-//   const rtcProps = {
-//     appId: agoraAppId,
-//     channel: groupId,
-//     token: null,
-//   };
-//   const callbacks = {
-//     EndCall: () => setVideoCall(false),
-//   };
-//   return videoCall ? (
-//     <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
-//       <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
-//     </div>
-//   ) : (
-//     <h3 onClick={() => setVideoCall(true)}>Start Call</h3>
-//   );
-// };
+  const rtcProps = {
+    appId: agoraAppId,
+    channel: groupId,
+    token: rtcToken,
+    uid: uid,
+  };
 
-// export default VideoScreen;
+  const callbacks = {
+    EndCall: () => setVideoCall(false),
+  };
+
+  return videoCall && rtcToken ? (
+    <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
+      <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
+    </div>
+  ) : (
+    <div>
+      {videoCall ? (
+        <h3>Loading...</h3>
+      ) : (
+        <h3 onClick={() => setVideoCall(true)}>Start Call</h3>
+      )}
+    </div>
+  );
+};
+
+export default VideoScreen;
 
 // import AgoraUIKit from "agora-react-uikit";
 // import React, { useState } from "react";
@@ -162,28 +173,28 @@
 
 // export default VideoScreen;
 
-import { useState } from "react";
-import AgoraUIKit from "agora-react-uikit";
-import React from "react";
+// import { useState } from "react";
+// import AgoraUIKit from "agora-react-uikit";
+// import React from "react";
 
-const VideoScreen = ({ groupId }) => {
-  const [videoCall, setVideoCall] = useState(true);
-  console.log(groupId + "in video MAIN DRIVER");
-  const rtcProps = {
-    appId: import.meta.env.VITE_REACT_APP_AGORA_APP_ID,
-    channel: groupId,
-    token: null,
-  };
-  const callbacks = {
-    EndCall: () => setVideoCall(false),
-  };
-  return videoCall ? (
-    <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
-      <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
-    </div>
-  ) : (
-    <h3 onClick={() => setVideoCall(true)}>Start Call</h3>
-  );
-};
+// const VideoScreen = ({ groupId }) => {
+//   const [videoCall, setVideoCall] = useState(true);
+//   console.log(groupId + "in video MAIN DRIVER");
+//   const rtcProps = {
+//     appId: import.meta.env.VITE_REACT_APP_AGORA_APP_ID,
+//     channel: groupId,
+//     token: null,
+//   };
+//   const callbacks = {
+//     EndCall: () => setVideoCall(false),
+//   };
+//   return videoCall ? (
+//     <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
+//       <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
+//     </div>
+//   ) : (
+//     <h3 onClick={() => setVideoCall(true)}>Start Call</h3>
+//   );
+// };
 
-export default VideoScreen;
+// export default VideoScreen;

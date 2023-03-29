@@ -22,31 +22,34 @@ app.use("/users", userrouter);
 //app.use("/messages", messagerouter);
 app.use("/groups", groupRoutes);
 app.use("/messages", messageRoutes);
-const Agora = require("agora-access-token");
+const {
+  RtcTokenBuilder,
+  RtmTokenBuilder,
+  RtcRole,
+  RtmRole,
+} = require("agora-access-token");
 
 app.post("/token", (req, res) => {
-  const agoraAppId = process.env.AGORA_APP_ID;
-  const agoraAppCertificate = process.env.AGORA_APP_CERTIFICATE;
-
+  const appId = process.env.AGORA_APP_ID;
+  const appCertificate = process.env.AGORA_APP_CERTIFICATE;
+  const channelName = req.body.channel;
+  // const uid = Math.floor(Math.random() * 50000) + 1;
+  const uid = 0;
+  const role = RtcRole.PUBLISHER;
   const expirationTimeInSeconds = 3600;
-  const uid = uuidv4();
-  const role = req.body.isPublisher
-    ? Agora.RtcRole.PUBLISHER
-    : Agora.RtcRole.SUBSCRIBER;
-
-  const channel = req.body.channel;
   const currentTimestamp = Math.floor(Date.now() / 1000);
-  const expirationTimestamp = currentTimestamp + expirationTimeInSeconds;
+  const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds;
 
-  const token = Agora.RtcTokenBuilder.buildTokenWithUid(
-    agoraAppId,
-    agoraAppCertificate,
-    channel,
+  const token = RtcTokenBuilder.buildTokenWithUid(
+    appId,
+    appCertificate,
+    channelName,
     uid,
     role,
-    100000
+    privilegeExpiredTs
   );
-  res.send({ uid, token });
+
+  res.json({ token, uid });
 });
 
 mongoose.set("strictQuery", true);
