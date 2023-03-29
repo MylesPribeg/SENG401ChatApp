@@ -12,7 +12,7 @@ export default function Group(props) {
   return (
     <div className={`group ${props.val.active?"active":""}`} onClick={props.clickHandler} >
       <img src={avater} alt="" />
-      <h2 className="group-name">{props.val.name}</h2>
+      <h2 className="group-name font">{props.val.name}</h2>
     </div> 
   );
 }
