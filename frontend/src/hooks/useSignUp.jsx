@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/users/signup`, {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),
