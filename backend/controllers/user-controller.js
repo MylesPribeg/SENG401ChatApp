@@ -18,12 +18,9 @@ const createToken = (_id) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    console.log("assssss")
-    const users = await User.find();
-    console.log(users)
+    const users = await User.find.populate("groups");
     res.json(users);
   } catch (error) {
-    console.log("FUCK")
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -41,12 +38,10 @@ const createUser = async (req, res, next) => {
       email: email,
       password: password,
     });
-
     user = await user.save();
   } catch (err) {
     return next(err);
   }
-
   if (!user) {
     return res.status(500).json({ message: "User not created" });
   }
@@ -111,10 +106,8 @@ const getUserById = async (req, res, next) => {
 
 const signUpUser = async (req, res) => {
   const { username, email, password } = req.body;
-
   try {
     const user = await User.signUp(username, email, password);
-
     //Create token
     const token = createToken(user._id);
     res.status(200).json({ user, token });
@@ -168,7 +161,7 @@ async function getgrp(userId) {
     }
     return user.groups;
   } catch (error) {
-    console.error("Error retrieving user groups:", error);
+    //console.error("Error retrieving user groups:", error);
     return null;
   }
 }
@@ -182,7 +175,6 @@ const getUserGroups = async (req, res) => {
         .status(404)
         .json({ error: "User not found or error retrieving groups" });
     }
-    console.log(groups);
     res.json(groups);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
