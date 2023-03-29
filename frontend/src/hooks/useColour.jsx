@@ -12,6 +12,8 @@ export const useColour = () => {
     console.log("primary background " + `rgb(${ThemeState.PBGred}, ${ThemeState.PBGgreen}, ${ThemeState.PBGblue})`)
     r.style.setProperty('--pBG',`rgb(${ThemeState.PBGred}, ${ThemeState.PBGgreen}, ${ThemeState.PBGblue})`)
 
+    ThemeState.updated = !ThemeState.updated
+    console.log(ThemeState.updated)
 
   }
 

@@ -11,7 +11,7 @@ import Profile from "./Profile";
 import Account from "./Account";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import settingssvg from "../../assets/settings.svg"
+import close from "../../assets/close.svg"
 
 
 function SettingsOptionsView({someState}){
@@ -141,7 +141,7 @@ export default function Settings(props) {
               onClick={()=>{
                 navigate("/")
               }}
-              src={settingssvg}
+              src={close}
               alt=""
             />
 

@@ -7,6 +7,7 @@ import UserMessage from "./UserMessage";
 import Group from "./Group";
 import { useNavigate } from "react-router-dom";
 // import { useColour } from "../../hooks/useColour";
+// import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";
 import { io } from "socket.io-client";
@@ -27,6 +28,8 @@ export default function Home() {
   const socket = useRef();
   const scrollRef = useRef();
   const navigate = useNavigate();
+
+  const { getBackGroundColor } = useColour();
 
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const { groupsState, groupsStateDispatch } = useGroups();
@@ -198,11 +201,7 @@ export default function Home() {
           <Box className="userList" sx={{}}>
             <div className="users">{renderUsernames(groupsState)}</div>
             <div className="addUsers">
-              <button
-                onClick={() => {
-                  setAddUser(true);
-                }}
-              >
+              <button onClick={() => {setAddUser(true);}}>
                 Add Users
               </button>
               <button onClick={handleUserLeave}>Leave Group</button>
@@ -255,5 +254,6 @@ export default function Home() {
         </Box>
       </Box>
     </Box>
+    
   );
 }

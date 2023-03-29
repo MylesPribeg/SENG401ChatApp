@@ -1,3 +1,16 @@
+:root{
+  --font-colour:100;
+  --font-style:normal;
+  --font:"Times New Roman";
+
+}
+
+.font{
+  font-style: var(--font-style);
+  font-family: var(--font);
+  color: var(--font-colour);
+}
+
 .primaryBackground{
   background-color: var(--pBG);
 }

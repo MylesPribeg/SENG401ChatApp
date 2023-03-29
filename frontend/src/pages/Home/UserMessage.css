@@ -18,7 +18,7 @@
 }
 
 .messageSender {
-    color: black;
+    /* color: black; */
 }
 
 .messageTop * {
@@ -26,13 +26,13 @@
     /* white-space: nowrap; */
 }
 .messageTime {
-    color: #D3D3D3;
+    /* color: #D3D3D3; */
 }
 
 .messageContent {
     margin: 5px 0px 25px; /*top left/right bottom*/
     flex-wrap: wrap;
-    color: black;
+    /* color: black; */
     overflow-wrap: break-word;
     width: 60vw;
     max-width: 60vw;

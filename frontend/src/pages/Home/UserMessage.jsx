@@ -21,10 +21,10 @@ export default function UserMessage(props) {
       <div className="avatar"><img src={avater} alt=""/></div>
       <div className="messageContainer">
         <div className="messageTop"> 
-          <h2 className="messageSender">{props.val.user}</h2>
-          <h4 className="messageTime">{formatDistanceToNow(new Date(props.val.createdAt), { addSuffix: true })}</h4>
+          <h2 className="messageSender font">{props.val.user}</h2>
+          <h4 className="messageTime font">{formatDistanceToNow(new Date(props.val.createdAt), { addSuffix: true })}</h4>
         </div>
-        <h3 className="messageContent">{props.val.content}</h3>
+        <h3 className="messageContent font">{props.val.content}</h3>
       </div>
     </div>
   );
