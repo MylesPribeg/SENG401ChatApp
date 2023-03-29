@@ -54,7 +54,7 @@ const deleteGroup = async (req, res) => {
 };
 
 //update a group based off id recieved as a parameter from the url, checking for valid id and then updating the body using the spread operator
-const updateGroup = async (req, res) => {
+const updateGroup = async (req, res) => { 
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "no group invalid id" });
@@ -98,6 +98,7 @@ const updateGroup = async (req, res) => {
 
 //new code feel free to change up (im not gonna test it)
 
+// add a user to a group
 const addToGroup = async (req, res) => {
   const gid = req.params.gid;
   const uid = req.params.uid;
@@ -132,6 +133,8 @@ const addToGroup = async (req, res) => {
 const addToGroupWithUsername = async (req, res) => {
   const gid = req.params.gid;
   const username = req.query.username; // Changed from req.params.username
+  console.log(gid)
+  console.log(username)
 
   if (!mongoose.Types.ObjectId.isValid(gid)) {
     return res.status(404).json({ error: "Invalid gid" });
@@ -191,7 +194,11 @@ const createGroupWithName = async (req, res) => {
   }
 };
 
-//this function accesses the users ina group based off an id for group passed in parameters and populates the list giving access to the users name
+//this function accesses the users ina group based off an id for group passed in parameters 
+// and populates the list giving access to the users name
+
+// get the users in a group using the group id, 
+// then return a list of all user's names and emails
 const getUsers = async (req, res) => {
   const { id } = req.params;
 
