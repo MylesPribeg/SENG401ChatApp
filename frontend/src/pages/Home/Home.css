@@ -320,3 +320,7 @@
   align-items: center;
   flex-flow: column nowrap;
 }
+
+button {
+  color: white;
+}
