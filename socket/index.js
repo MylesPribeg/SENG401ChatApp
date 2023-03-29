@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8001;
 
 const io = require("socket.io")(PORT, {
   cors: {
-    origin: [FRONTEND_URL, "https://admin.socket.io"],
+    origin: [FRONTEND_URL, "http://localhost:5173","https://admin.socket.io"],
     methods: ["GET", "POST", "PUT"],
     credentials: true,
   },
@@ -20,7 +20,7 @@ console.log("server running");
 let activeUsers = [];
 
 async function addToGroups(user, socket) {
-  const response = await fetch(`${BACKEND_URL}/users/user/${user.id}`);
+  const response = await fetch(`${BACKEND_URL}users/user/${user.id}`);
   const json = await response.json();
   if (!response.ok) {
     console.log("unable to retrieve user groups");
