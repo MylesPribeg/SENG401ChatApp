@@ -8,6 +8,10 @@ const messageRoutes = require("./routes/messageRoute.js");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
+const { v4: uuidv4 } = require("uuid");
+
+const agoraAppId = process.env.AGORA_APP_ID;
+const agoraAppCertificate = process.env.AGORA_APP_CERTIFICATE;
 
 const PORT = process.env.PORT;
 const MongoURL = process.env.MONGO_URL;
@@ -18,7 +22,34 @@ app.use("/users", userrouter);
 //app.use("/messages", messagerouter);
 app.use("/groups", groupRoutes);
 app.use("/messages", messageRoutes);
-mongoose.set('strictQuery', true);
+const Agora = require("agora-access-token");
+
+app.post("/token", (req, res) => {
+  const agoraAppId = process.env.AGORA_APP_ID;
+  const agoraAppCertificate = process.env.AGORA_APP_CERTIFICATE;
+
+  const expirationTimeInSeconds = 3600;
+  const uid = uuidv4();
+  const role = req.body.isPublisher
+    ? Agora.RtcRole.PUBLISHER
+    : Agora.RtcRole.SUBSCRIBER;
+
+  const channel = req.body.channel;
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const expirationTimestamp = currentTimestamp + expirationTimeInSeconds;
+
+  const token = Agora.RtcTokenBuilder.buildTokenWithUid(
+    agoraAppId,
+    agoraAppCertificate,
+    channel,
+    uid,
+    role,
+    100000
+  );
+  res.send({ uid, token });
+});
+
+mongoose.set("strictQuery", true);
 mongoose
   .connect(MongoURL)
   .then(() => app.listen(PORT, () => console.log("Server is running")))
