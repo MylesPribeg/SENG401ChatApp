@@ -21,7 +21,13 @@
 }
 
 .group:hover {
-  background-color: lightblue;
+  /* background-color: lightblue; */
+  border: 1px solid white;
+}
+
+.group:active {
+  /* background-color: lightblue; */
+  border: 2px solid black;
 }
 
 .active{
