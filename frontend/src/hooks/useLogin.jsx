@@ -14,8 +14,8 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
     
-    console.log("CALLED TO: " + `${import.meta.env.VITE_REACT_APP_API_URL}/users/login`)
-    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/users/login`, {
+    console.log("CALLED TO: " + `${import.meta.env.VITE_REACT_APP_API_URL}users/login`)
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
