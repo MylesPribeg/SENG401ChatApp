@@ -19,6 +19,7 @@
   /* border-color: red; */
   border-width: 50px;
   min-height: 118px;
+  max-height: 118px;
 }
 
 .body {
