@@ -6,7 +6,7 @@ import settingssvg from "../../assets/settings.svg";
 import UserMessage from "./UserMessage";
 import Group from "./Group";
 import { useNavigate } from "react-router-dom";
-// import { useColour } from "../../hooks/useColour";
+import { useColour } from "../../hooks/useColour";
 // import { useColour } from "../../hooks/useColour";
 import { Box } from "@mui/system";
 import { useGroups } from "../../hooks/useGroups";

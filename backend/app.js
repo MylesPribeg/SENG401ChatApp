@@ -15,7 +15,19 @@ const agoraAppCertificate = process.env.AGORA_APP_CERTIFICATE;
 
 const PORT = process.env.PORT;
 const MongoURL = process.env.MONGO_URL;
-app.use(cors());
+
+// CORS configuration options
+const corsOptions = {
+  origin: '*', // Allow all origins (not recommended for production)
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
+// Use the cors middleware with the configuration options
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use("/users", userrouter);
 //app.use("/conversations", convorouter);
