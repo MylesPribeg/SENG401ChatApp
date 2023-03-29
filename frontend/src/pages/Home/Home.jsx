@@ -18,7 +18,7 @@ import VideoScreen from "../Video/VideoScreen";
 import VideoCallPage from "../Video/VideoCallPage";
 
 export default function Home() {
-  var alreadyConnected = false;
+  var alreadyConnected = useRef(false);
   const [addGroup, setAddGroup] = useState(false);
   const { logOut } = useLogOut();
   const { user } = useAuthContext();
@@ -29,19 +29,18 @@ export default function Home() {
   const scrollRef = useRef();
   const navigate = useNavigate();
 
-  const { getBackGroundColor } = useColour();
-
   // const [currentActiveGroupIndex, setCurrentActiveGroupIndex] = useState(0)
   const { groupsState, groupsStateDispatch } = useGroups();
   const [activeIdx, setActiveIdx] = useState(-1);
 
   const username = user?.username;
-  console.log(groupsState);
-  // set socket for current user
+  //console.log(groupsState);
+  //set socket for current user
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
-    if (user != null && alreadyConnected === false) {
-      alreadyConnected = true;
+    if (user != null && alreadyConnected.current === false) {
+      console.log("connected")
+      alreadyConnected.current = true;
       socket.current = io(import.meta.env.VITE_REACT_APP_SOCKET_URL, {
         auth: {
           token: user,
@@ -59,8 +58,10 @@ export default function Home() {
 
       //receive messages from server
       socket.current.on("receive-message", (message, groupid) => {
-        console.log("received " + message);
+        console.log("received ",message.content, " from ", message.user );
+        console.log("adding message")
         groupsStateDispatch({ type: "ADDMESSAGE", grp: groupid, msg: message });
+
       });
 
       //receive message that user left group

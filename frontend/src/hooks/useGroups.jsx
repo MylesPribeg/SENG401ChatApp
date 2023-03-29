@@ -7,10 +7,12 @@ const groupReducer = (state, action) => {
         return action.grps
       case "REMOVE_USER":
         const grpidx = state.findIndex((group)=>group._id===action.grp);
-        const useridx = state[grpidx].users.findIndex((user)=>user.username === action.user);
-        if(grpidx>-1 && useridx>-1){state[grpidx].users.splice(useridx, 1)}
-        console.log("after remove: ",state)
-        return state;
+        if(grpidx>-1){
+          const useridx = state[grpidx].users.findIndex((user)=>user.username === action.user);
+          if(useridx>-1){state[grpidx].users.splice(useridx, 1)}
+          console.log("after remove: ",state)
+          return state;
+        }
       case "ADDGROUP":
         return[...state, {id:4,name:action.name,messages:[]}]
       case "ADDMESSAGE":
