@@ -1,5 +1,5 @@
 # SENG401Chat App
-#Demo
+
 rattlechat.netlify.app/
 
 ## How To Start
