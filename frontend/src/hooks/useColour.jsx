@@ -18,7 +18,7 @@ export const useColour = () => {
       console.log(`${user.username} this is username from useColour` )
       const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}updateTheme`, { username, themeObject });
       const updatedUser = response.data;
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      //localStorage.setItem("user", JSON.stringify(updatedUser));
 
       console.log('User theme updated successfully:', updatedUser);
       
