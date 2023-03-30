@@ -186,6 +186,8 @@ const getUserGroups = async (req, res) => {
   }
 };
 
+
+
 // shoudl turn this format HASAN
 // [
 //    group 1:
@@ -206,3 +208,4 @@ exports.getUserById = getUserById;
 exports.signUpUser = signUpUser;
 exports.loginUser = loginUser;
 exports.getUserGroups = getUserGroups;
+
