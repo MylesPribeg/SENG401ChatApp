@@ -134,7 +134,7 @@ export default function Home() {
     if (activeIdx >= 0) {
       return groupsState[activeIdx].users.map((user, index) => {
         return (
-          <h2 className="member" key={index}>
+          <h2 className="member font" key={index}>
             {user.username}
           </h2>
         );
@@ -211,7 +211,7 @@ export default function Home() {
             </div>
           </Box>
           <Box className="sideview-bottom">
-            <p className="username">{username}</p>
+            <p className="username font">{username}</p>
             <div className="options">
               <img
                 className="settings-svg"

@@ -10,6 +10,7 @@
     display: flex;
     justify-content: space-between;
     text-align: center;
+    border: 2px solid transparent;
 }
 
 .group-name {
@@ -21,9 +22,15 @@
 }
 
 .group:hover {
-  background-color: lightblue;
+  /* background-color: lightblue; */
+  border: 2px solid white;
+}
+
+.group:active {
+  /* background-color: lightblue; */
+  border: 2px solid black;
 }
 
 .active{
-  background-color: green;
+  border: 2px solid black;
 }

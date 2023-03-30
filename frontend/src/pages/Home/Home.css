@@ -19,6 +19,7 @@
   /* border-color: red; */
   border-width: 50px;
   min-height: 118px;
+  max-height: 118px;
 }
 
 .body {
@@ -273,7 +274,7 @@
   margin-top: -10rem;
   width: 20rem;
   height: 20rem;
-  background-color: transparent;
+  backdrop-filter: blur(10px);
   z-index: 100;
 }
 
@@ -305,7 +306,7 @@
   margin-top: -10rem;
   width: 20rem;
   height: 20rem;
-  background-color: transparent;
+  backdrop-filter: blur(10px);
   z-index: 100;
 }
 
@@ -319,4 +320,8 @@
   justify-content: space-evenly;
   align-items: center;
   flex-flow: column nowrap;
+}
+
+button {
+  color: white;
 }
