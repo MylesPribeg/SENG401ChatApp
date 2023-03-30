@@ -38,11 +38,11 @@ export default function Home() {
   //console.log(groupsState);
   //set socket for current user
   
-  const {setThemes, loadThemes } = useThemeContext();
-  if(user) {
-    loadThemes(user.theme);
-    setThemes();
-  }
+  // const {setThemes, loadThemes } = useThemeContext();
+  // if(user) {
+  //   loadThemes(user.theme);
+  //   setThemes();
+  // }
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
 

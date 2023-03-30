@@ -1,5 +1,6 @@
 import { createContext, useReducer, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useThemeContext } from "../hooks/useThemeContext";
 
 export const AuthContext = createContext();
 
@@ -18,7 +19,11 @@ export const AuthContextProvider = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, { user: null });
   const navigate = useNavigate();
   const location = useLocation();
-
+  // const {setThemes, loadThemes } = useThemeContext();
+  // if(user) {
+  //   loadThemes(user.theme);
+  //   setThemes();
+  // }
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {

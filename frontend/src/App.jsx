@@ -6,8 +6,18 @@ import Home from "./pages/Home/Home";
 import Settings from "./pages/Settings/Settings";
 import VideoCallPage from "./pages/Video/VideoCallPage";
 import VideoScreen from "./pages/Video/VideoScreen";
+import { useThemeContext } from "./hooks/useThemeContext";
+import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
+
+  const {user} = useAuthContext()
+  const {setThemes, loadThemes } = useThemeContext();
+  // if(user) {
+  //   loadThemes(user.theme);
+  //   setThemes();
+  // }
+
   return (
     // <div style={{backgroundColor:}}>
 
