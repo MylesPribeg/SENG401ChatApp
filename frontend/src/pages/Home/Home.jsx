@@ -17,6 +17,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import VideoScreen from "../Video/VideoScreen";
 import VideoCallPage from "../Video/VideoCallPage";
 import { useThemeContext } from "../../hooks/useThemeContext";
+import axios from "axios";
 
 export default function Home() {
   var alreadyConnected = useRef(false);
@@ -37,18 +38,53 @@ export default function Home() {
   const username = user?.username;
   //console.log(groupsState);
   //set socket for current user
-  
+  const [trigger, setTrigger] = useState(0)
   const {setThemes, loadThemes } = useThemeContext();
-  // if(user) {
-  //   loadThemes(user.theme);
-  //   setThemes();
-  // }
+  const [theme, setTheme] = useState()
+
+  const getThemeByUsername  = async (username) => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}themes/${username}`);
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        return { error: error.response.data, status: error.response.status };
+      } else if (error.request) {
+        return { error: 'No response received', request: error.request };
+      } else {
+        return { error: error.message };
+      }
+    }
+  }
+
+  useEffect(()=>{
+    if(user){
+      const getThemeByUsername  = async (username) => {
+        try {
+          const theme = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}themes/${username}`);
+          loadThemes(theme);
+          setThemes();
+          setTrigger(1)
+
+        } catch (error) {
+          if (error.response) {
+            return { error: error.response.data, status: error.response.status };
+          } else if (error.request) {
+            return { error: 'No response received', request: error.request };
+          } else {
+            return { error: error.message };
+          }
+        }
+      }
+      getThemeByUsername(user.username)
+
+      
+    }
+    
+  },[])
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
-    if(user) {
-      loadThemes(user.theme);
-      setThemes();
-    }
+    
     if (user != null && alreadyConnected.current === false) {
       console.log("connected")
       alreadyConnected.current = true;

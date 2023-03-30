@@ -1,6 +1,7 @@
 import { color } from "@mui/system";
 import { createContext, useReducer, useState } from "react";
 import { useEffect } from "react";
+import { AuthContext } from "./AuthContext";
 export const ThemeContext = createContext()
 
 
@@ -17,8 +18,7 @@ export function ThemeContextProvider({children}){
     // const [fontState, changefontStateDispatch] = useReducer(changeFontReducer,{font:"", fontStyle:"", fontColour:""})
 
     // const [Theme, changeThemeDispatch] = useReducer(ChangeThemeReducer,({colorState,fontState}))
-
-    const [ThemeState,setThemeState] = useState({
+    const  [ThemeState,setThemeState] = useState({
         fontStyle: "normal",
         fontColour: 100,
         font:"Times New Roman",
@@ -31,7 +31,13 @@ export function ThemeContextProvider({children}){
         updated:false,
     })
 
+
+    
+
     const setThemes = () =>{
+
+        console.log("themestate is " + {ThemeState})
+
         var r = document.querySelector(':root');
         r.style.setProperty('--font-colour',`rgb(${ThemeState.fontColour}, ${ThemeState.fontColour}, ${ThemeState.fontColour})`)
         r.style.setProperty('--font-style',ThemeState.fontStyle)
@@ -46,14 +52,7 @@ export function ThemeContextProvider({children}){
     
     }
 
-    const setThemeColor = (red,green,blue) =>{
-
-        console.log("setting theme colour")
-        setThemeState({...ThemeState,BGred:red?red:null, BGgreen:green, BGblue:blue})
-    }
-    const setThemeFont = ({style, color, type}) =>{
-        setThemeState(...ThemeState,fontStyle=style, fontColour=color, font=type)
-    }
+    
 
     const loadThemes = (ThemeObject) =>{
         setThemeState(ThemeObject)

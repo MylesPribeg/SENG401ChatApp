@@ -111,6 +111,20 @@ app.put('/updateTheme', async (req, res) => {
   }
 });
 
+app.get('/themes/:username', async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username });
+    if (user) {
+      res.json(user.theme);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
 mongoose.set("strictQuery", true);
 mongoose
   .connect(MongoURL)
