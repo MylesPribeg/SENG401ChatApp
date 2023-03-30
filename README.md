@@ -1,6 +1,6 @@
 # SENG401Chat App
 
-[App](https://rattlechat.netlify.app/)
+[App Demonstration](https://rattlechat.netlify.app/)
 
 ## How To Start
 
