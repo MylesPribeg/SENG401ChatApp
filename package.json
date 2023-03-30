@@ -6,6 +6,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "jest": "^29.5.0",
+    "jest-html-reporter": "^3.7.1",
     "libcrypto": "^0.0.1",
     "mongod": "^2.0.0",
     "mongodb-memory-server": "^8.12.1",
@@ -15,9 +16,16 @@
     "validator": "^13.9.0"
   },
   "scripts": {
-    "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles --coverage"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "reporters": [
+        "default",
+        ["./node_modules/jest-html-reporter", {
+            "pageTitle": "Test Report"
+        }]
+    ],
+    "coverageReporters": ["text-summary", "html"]
   }
 }

@@ -32,7 +32,6 @@ const createGroup = async (req, res) => {
   try {
     const group = await Group.create({ name, messages });
     res.status(200).json(group);
-    console.log("attempted");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -133,8 +132,6 @@ const addToGroup = async (req, res) => {
 const addToGroupWithUsername = async (req, res) => {
   const gid = req.params.gid;
   const username = req.query.username; // Changed from req.params.username
-  console.log(gid)
-  console.log(username)
 
   if (!mongoose.Types.ObjectId.isValid(gid)) {
     return res.status(404).json({ error: "Invalid gid" });
@@ -202,7 +199,6 @@ const createGroupWithName = async (req, res) => {
 const getUsers = async (req, res) => {
   const { id } = req.params;
 
-  console.log("occured");
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "no users invalid group id" });
   }
@@ -211,7 +207,6 @@ const getUsers = async (req, res) => {
     .select({ users: 1, _id: 0 })
     .populate("users", { username: 1, email: 1 });
 
-  console.log(users);
   res.status(200).json(users);
 };
 
@@ -231,8 +226,6 @@ const removeUserFromGroup = async (groupId, username) => {
 
     // Save the changes to the database
     await Promise.all([user.save(), group.save()]);
-
-    console.log(`User ${username} removed from group ${group.name}`);
   } catch (err) {
     console.error(err);
   }
