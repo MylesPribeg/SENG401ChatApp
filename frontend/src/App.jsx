@@ -11,8 +11,8 @@ import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
 
-  const {user} = useAuthContext()
-  const {setThemes, loadThemes } = useThemeContext();
+  // const {user} = useAuthContext()
+  // const {setThemes, loadThemes } = useThemeContext();
   // if(user) {
   //   loadThemes(user.theme);
   //   setThemes();

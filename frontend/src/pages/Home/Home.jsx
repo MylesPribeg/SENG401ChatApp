@@ -38,14 +38,17 @@ export default function Home() {
   //console.log(groupsState);
   //set socket for current user
   
-  // const {setThemes, loadThemes } = useThemeContext();
+  const {setThemes, loadThemes } = useThemeContext();
   // if(user) {
   //   loadThemes(user.theme);
   //   setThemes();
   // }
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
-
+    if(user) {
+      loadThemes(user.theme);
+      setThemes();
+    }
     if (user != null && alreadyConnected.current === false) {
       console.log("connected")
       alreadyConnected.current = true;
