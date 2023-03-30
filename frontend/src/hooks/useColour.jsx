@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { useThemeContext } from "./useThemeContext";
+import axios from "axios";
 
 export const useColour = () => {
-  const {ThemeState, setThemeState} = useThemeContext()
+
+
 
 
   const setBackGroundColor = () =>{
@@ -53,10 +55,12 @@ export const useColour = () => {
     setThemeState({...ThemeState, SBGgreen:green})
     setSecondaryColor()
 
+
   }
   const setSBlue =(blue)=>{
     setThemeState({...ThemeState, SBGblue:blue})
     setSecondaryColor()
+
 
   }
   const setSRed =(red)=>{
