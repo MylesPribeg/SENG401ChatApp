@@ -87,8 +87,6 @@ userSchema.statics.login = async function (username, password) {
   return user;
 };
 
-//update user to have theme
-userSchema.statics.updateTheme = 
  
 
 module.exports = mongoose.model("User", userSchema);

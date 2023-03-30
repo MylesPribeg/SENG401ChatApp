@@ -83,7 +83,7 @@ const VideoScreen = ({ groupId }) => {
   useEffect(() => {
     const fetchToken = async () => {
       try {
-        const response = await fetch("http://localhost:8000/token", {
+        const response = await fetch(`${VITE_REACT_APP_API_URL}token`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
