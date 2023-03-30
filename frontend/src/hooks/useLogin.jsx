@@ -13,13 +13,18 @@ export const useLogin = () => {
   const login = async (username, password) => {
     setIsLoading(true);
     setError(null);
-    
-    console.log("CALLED TO: " + `${import.meta.env.VITE_REACT_APP_API_URL}users/login`)
-    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}users/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+
+    console.log(
+      "CALLED TO: " + `${import.meta.env.VITE_REACT_APP_API_URL}users/login`
+    );
+    const response = await fetch(
+      `${import.meta.env.VITE_REACT_APP_API_URL}users/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      }
+    );
     const json = await response.json();
 
     if (!response.ok) {
