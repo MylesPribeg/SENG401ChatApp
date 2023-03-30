@@ -5,7 +5,6 @@ const User = require("../models/User");
 //request all elements in Group collection and sort by create at time in ascending order
 const getGroups = async (req, res) => {
   const groups = await Group.find({}).sort({ createdAt: 1 });
-
   res.status(200).json(groups);
 };
 
