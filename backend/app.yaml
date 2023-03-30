@@ -1,8 +1,0 @@
-# [START app_yaml]
-runtime: nodejs16
-env_variables:
-  MONGO_URL: "mongodb+srv://admin:MWxU5Ztxcq6BfT1L@cluster0.glsp4it.mongodb.net/?retryWrites=true&w=majority"
-  SECRET: 53fb9c38075224bc16e8c697ef7435a5688bbf4cb787504a983d95fa9c8fe435
-  AGORA_APP_ID: "c14ce4c95ad646818a2efc2d4db072dc"
-  AGORA_APP_CERTIFICATE: "69009efb2bee4d2baaec191251f67525"
-# [END app_yaml]
