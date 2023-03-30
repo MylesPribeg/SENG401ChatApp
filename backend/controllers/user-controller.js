@@ -127,7 +127,7 @@ const loginUser = async (req, res) => {
     const user = await User.login(username, password);
     const token = createToken(user._id);
     // Include the user ObjectID (_id) in the response
-    res.status(200).json({ username, token, id: user._id });
+    res.status(200).json({ username, token, id: user._id, theme: user.theme });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

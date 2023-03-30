@@ -1,6 +1,6 @@
 import { color } from "@mui/system";
 import { createContext, useReducer, useState } from "react";
-
+import { useEffect } from "react";
 export const ThemeContext = createContext()
 
 
@@ -17,7 +17,7 @@ export function ThemeContextProvider({children}){
     // const [fontState, changefontStateDispatch] = useReducer(changeFontReducer,{font:"", fontStyle:"", fontColour:""})
 
     // const [Theme, changeThemeDispatch] = useReducer(ChangeThemeReducer,({colorState,fontState}))
-    
+
     const [ThemeState,setThemeState] = useState({
         fontStyle: "normal",
         fontColour: 100,
@@ -29,8 +29,6 @@ export function ThemeContextProvider({children}){
         SBGgreen:50,
         SBGblue:50,
         updated:false,
-        
-        
     })
 
     const setThemes = () =>{
@@ -57,6 +55,9 @@ export function ThemeContextProvider({children}){
         setThemeState(...ThemeState,fontStyle=style, fontColour=color, font=type)
     }
 
+    const loadThemes = (ThemeObject) =>{
+        setThemeState(ThemeObject)
+    }
 
 
     // const changeBackgroundColorReducer = (state, action) => {
@@ -90,7 +91,7 @@ export function ThemeContextProvider({children}){
 
 
 return (
-    <ThemeContext.Provider value={{ThemeState, setThemeState}}>
+    <ThemeContext.Provider value={{ThemeState, setThemeState, loadThemes, setThemes}}>
         {children}
     </ThemeContext.Provider>
 )

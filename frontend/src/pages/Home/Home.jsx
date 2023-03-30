@@ -16,6 +16,7 @@ import AddUser from "./AddUser";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import VideoScreen from "../Video/VideoScreen";
 import VideoCallPage from "../Video/VideoCallPage";
+import { useThemeContext } from "../../hooks/useThemeContext";
 
 export default function Home() {
   var alreadyConnected = useRef(false);
@@ -36,8 +37,15 @@ export default function Home() {
   const username = user?.username;
   //console.log(groupsState);
   //set socket for current user
+  
+  const {setThemes, loadThemes } = useThemeContext();
+  if(user) {
+    loadThemes(user.theme);
+    setThemes();
+  }
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
+
     if (user != null && alreadyConnected.current === false) {
       console.log("connected")
       alreadyConnected.current = true;
