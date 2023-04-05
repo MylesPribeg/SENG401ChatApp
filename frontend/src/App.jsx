@@ -5,8 +5,22 @@ import Home from "./pages/Home/Home";
 import Settings from "./pages/Settings/Settings";
 import VideoCallPage from "./pages/Video/VideoCallPage";
 import VideoScreen from "./pages/Video/VideoScreen";
+import { useThemeContext } from "./hooks/useThemeContext";
+import { useAuthContext } from "./hooks/useAuthContext";
+import { useEffect } from "react";
 
 function App() {
+  const {setThemes } = useThemeContext();
+  useEffect( () =>{
+    setThemes();
+  },[])
+  // const {user} = useAuthContext()
+  // const {setThemes, loadThemes } = useThemeContext();
+  // if(user) {
+  //   loadThemes(user.theme);
+  //   setThemes();
+  // }
+
   return (
     // <div style={{backgroundColor:}}>
 
