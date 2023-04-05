@@ -16,8 +16,6 @@ import AddUser from "./AddUser";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import VideoScreen from "../Video/VideoScreen";
 import VideoCallPage from "../Video/VideoCallPage";
-import { useThemeContext } from "../../hooks/useThemeContext";
-import axios from "axios";
 
 export default function Home() {
   var alreadyConnected = useRef(false);
@@ -38,52 +36,8 @@ export default function Home() {
   const username = user?.username;
   //console.log(groupsState);
   //set socket for current user
-  const [trigger, setTrigger] = useState(false)
-  const {setThemes, loadThemes, ThemeState } = useThemeContext();
-  const [theme, setTheme] = useState()
-  const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(()=>{
-
-
-
-    
-      console.log("is user null") 
-      if(user!= null){
-      console.log(user.theme)
-      const getThemeByUsername  = async (username) => {
-        console.log("running")
-        try {
-          console.log("1")
-          const theme = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}themes/${username}`);
-          console.log("2")
-
-          loadThemes(theme.data);
-          setThemes();
-          setTrigger(!trigger)
-          // setIsLoading(true)
-          console.log("after the trigger is " + trigger)
-
-        } catch (error) {
-          if (error.response) {
-            return { error: error.response.data, status: error.response.status };
-          } else if (error.request) {
-            return { error: 'No response received', request: error.request };
-          } else {
-            return { error: error.message };
-          }
-        }
-      
-      
-      
-      }
-      getThemeByUsername(user.username)
-    }
-    
-  },[user])
   useEffect(() => {
     //console.log("connecting with user: " + user.username)
-    
     if (user != null && alreadyConnected.current === false) {
       console.log("connected")
       alreadyConnected.current = true;
@@ -219,7 +173,6 @@ export default function Home() {
     console.log("before use nav " + groupsState[activeIdx]._id);
     navigate("/video-call/" + groupsState[activeIdx]._id);
   };
-  
 
   return (
     <Box className="parent">
