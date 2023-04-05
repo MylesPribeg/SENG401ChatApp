@@ -36,7 +36,6 @@ export function ThemeContextProvider({children}){
 
     const setThemes = () =>{
 
-        console.log("themestate is " + {ThemeState})
 
         var r = document.querySelector(':root');
         r.style.setProperty('--font-colour',`rgb(${ThemeState.fontColour}, ${ThemeState.fontColour}, ${ThemeState.fontColour})`)
@@ -46,6 +45,8 @@ export function ThemeContextProvider({children}){
         r.style.setProperty('--font',ThemeState.font)
 
         ThemeState.updated = !ThemeState.updated
+        console.log("theme updated " + ThemeState.updated)
+
 
 
 
