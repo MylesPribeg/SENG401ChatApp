@@ -32,8 +32,12 @@ export function ThemeContextProvider({children}){
         
         
     })
+    const loadThemes = (ThemeObject) =>{
+      setThemeState(ThemeObject)
+  }
 
     const setThemes = () =>{
+      console.log(ThemeState)
         var r = document.querySelector(':root');
         r.style.setProperty('--font-colour',`rgb(${ThemeState.fontColour}, ${ThemeState.fontColour}, ${ThemeState.fontColour})`)
         r.style.setProperty('--font-style',ThemeState.fontStyle)
@@ -90,7 +94,7 @@ export function ThemeContextProvider({children}){
 
 
 return (
-    <ThemeContext.Provider value={{ThemeState, setThemeState}}>
+    <ThemeContext.Provider value={{ThemeState, setThemeState, setThemes, loadThemes}}>
         {children}
     </ThemeContext.Provider>
 )

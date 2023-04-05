@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom";
-
+import { useThemeContext } from "./useThemeContext";
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
   const navigate = useNavigate();
+  const {setThemes, loadThemes} = useThemeContext()
   // const API_URL =
   //   process.env.production.REACT_APP_API_URL || "http://localhost:8000";
 
@@ -34,6 +35,10 @@ export const useLogin = () => {
 
     if (response.ok) {
       localStorage.setItem("user", JSON.stringify(json));
+      console.log("themes" )
+      console.log(json.theme)
+      loadThemes(json.theme)
+      setThemes()
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
       navigate("/");

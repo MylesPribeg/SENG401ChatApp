@@ -5,8 +5,17 @@ import Home from "./pages/Home/Home";
 import Settings from "./pages/Settings/Settings";
 import VideoCallPage from "./pages/Video/VideoCallPage";
 import VideoScreen from "./pages/Video/VideoScreen";
+import { useThemeContext } from "./hooks/useThemeContext";
+import { useEffect, useState } from "react";
+
 
 function App() {
+  const [trigger, setTrigger] = useState(false)
+  const {setThemes } = useThemeContext();
+  useEffect( () =>{
+    setThemes();
+    setTrigger(!trigger)
+  },[])
   return (
     // <div style={{backgroundColor:}}>
 
